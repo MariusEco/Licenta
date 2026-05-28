@@ -1,0 +1,83 @@
+import { ArrowRight, BarChart3, Globe2, MapPinned, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+
+const overviewItems = [
+  {
+    title: "Informatii legale",
+    description: "Vize, documente, pasi de emigrare si dificultatea cetateniei.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Date economice",
+    description: "Chirii, utilitati, costuri alimentare, salarii medii si taxe.",
+    icon: BarChart3,
+  },
+  {
+    title: "Harta globala",
+    description: "Tari si orase explorabile prin pin-uri interactive.",
+    icon: MapPinned,
+  },
+];
+
+export default function HomePage() {
+  return (
+    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-12 px-4 py-8 sm:px-6 lg:px-8">
+      <section className="grid min-h-[calc(100svh-9rem)] items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="max-w-3xl">
+          <div className="mb-5 inline-flex items-center gap-2 border border-border bg-white px-3 py-2 text-sm font-medium text-muted-foreground shadow-sm">
+            <Globe2 className="h-4 w-4 text-primary" aria-hidden="true" />
+            Analiza structurata pentru decizii reale de emigrare
+          </div>
+          <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-5xl lg:text-6xl">
+            Emigrare Informat
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+            O platforma web pentru romanii care vor sa compare tari si orase pe
+            baza costurilor, oportunitatilor, cerintelor legale si comunitatilor
+            romanesti.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button asChild>
+              <Link href="/countries">
+                Exploreaza tari
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild variant="secondary">
+              <Link href="/map">Deschide harta</Link>
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-4">
+          {overviewItems.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <article
+                key={item.title}
+                className="border border-border bg-white p-5 shadow-sm"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center bg-primary text-primary-foreground">
+                    <Icon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-semibold text-foreground">
+                      {item.title}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    </main>
+  );
+}

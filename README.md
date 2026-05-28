@@ -26,4 +26,25 @@ Aplicatie web production-ready pentru lucrarea de licenta, destinata romanilor c
 8. Deployment pe Vercel
 9. Securitate, optimizare si scalare
 
-Documentatia etapei curente se afla in [docs/architecture.md](docs/architecture.md).
+Documentele de lucru din `docs/` sunt pastrate local si ignorate temporar din Git.
+
+## Rulare locala
+
+```bash
+npm install
+npm run dev
+```
+
+Aplicatia porneste implicit la `http://localhost:3000`.
+
+## Verificari
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
+
+## Variabile de mediu
+
+Copiaza `.env.example` in `.env.local` si completeaza valorile Supabase si PostgreSQL inainte de etapele care folosesc autentificare sau baza de date.
