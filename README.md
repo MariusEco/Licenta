@@ -96,8 +96,8 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 Pentru funcționalitățile care salvează date în PostgreSQL mai trebuie:
 
 ```bash
-DATABASE_URL=postgresql://...
-SUPABASE_SERVICE_ROLE_KEY=...
+DATABASE_URL=postgresql://postgres:<PAROLA_DB>@db.lihesfxqmjwtocefjqjh.supabase.co:5432/postgres
+SUPABASE_SERVICE_ROLE_KEY=<SERVICE_ROLE_KEY>
 ```
 
 Pași recomandați:
