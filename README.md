@@ -76,6 +76,13 @@ Endpoint-uri private, protejate prin Supabase Auth:
 - `GET /api/comparisons/[id]`
 - `DELETE /api/comparisons/[id]`
 
+Autentificare:
+
+- `/login` pentru autentificare cu email și parolă;
+- `/register` pentru creare cont;
+- `/auth/callback` pentru confirmări email și schimbarea codului Supabase în sesiune;
+- `/dashboard`, `/favorites` și `/comparisons` sunt protejate prin middleware.
+
 ## Frontend
 
 Paginile publice principale sunt:
