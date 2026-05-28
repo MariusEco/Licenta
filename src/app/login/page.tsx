@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { AuthForm } from "@/components/features/auth/auth-form";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
@@ -14,7 +15,9 @@ export default function LoginPage() {
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-12 sm:px-6">
       <section className="border border-border bg-white p-6 shadow-sm">
         {isConfigured ? (
-          <AuthForm mode="login" />
+          <Suspense fallback={<p className="text-sm text-muted-foreground">Se încarcă formularul...</p>}>
+            <AuthForm mode="login" />
+          </Suspense>
         ) : (
           <div>
             <h1 className="text-2xl font-semibold text-foreground">
@@ -22,8 +25,8 @@ export default function LoginPage() {
             </h1>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Configurează `NEXT_PUBLIC_SUPABASE_URL` și
-              `NEXT_PUBLIC_SUPABASE_ANON_KEY` în `.env.local` pentru a activa
-              autentificarea.
+              `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` în `.env.local` pentru a
+              activa autentificarea.
             </p>
           </div>
         )}

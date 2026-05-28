@@ -100,3 +100,21 @@ Până la configurarea Supabase, frontend-ul folosește date demonstrative contr
 ## Variabile de mediu
 
 Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.
+
+### Configurare Supabase local
+
+1. Creează un proiect în Supabase.
+2. Din `Project Settings > API`, copiază `Project URL` în `NEXT_PUBLIC_SUPABASE_URL`.
+3. Din aceeași pagină, copiază cheia `publishable` în `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+4. Copiază cheia `service_role` în `SUPABASE_SERVICE_ROLE_KEY`, dar folosește-o doar server-side.
+5. Din `Project Settings > Database > Connection string`, copiază conexiunea PostgreSQL directă în `DATABASE_URL`.
+6. În `Authentication > URL Configuration`, setează `Site URL` la `http://localhost:3000`.
+7. În `Redirect URLs`, adaugă `http://localhost:3000/auth/callback` și URL-ul Vercel după deployment.
+8. Rulează:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+După configurare, autentificarea, favoritele și salvarea comparațiilor folosesc Supabase Auth și PostgreSQL prin Prisma.

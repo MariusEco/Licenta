@@ -2,8 +2,8 @@ import type { Route } from "next";
 import { MapPinned } from "lucide-react";
 import Link from "next/link";
 
+import { InteractiveMap } from "@/components/features/map/interactive-map";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { getCities, getCountries } from "@/services/locations/queries";
 
 export const metadata = {
@@ -28,10 +28,12 @@ export default async function MapPage() {
             </div>
             <h1 className="text-3xl font-semibold text-foreground">Hartă</h1>
             <p className="mt-3 text-muted-foreground">
-              În etapa dedicată hărții, această zonă va fi înlocuită cu Leaflet
-              și pin-uri interactive pentru fiecare locație.
+              Explorează țări și orașe pe hartă. Click pe marker afișează
+              detalii rapide, iar dublu click deschide pagina locației.
             </p>
           </div>
+
+          <Badge tone="success">{locations.length} locații disponibile</Badge>
 
           <div className="grid gap-2">
             {locations.slice(0, 8).map((location) => (
@@ -55,22 +57,7 @@ export default async function MapPage() {
           </div>
         </aside>
 
-        <section className="relative min-h-[560px] overflow-hidden border border-border bg-white">
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgb(15_118_110_/_0.08)_1px,transparent_1px),linear-gradient(0deg,rgb(15_118_110_/_0.08)_1px,transparent_1px)] bg-[size:44px_44px]" />
-          <div className="relative flex h-full min-h-[560px] flex-col items-center justify-center gap-4 p-6 text-center">
-            <Badge tone="success">{locations.length} locații pregătite</Badge>
-            <h2 className="max-w-xl text-2xl font-semibold text-foreground">
-              Datele pentru pin-uri sunt pregătite pentru integrarea Leaflet.
-            </h2>
-            <p className="max-w-xl text-sm leading-6 text-muted-foreground">
-              Endpoint-ul `/api/map/locations` livrează țări și orașe cu
-              coordonate, costuri, salarii și dificultate.
-            </p>
-            <Button asChild variant="secondary">
-              <Link href="/countries">Explorează lista</Link>
-            </Button>
-          </div>
-        </section>
+        <InteractiveMap locations={locations} />
       </section>
     </main>
   );

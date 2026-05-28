@@ -1,8 +1,9 @@
 import { GitCompareArrows } from "lucide-react";
 
+import { ComparisonBuilder } from "@/components/features/comparison/comparison-builder";
 import { ComparisonSnapshot } from "@/components/features/comparison/comparison-snapshot";
 import { CountryCard } from "@/components/features/locations/country-card";
-import { getCountries } from "@/services/locations/queries";
+import { getCities, getCountries } from "@/services/locations/queries";
 
 export const metadata = {
   title: "Comparare",
@@ -10,7 +11,11 @@ export const metadata = {
 };
 
 export default async function ComparePage() {
-  const countries = await getCountries({ pageSize: 3, sort: "salary_desc" });
+  const [countries, cities] = await Promise.all([
+    getCountries({ pageSize: 3, sort: "salary_desc" }),
+    getCities({ pageSize: 6, sort: "salary_desc" }),
+  ]);
+  const comparableLocations = [...countries.items, ...cities.items];
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
@@ -20,11 +25,13 @@ export default async function ComparePage() {
         </div>
         <h1 className="text-3xl font-semibold text-foreground">Comparare</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Compară rapid țările după costul vieții, salarii medii și dificultatea
-          emigrării. În etapa de autentificare, comparațiile vor putea fi
-          salvate în contul utilizatorului.
+          Compară rapid țări și orașe după costul vieții, salarii medii și
+          dificultatea emigrării. Utilizatorii autentificați pot salva
+          comparațiile în cont.
         </p>
       </section>
+
+      <ComparisonBuilder locations={comparableLocations} />
 
       <section className="grid gap-4 lg:grid-cols-[1fr_420px]">
         <div>

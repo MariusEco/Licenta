@@ -3,6 +3,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { FavoriteButton } from "@/components/features/favorites/favorite-button";
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -62,6 +63,7 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
           <span>Cost lunar: {formatCurrency(city.monthlyCostEur)}</span>
           <span>Salariu mediu: {formatCurrency(city.averageSalaryEur)}</span>
           <span>Populație: {formatNumber(city.population)}</span>
+          <FavoriteButton kind="CITY" cityId={city.id} />
         </div>
       </section>
 

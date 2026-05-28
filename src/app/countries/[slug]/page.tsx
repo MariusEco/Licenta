@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { FavoriteButton } from "@/components/features/favorites/favorite-button";
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -65,6 +66,7 @@ export default async function CountryDetailPage({
           <span>Cost lunar: {formatCurrency(country.monthlyCostEur)}</span>
           <span>Salariu mediu: {formatCurrency(country.averageSalaryEur)}</span>
           <span>Taxare: {formatTaxLevel(country.taxLevel)}</span>
+          <FavoriteButton kind="COUNTRY" countryId={country.id} />
         </div>
       </section>
 

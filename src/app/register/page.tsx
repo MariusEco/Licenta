@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { AuthForm } from "@/components/features/auth/auth-form";
 import { isSupabaseConfigured } from "@/lib/supabase/server";
@@ -14,7 +15,9 @@ export default function RegisterPage() {
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-12 sm:px-6">
       <section className="border border-border bg-white p-6 shadow-sm">
         {isConfigured ? (
-          <AuthForm mode="register" />
+          <Suspense fallback={<p className="text-sm text-muted-foreground">Se încarcă formularul...</p>}>
+            <AuthForm mode="register" />
+          </Suspense>
         ) : (
           <div>
             <h1 className="text-2xl font-semibold text-foreground">Cont nou</h1>
