@@ -56,6 +56,26 @@ npm run db:seed
 
 Schema Prisma este în `prisma/schema.prisma`, iar migrarea inițială este în `prisma/migrations/0001_init/migration.sql`.
 
+## API intern
+
+Endpoint-uri publice:
+
+- `GET /api/countries`
+- `GET /api/countries/[slug]`
+- `GET /api/cities`
+- `GET /api/cities/[slug]`
+- `GET /api/map/locations`
+
+Endpoint-uri private, protejate prin Supabase Auth:
+
+- `GET /api/favorites`
+- `POST /api/favorites`
+- `DELETE /api/favorites`
+- `GET /api/comparisons`
+- `POST /api/comparisons`
+- `GET /api/comparisons/[id]`
+- `DELETE /api/comparisons/[id]`
+
 ## Variabile de mediu
 
 Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.
