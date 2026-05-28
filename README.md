@@ -100,16 +100,25 @@ DATABASE_URL=postgresql://postgres:<PAROLA_DB>@db.lihesfxqmjwtocefjqjh.supabase.
 SUPABASE_SERVICE_ROLE_KEY=<SERVICE_ROLE_KEY>
 ```
 
+Pentru Windows sau alte medii fără IPv6, folosește conexiunea Supabase Pooler pentru Prisma:
+
+```bash
+DATABASE_URL=postgresql://postgres.<PROJECT_REF>:<PAROLA_DB>@aws-0-eu-west-1.pooler.supabase.com:5432/postgres
+```
+
+În aplicație, Prisma este configurat să folosească `pg.Pool` cu TLS explicit, astfel încât certificatul pooler-ului Supabase să nu blocheze dezvoltarea locală pe Windows.
+
 Pași recomandați:
 
 1. Creează sau deschide proiectul în Supabase.
 2. Din `Project Settings > API`, copiază `Project URL` în `NEXT_PUBLIC_SUPABASE_URL`.
 3. Din aceeași pagină, copiază cheia `publishable` în `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 4. Copiază cheia `service_role` în `SUPABASE_SERVICE_ROLE_KEY`, dar folosește-o doar server-side.
-5. Din `Project Settings > Database > Connection string`, copiază conexiunea PostgreSQL directă în `DATABASE_URL`.
-6. În `Authentication > URL Configuration`, setează `Site URL` la `http://localhost:3000`.
-7. În `Redirect URLs`, adaugă `http://localhost:3000/auth/callback` și URL-ul Vercel după deployment.
-8. Rulează `npm run db:migrate` și `npm run db:seed`.
+5. Din `Project Settings > Database > Connection string`, copiază conexiunea PostgreSQL potrivită mediului tău în `DATABASE_URL`.
+6. Pentru local pe Windows, preferă Supabase Pooler cu `uselibpqcompat=true`.
+7. În `Authentication > URL Configuration`, setează `Site URL` la `http://localhost:3000`.
+8. În `Redirect URLs`, adaugă `http://localhost:3000/auth/callback` și URL-ul Vercel după deployment.
+9. Rulează `npm run db:migrate` și `npm run db:seed`.
 
 ## Deployment pe Vercel
 
