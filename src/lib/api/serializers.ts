@@ -51,6 +51,7 @@ export function serializeCountry(
 ) {
   return {
     id: country.id,
+    kind: "COUNTRY" as const,
     name: country.name,
     slug: country.slug,
     isoCode: country.isoCode,
@@ -68,11 +69,19 @@ export function serializeCountry(
     latitude: toNumber(country.latitude),
     longitude: toNumber(country.longitude),
     averageSalaryEur: country.averageSalaryEur,
+    monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     taxLevel: country.taxLevel,
     incomeTaxRate: toNumber(country.incomeTaxRate),
     isFeatured: country.isFeatured,
     costOfLiving: serializeCostOfLiving(country.costOfLiving?.[0] ?? null),
-    cities: country.cities?.map(serializeCitySummary) ?? [],
+    cities:
+      country.cities?.map((city) =>
+        serializeCitySummary({
+          ...city,
+          countryName: country.name,
+          countrySlug: country.slug,
+        }),
+      ) ?? [],
     visaInfos: country.visaInfos?.map(serializeVisaInfo) ?? [],
   };
 }
@@ -104,9 +113,12 @@ export function serializeCity(
 ) {
   return {
     id: city.id,
+    kind: "CITY" as const,
     name: city.name,
     slug: city.slug,
     region: city.region,
+    countryName: city.country.name,
+    countrySlug: city.country.slug,
     country: {
       id: city.country.id,
       name: city.country.name,
@@ -123,17 +135,26 @@ export function serializeCity(
     predominantReligion: city.predominantReligion,
     emigrationDifficulty: city.emigrationDifficulty,
     averageSalaryEur: city.averageSalaryEur,
+    monthlyCostEur: city.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     isFeatured: city.isFeatured,
     costOfLiving: serializeCostOfLiving(city.costOfLiving?.[0] ?? null),
   };
 }
 
-export function serializeCitySummary(city: City & { costOfLiving?: CostOfLiving[] }) {
+export function serializeCitySummary(
+  city: City & {
+    costOfLiving?: CostOfLiving[];
+    countryName?: string;
+    countrySlug?: string;
+  },
+) {
   return {
     id: city.id,
     kind: "CITY" as const,
     name: city.name,
     slug: city.slug,
+    countryName: city.countryName ?? "",
+    countrySlug: city.countrySlug ?? "",
     latitude: toNumber(city.latitude),
     longitude: toNumber(city.longitude),
     averageSalaryEur: city.averageSalaryEur,

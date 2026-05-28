@@ -76,6 +76,20 @@ Endpoint-uri private, protejate prin Supabase Auth:
 - `GET /api/comparisons/[id]`
 - `DELETE /api/comparisons/[id]`
 
+## Frontend
+
+Paginile publice principale sunt:
+
+- `/` pentru prezentarea platformei și țări recomandate;
+- `/countries` pentru listare, filtrare și sortare țări;
+- `/countries/[slug]` pentru detalii despre o țară;
+- `/cities` pentru listare, filtrare și sortare orașe;
+- `/cities/[slug]` pentru detalii despre un oraș;
+- `/compare` pentru comparație vizuală între indicatori economici;
+- `/map` pentru structura vizuală pregătită pentru integrarea Leaflet.
+
+Până la configurarea Supabase, frontend-ul folosește date demonstrative controlate din `src/services/locations/demo-data.ts`, iar după setarea `DATABASE_URL` serviciile citesc datele prin Prisma.
+
 ## Variabile de mediu
 
 Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.

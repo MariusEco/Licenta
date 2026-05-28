@@ -1,7 +1,15 @@
-import { ArrowRight, BarChart3, Globe2, MapPinned, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  Globe2,
+  MapPinned,
+  ShieldCheck,
+} from "lucide-react";
 import Link from "next/link";
 
+import { CountryCard } from "@/components/features/locations/country-card";
 import { Button } from "@/components/ui/button";
+import { getCountries } from "@/services/locations/queries";
 
 const overviewItems = [
   {
@@ -16,12 +24,14 @@ const overviewItems = [
   },
   {
     title: "Hartă globală",
-    description: "Țări și orașe explorabile prin pin-uri interactive.",
+    description: "Țări și orașe pregătite pentru pin-uri interactive.",
     icon: MapPinned,
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const countries = await getCountries({ pageSize: 3, sort: "salary_desc" });
+
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-12 px-4 py-8 sm:px-6 lg:px-8">
       <section className="grid min-h-[calc(100svh-9rem)] items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -76,6 +86,28 @@ export default function HomePage() {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="border-t border-border pt-8">
+        <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-2xl font-semibold text-foreground">
+              Țări recomandate pentru analiză
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Primele opțiuni sunt alese după salarii, costuri și relevanță
+              pentru românii care vor să emigreze.
+            </p>
+          </div>
+          <Button asChild variant="secondary">
+            <Link href="/countries">Vezi toate țările</Link>
+          </Button>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {countries.items.map((country) => (
+            <CountryCard key={country.id} country={country} />
+          ))}
         </div>
       </section>
     </main>
