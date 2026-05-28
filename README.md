@@ -81,8 +81,6 @@ Paginile publice principale sunt:
 - `/compare` pentru comparație vizuală între indicatori economici;
 - `/map` pentru harta Leaflet cu locații interactive.
 
-Până la configurarea completă a bazei de date, frontend-ul poate folosi date demonstrative controlate din `src/services/locations/demo-data.ts`.
-
 ## Configurare Supabase local
 
 În `.env.local` trebuie să existe cel puțin:
@@ -105,46 +103,3 @@ Pentru Windows sau alte medii fără IPv6, folosește conexiunea Supabase Pooler
 ```bash
 DATABASE_URL=postgresql://postgres.<PROJECT_REF>:<PAROLA_DB>@aws-0-eu-west-1.pooler.supabase.com:5432/postgres
 ```
-
-În aplicație, Prisma este configurat să folosească `pg.Pool` cu TLS explicit, astfel încât certificatul pooler-ului Supabase să nu blocheze dezvoltarea locală pe Windows.
-
-Pași recomandați:
-
-1. Creează sau deschide proiectul în Supabase.
-2. Din `Project Settings > API`, copiază `Project URL` în `NEXT_PUBLIC_SUPABASE_URL`.
-3. Din aceeași pagină, copiază cheia `publishable` în `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-4. Copiază cheia `service_role` în `SUPABASE_SERVICE_ROLE_KEY`, dar folosește-o doar server-side.
-5. Din `Project Settings > Database > Connection string`, copiază conexiunea PostgreSQL potrivită mediului tău în `DATABASE_URL`.
-6. Pentru local pe Windows, preferă Supabase Pooler cu `uselibpqcompat=true`.
-7. În `Authentication > URL Configuration`, setează `Site URL` la `http://localhost:3000`.
-8. În `Redirect URLs`, adaugă `http://localhost:3000/auth/callback` și URL-ul Vercel după deployment.
-9. Rulează `npm run db:migrate` și `npm run db:seed`.
-
-## Deployment pe Vercel
-
-1. Fă push pe GitHub pentru branch-ul `main`.
-2. Intră în Vercel și alege `Add New Project`.
-3. Importă repository-ul `MariusEco/Licenta`.
-4. Framework Preset trebuie să fie `Next.js`.
-5. Build Command rămâne `npm run build`.
-6. Install Command rămâne `npm install`.
-7. Output Directory rămâne valoarea implicită Next.js.
-8. În `Environment Variables`, adaugă variabilele:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-   - `NEXT_PUBLIC_APP_URL`
-   - `DATABASE_URL`
-   - `SUPABASE_SERVICE_ROLE_KEY`
-9. După primul deployment, copiază URL-ul Vercel și actualizează `NEXT_PUBLIC_APP_URL`.
-10. În Supabase, adaugă în `Authentication > URL Configuration > Redirect URLs`:
-    - `https://domeniul-tau.vercel.app/auth/callback`
-    - orice domeniu custom configurat ulterior.
-11. Redeploy din Vercel după actualizarea variabilelor.
-
-## Note de producție
-
-- Nu comita `.env.local`.
-- Cheia `SUPABASE_SERVICE_ROLE_KEY` nu trebuie expusă în browser.
-- `DATABASE_URL` se setează doar în Vercel și local, nu în cod.
-- Pentru Vercel, folosește conexiunea PostgreSQL compatibilă cu mediul serverless recomandată de Supabase.
-- Rulează `npm run build` înainte de fiecare push important.
