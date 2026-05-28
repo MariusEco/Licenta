@@ -41,7 +41,7 @@ export default async function HomePage() {
             Analiză structurată pentru decizii reale de emigrare
           </div>
           <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-5xl lg:text-6xl">
-            Emigrare Informat
+            Migro
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
             O platformă web pentru românii care vor să compare țări și orașe pe

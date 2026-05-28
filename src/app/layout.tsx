@@ -5,8 +5,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Emigrare Informat",
-    template: "%s | Emigrare Informat",
+    default: "Migro",
+    template: "%s | Migro",
   },
   description:
     "Platformă web pentru informarea și analiza oportunităților de emigrare pentru români.",

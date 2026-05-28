@@ -23,7 +23,7 @@ export async function SiteHeader() {
           <span className="flex h-9 w-9 items-center justify-center bg-primary text-primary-foreground">
             <Globe2 className="h-5 w-5" aria-hidden="true" />
           </span>
-          <span>Emigrare Informat</span>
+          <span>Migro</span>
         </Link>
 
         <nav

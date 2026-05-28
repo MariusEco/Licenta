@@ -1,6 +1,6 @@
-# Platformă web pentru informarea și analiza oportunităților de emigrare
+# Migro
 
-Aplicație web production-ready pentru lucrarea de licență, destinată românilor care analizează oportunități de emigrare în funcție de informații legale, costuri, salarii, taxe, comunități și dificultatea obținerii cetățeniei.
+Migro este o aplicație web production-ready pentru lucrarea de licență „Platformă web pentru informarea și analiza oportunităților de emigrare”. Platforma este destinată românilor care analizează oportunități de emigrare în funcție de informații legale, costuri, salarii, taxe, comunități și dificultatea obținerii cetățeniei.
 
 ## Stack tehnologic
 
@@ -13,20 +13,6 @@ Aplicație web production-ready pentru lucrarea de licență, destinată români
 - Leaflet + OpenStreetMap
 - Recharts
 - Deployment pe Vercel
-
-## Etape de dezvoltare
-
-1. Arhitectura generală a aplicației
-2. Structura folderelor și configurarea proiectului Next.js
-3. Schema Prisma și modelele bazei de date
-4. API Route Handlers
-5. Frontend și componente principale
-6. Autentificare și protecția rutelor
-7. Funcționalități principale
-8. Deployment pe Vercel
-9. Securitate, optimizare și scalare
-
-Documentele de lucru din `docs/` sunt păstrate local și ignorate temporar din Git.
 
 ## Rulare locală
 
@@ -93,28 +79,63 @@ Paginile publice principale sunt:
 - `/cities` pentru listare, filtrare și sortare orașe;
 - `/cities/[slug]` pentru detalii despre un oraș;
 - `/compare` pentru comparație vizuală între indicatori economici;
-- `/map` pentru structura vizuală pregătită pentru integrarea Leaflet.
+- `/map` pentru harta Leaflet cu locații interactive.
 
-Până la configurarea Supabase, frontend-ul folosește date demonstrative controlate din `src/services/locations/demo-data.ts`, iar după setarea `DATABASE_URL` serviciile citesc datele prin Prisma.
+Până la configurarea completă a bazei de date, frontend-ul poate folosi date demonstrative controlate din `src/services/locations/demo-data.ts`.
 
-## Variabile de mediu
+## Configurare Supabase local
 
-Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.
+În `.env.local` trebuie să existe cel puțin:
 
-### Configurare Supabase local
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://lihesfxqmjwtocefjqjh.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
 
-1. Creează un proiect în Supabase.
+Pentru funcționalitățile care salvează date în PostgreSQL mai trebuie:
+
+```bash
+DATABASE_URL=postgresql://...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+Pași recomandați:
+
+1. Creează sau deschide proiectul în Supabase.
 2. Din `Project Settings > API`, copiază `Project URL` în `NEXT_PUBLIC_SUPABASE_URL`.
 3. Din aceeași pagină, copiază cheia `publishable` în `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 4. Copiază cheia `service_role` în `SUPABASE_SERVICE_ROLE_KEY`, dar folosește-o doar server-side.
 5. Din `Project Settings > Database > Connection string`, copiază conexiunea PostgreSQL directă în `DATABASE_URL`.
 6. În `Authentication > URL Configuration`, setează `Site URL` la `http://localhost:3000`.
 7. În `Redirect URLs`, adaugă `http://localhost:3000/auth/callback` și URL-ul Vercel după deployment.
-8. Rulează:
+8. Rulează `npm run db:migrate` și `npm run db:seed`.
 
-```bash
-npm run db:migrate
-npm run db:seed
-```
+## Deployment pe Vercel
 
-După configurare, autentificarea, favoritele și salvarea comparațiilor folosesc Supabase Auth și PostgreSQL prin Prisma.
+1. Fă push pe GitHub pentru branch-ul `main`.
+2. Intră în Vercel și alege `Add New Project`.
+3. Importă repository-ul `MariusEco/Licenta`.
+4. Framework Preset trebuie să fie `Next.js`.
+5. Build Command rămâne `npm run build`.
+6. Install Command rămâne `npm install`.
+7. Output Directory rămâne valoarea implicită Next.js.
+8. În `Environment Variables`, adaugă variabilele:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+   - `NEXT_PUBLIC_APP_URL`
+   - `DATABASE_URL`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+9. După primul deployment, copiază URL-ul Vercel și actualizează `NEXT_PUBLIC_APP_URL`.
+10. În Supabase, adaugă în `Authentication > URL Configuration > Redirect URLs`:
+    - `https://domeniul-tau.vercel.app/auth/callback`
+    - orice domeniu custom configurat ulterior.
+11. Redeploy din Vercel după actualizarea variabilelor.
+
+## Note de producție
+
+- Nu comita `.env.local`.
+- Cheia `SUPABASE_SERVICE_ROLE_KEY` nu trebuie expusă în browser.
+- `DATABASE_URL` se setează doar în Vercel și local, nu în cod.
+- Pentru Vercel, folosește conexiunea PostgreSQL compatibilă cu mediul serverless recomandată de Supabase.
+- Rulează `npm run build` înainte de fiecare push important.
