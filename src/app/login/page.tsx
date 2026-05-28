@@ -14,10 +14,10 @@ export default function LoginPage() {
           Autentificare
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          Formularul Supabase Auth va fi conectat in etapa de autentificare.
+          Formularul Supabase Auth va fi conectat în etapa de autentificare.
         </p>
         <Button asChild className="mt-6 w-full">
-          <Link href="/dashboard">Continua</Link>
+          <Link href="/dashboard">Continuă</Link>
         </Button>
       </section>
     </main>

@@ -1,6 +1,6 @@
-# Platforma web pentru informarea si analiza oportunitatilor de emigrare
+# Platformă web pentru informarea și analiza oportunităților de emigrare
 
-Aplicatie web production-ready pentru lucrarea de licenta, destinata romanilor care analizeaza oportunitati de emigrare in functie de informatii legale, costuri, salarii, taxe, comunitati si dificultatea obtinerii cetateniei.
+Aplicație web production-ready pentru lucrarea de licență, destinată românilor care analizează oportunități de emigrare în funcție de informații legale, costuri, salarii, taxe, comunități și dificultatea obținerii cetățeniei.
 
 ## Stack tehnologic
 
@@ -16,28 +16,28 @@ Aplicatie web production-ready pentru lucrarea de licenta, destinata romanilor c
 
 ## Etape de dezvoltare
 
-1. Arhitectura generala a aplicatiei
-2. Structura folderelor si configurarea proiectului Next.js
-3. Schema Prisma si modelele bazei de date
+1. Arhitectura generală a aplicației
+2. Structura folderelor și configurarea proiectului Next.js
+3. Schema Prisma și modelele bazei de date
 4. API Route Handlers
-5. Frontend si componente principale
-6. Autentificare si protectia rutelor
-7. Functionalitati principale
+5. Frontend și componente principale
+6. Autentificare și protecția rutelor
+7. Funcționalități principale
 8. Deployment pe Vercel
-9. Securitate, optimizare si scalare
+9. Securitate, optimizare și scalare
 
-Documentele de lucru din `docs/` sunt pastrate local si ignorate temporar din Git.
+Documentele de lucru din `docs/` sunt păstrate local și ignorate temporar din Git.
 
-## Rulare locala
+## Rulare locală
 
 ```bash
 npm install
 npm run dev
 ```
 
-Aplicatia porneste implicit la `http://localhost:3000`.
+Aplicația pornește implicit la `http://localhost:3000`.
 
-## Verificari
+## Verificări
 
 ```bash
 npm run typecheck
@@ -47,4 +47,4 @@ npm run build
 
 ## Variabile de mediu
 
-Copiaza `.env.example` in `.env.local` si completeaza valorile Supabase si PostgreSQL inainte de etapele care folosesc autentificare sau baza de date.
+Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.

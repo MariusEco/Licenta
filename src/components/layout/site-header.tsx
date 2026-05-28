@@ -5,9 +5,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
-  { href: "/countries", label: "Tari" },
-  { href: "/cities", label: "Orase" },
-  { href: "/map", label: "Harta" },
+  { href: "/countries", label: "Țări" },
+  { href: "/cities", label: "Orașe" },
+  { href: "/map", label: "Hartă" },
   { href: "/compare", label: "Comparare" },
 ] satisfies Array<{ href: Route; label: string }>;
 
@@ -23,7 +23,7 @@ export function SiteHeader() {
         </Link>
 
         <nav
-          aria-label="Navigare principala"
+          aria-label="Navigare principală"
           className="hidden items-center gap-6 md:flex"
         >
           {navigation.map((item) => (

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: "%s | Emigrare Informat",
   },
   description:
-    "Platforma web pentru informarea si analiza oportunitatilor de emigrare pentru romani.",
+    "Platformă web pentru informarea și analiza oportunităților de emigrare pentru români.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
   ),

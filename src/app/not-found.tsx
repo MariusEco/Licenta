@@ -9,13 +9,13 @@ export default function NotFound() {
         404
       </p>
       <h1 className="mt-4 text-3xl font-semibold text-foreground">
-        Pagina nu a fost gasita
+        Pagina nu a fost găsită
       </h1>
       <p className="mt-4 text-muted-foreground">
-        Linkul accesat nu exista sau resursa a fost mutata.
+        Linkul accesat nu există sau resursa a fost mutată.
       </p>
       <Button asChild className="mt-8">
-        <Link href="/">Inapoi la pagina principala</Link>
+        <Link href="/">Înapoi la pagina principală</Link>
       </Button>
     </main>
   );

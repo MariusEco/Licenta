@@ -3,8 +3,8 @@ import { Building2, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata = {
-  title: "Orase",
-  description: "Exploreaza orase relevante pentru romanii care vor sa emigreze.",
+  title: "Orașe",
+  description: "Explorează orașe relevante pentru românii care vor să emigreze.",
 };
 
 export default function CitiesPage() {
@@ -15,10 +15,10 @@ export default function CitiesPage() {
           <div className="mb-3 flex h-11 w-11 items-center justify-center bg-primary text-primary-foreground">
             <Building2 className="h-5 w-5" aria-hidden="true" />
           </div>
-          <h1 className="text-3xl font-semibold text-foreground">Orase</h1>
+          <h1 className="text-3xl font-semibold text-foreground">Orașe</h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            Datele despre orase vor include chirii, oportunitati de joburi,
-            comunitati romanesti si costuri lunare estimate.
+            Datele despre orașe vor include chirii, oportunități de joburi,
+            comunități românești și costuri lunare estimate.
           </p>
         </div>
         <Button variant="secondary">

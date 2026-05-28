@@ -2,7 +2,7 @@ import { GitCompareArrows } from "lucide-react";
 
 export const metadata = {
   title: "Comparare",
-  description: "Compara tari si orase dupa indicatori legali si economici.",
+  description: "Compară țări și orașe după indicatori legali și economici.",
 };
 
 export default function ComparePage() {
@@ -14,8 +14,8 @@ export default function ComparePage() {
         </div>
         <h1 className="text-3xl font-semibold text-foreground">Comparare</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Modulul va permite compararea tarilor si oraselor dupa costul vietii,
-          salarii, taxe si dificultatea emigrarii.
+          Modulul va permite compararea țărilor și orașelor după costul vieții,
+          salarii, taxe și dificultatea emigrării.
         </p>
       </section>
     </main>

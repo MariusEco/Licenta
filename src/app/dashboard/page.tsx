@@ -8,8 +8,8 @@ export default function DashboardPage() {
       <section className="border-b border-border pb-8">
         <h1 className="text-3xl font-semibold text-foreground">Dashboard</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Zona privata va include locatiile favorite si comparatiile salvate
-          dupa conectarea Supabase Auth.
+          Zona privată va include locațiile favorite și comparațiile salvate
+          după conectarea Supabase Auth.
         </p>
       </section>
     </main>

@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button";
 
 const overviewItems = [
   {
-    title: "Informatii legale",
-    description: "Vize, documente, pasi de emigrare si dificultatea cetateniei.",
+    title: "Informații legale",
+    description: "Vize, documente, pași de emigrare și dificultatea cetățeniei.",
     icon: ShieldCheck,
   },
   {
     title: "Date economice",
-    description: "Chirii, utilitati, costuri alimentare, salarii medii si taxe.",
+    description: "Chirii, utilități, costuri alimentare, salarii medii și taxe.",
     icon: BarChart3,
   },
   {
-    title: "Harta globala",
-    description: "Tari si orase explorabile prin pin-uri interactive.",
+    title: "Hartă globală",
+    description: "Țări și orașe explorabile prin pin-uri interactive.",
     icon: MapPinned,
   },
 ];
@@ -28,20 +28,20 @@ export default function HomePage() {
         <div className="max-w-3xl">
           <div className="mb-5 inline-flex items-center gap-2 border border-border bg-white px-3 py-2 text-sm font-medium text-muted-foreground shadow-sm">
             <Globe2 className="h-4 w-4 text-primary" aria-hidden="true" />
-            Analiza structurata pentru decizii reale de emigrare
+            Analiză structurată pentru decizii reale de emigrare
           </div>
           <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-5xl lg:text-6xl">
             Emigrare Informat
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            O platforma web pentru romanii care vor sa compare tari si orase pe
-            baza costurilor, oportunitatilor, cerintelor legale si comunitatilor
-            romanesti.
+            O platformă web pentru românii care vor să compare țări și orașe pe
+            baza costurilor, oportunităților, cerințelor legale și comunităților
+            românești.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild>
               <Link href="/countries">
-                Exploreaza tari
+                Explorează țări
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>

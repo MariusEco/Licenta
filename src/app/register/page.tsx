@@ -12,8 +12,8 @@ export default function RegisterPage() {
       <section className="border border-border bg-white p-6 shadow-sm">
         <h1 className="text-2xl font-semibold text-foreground">Cont nou</h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          In etapa de autentificare vom conecta inregistrarea prin Supabase
-          Auth si validarea formularului.
+          În etapa de autentificare vom conecta înregistrarea prin Supabase
+          Auth și validarea formularului.
         </p>
         <Button asChild className="mt-6 w-full">
           <Link href="/login">Am deja cont</Link>
