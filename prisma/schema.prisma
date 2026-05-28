@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum LocationKind {
+  COUNTRY
+  CITY
+}
+
+enum EmigrationDifficulty {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum VisaCategory {
+  TOURIST
+  STUDY
+  WORK
+  FAMILY_REUNIFICATION
+  BUSINESS
+  DIGITAL_NOMAD
+  PERMANENT_RESIDENCE
+  OTHER
+}
+
+enum TaxLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id        String   @id @db.Uuid
+  email     String   @unique
+  fullName  String?
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  favorites   Favorite[]
+  comparisons Comparison[]
+
+  @@map("users")
+}
+
+model Country {
+  id                     String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                   String
+  slug                   String                @unique
+  isoCode                String                @unique @db.VarChar(2)
+  continent              String
+  capital                String?
+  currency               String?
+  officialLanguage       String?
+  predominantReligion    String?
+  romanianCommunityNotes String?
+  jobMarketNotes         String?
+  localLawNotes          String?
+  generalDescription     String
+  citizenshipDifficulty  EmigrationDifficulty
+  emigrationDifficulty   EmigrationDifficulty
+  latitude               Decimal               @db.Decimal(9, 6)
+  longitude              Decimal               @db.Decimal(9, 6)
+  averageSalaryEur       Int?
+  taxLevel               TaxLevel?
+  incomeTaxRate          Decimal?              @db.Decimal(5, 2)
+  isFeatured             Boolean               @default(false)
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  cities          City[]
+  visaInfos       VisaInfo[]
+  costOfLiving    CostOfLiving[]
+  favorites       Favorite[]
+  comparisonItems ComparisonItem[]
+
+  @@index([continent])
+  @@index([emigrationDifficulty])
+  @@index([averageSalaryEur])
+  @@map("countries")
+}
+
+model City {
+  id                     String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId              String                @db.Uuid
+  name                   String
+  slug                   String                @unique
+  region                 String?
+  latitude               Decimal               @db.Decimal(9, 6)
+  longitude              Decimal               @db.Decimal(9, 6)
+  population             Int?
+  generalDescription     String
+  romanianCommunityNotes String?
+  jobMarketNotes         String?
+  localLawNotes          String?
+  predominantReligion    String?
+  emigrationDifficulty   EmigrationDifficulty?
+  averageSalaryEur       Int?
+  isFeatured             Boolean               @default(false)
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  country         Country          @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  costOfLiving    CostOfLiving[]
+  favorites       Favorite[]
+  comparisonItems ComparisonItem[]
+
+  @@index([countryId])
+  @@index([averageSalaryEur])
+  @@map("cities")
+}
+
+model VisaInfo {
+  id                String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId         String       @db.Uuid
+  category          VisaCategory
+  title             String
+  summary           String
+  legalSteps        String[]
+  requiredDocuments String[]
+  estimatedDuration String?
+  officialUrl       String?
+  isActive          Boolean      @default(true)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  country Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([category])
+  @@map("visa_infos")
+}
+
+model CostOfLiving {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId           String?  @db.Uuid
+  cityId              String?  @db.Uuid
+  rentOneBedroomEur   Int?
+  utilitiesEur        Int?
+  groceriesEur        Int?
+  transportEur        Int?
+  healthcareEur       Int?
+  internetEur         Int?
+  totalMonthlyCostEur Int?
+  sourceName          String?
+  sourceUrl           String?
+  collectedAt         DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  country Country? @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  city    City?    @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  @@index([countryId])
+  @@index([cityId])
+  @@index([totalMonthlyCostEur])
+  @@map("cost_of_living")
+}
+
+model Favorite {
+  id        String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String       @db.Uuid
+  countryId String?      @db.Uuid
+  cityId    String?      @db.Uuid
+  kind      LocationKind
+  createdAt DateTime     @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  country Country? @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  city    City?    @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, countryId])
+  @@unique([userId, cityId])
+  @@index([userId])
+  @@map("favorites")
+}
+
+model Comparison {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items ComparisonItem[]
+
+  @@index([userId])
+  @@map("comparisons")
+}
+
+model ComparisonItem {
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  comparisonId String       @db.Uuid
+  countryId    String?      @db.Uuid
+  cityId       String?      @db.Uuid
+  kind         LocationKind
+  position     Int          @default(0)
+  createdAt    DateTime     @default(now())
+
+  comparison Comparison @relation(fields: [comparisonId], references: [id], onDelete: Cascade)
+  country    Country?   @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  city       City?      @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  @@index([comparisonId])
+  @@index([countryId])
+  @@index([cityId])
+  @@map("comparison_items")
+}

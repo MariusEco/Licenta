@@ -45,6 +45,17 @@ npm run lint
 npm run build
 ```
 
+## Bază de date
+
+```bash
+npm run db:validate
+npm run db:generate
+npm run db:migrate
+npm run db:seed
+```
+
+Schema Prisma este în `prisma/schema.prisma`, iar migrarea inițială este în `prisma/migrations/0001_init/migration.sql`.
+
 ## Variabile de mediu
 
 Copiază `.env.example` în `.env.local` și completează valorile Supabase și PostgreSQL înainte de etapele care folosesc autentificare sau bază de date.
