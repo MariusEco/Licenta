@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       const rows = (await prisma.$queryRawUnsafe(
         `select email from auth.users where lower(email) = $1 limit 1`,
         normalizedEmail,
-      )) as any[];
+      )) as Array<{ email: string }>;
 
       if (rows && rows.length > 0) {
         return NextResponse.json(
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
           { status: 409 },
         );
       }
-    } catch (e) {
+    } catch {
       throw new AppError(
         "INTERNAL_ERROR",
         "Nu am putut verifica dacă adresa de email este deja folosită.",

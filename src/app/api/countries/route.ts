@@ -54,9 +54,7 @@ export async function GET(request: Request) {
       ...(query.continent
         ? { continent: { equals: query.continent, mode: "insensitive" } }
         : {}),
-      ...(query.difficulty
-        ? { emigrationDifficulty: query.difficulty }
-        : {}),
+      ...(query.difficulty ? { emigrationDifficulty: query.difficulty } : {}),
       ...(query.minAverageSalaryEur
         ? { averageSalaryEur: { gte: query.minAverageSalaryEur } }
         : {}),
@@ -75,8 +73,7 @@ export async function GET(request: Request) {
         where,
         include: countryInclude,
         orderBy: getCountryOrderBy(query.sort),
-        ...(
-          query.sort === "cost_asc" || query.sort === "cost_desc"
+        ...(query.sort === "cost_asc" || query.sort === "cost_desc"
           ? {}
           : {
               skip: (query.page - 1) * query.pageSize,
@@ -97,12 +94,20 @@ export async function GET(request: Request) {
                 Number.MAX_SAFE_INTEGER;
 
               if (query.sort === "cost_desc") {
-                return secondCost - firstCost || first.name.localeCompare(second.name);
+                return (
+                  secondCost - firstCost ||
+                  first.name.localeCompare(second.name)
+                );
               }
 
-              return firstCost - secondCost || first.name.localeCompare(second.name);
+              return (
+                firstCost - secondCost || first.name.localeCompare(second.name)
+              );
             })
-            .slice((query.page - 1) * query.pageSize, query.page * query.pageSize)
+            .slice(
+              (query.page - 1) * query.pageSize,
+              query.page * query.pageSize,
+            )
         : countries;
 
     return ok(sortedCountries.map(serializeCountrySummary), {

@@ -7,7 +7,7 @@ import { FavoriteButton } from "@/components/features/favorites/favorite-button"
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatDifficulty } from "@/lib/formatters";
+// `formatDifficulty` not needed in this page
 import { getCurrentUser } from "@/lib/supabase/server";
 import { getPrismaClient } from "@/lib/prisma/client";
 import { getCityBySlug } from "@/services/locations/queries";
@@ -47,10 +47,10 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
   if (user) {
     const prisma = getPrismaClient();
     isFavorited = Boolean(
-      (await prisma.favorite.findFirst({
+      await prisma.favorite.findFirst({
         where: { userId: user.id, cityId: city.id },
         select: { id: true },
-      })),
+      }),
     );
   }
 

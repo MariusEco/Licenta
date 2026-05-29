@@ -44,7 +44,10 @@ export default async function DashboardPage() {
         </article>
 
         <article className="border border-border bg-white p-5 shadow-sm">
-          <GitCompareArrows className="h-5 w-5 text-primary" aria-hidden="true" />
+          <GitCompareArrows
+            className="h-5 w-5 text-primary"
+            aria-hidden="true"
+          />
           <h2 className="mt-3 text-lg font-semibold text-foreground">
             Comparații
           </h2>

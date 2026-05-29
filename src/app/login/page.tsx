@@ -15,7 +15,13 @@ export default function LoginPage() {
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-12 sm:px-6">
       <section className="border border-border bg-white p-6 shadow-sm">
         {isConfigured ? (
-          <Suspense fallback={<p className="text-sm text-muted-foreground">Se încarcă formularul...</p>}>
+          <Suspense
+            fallback={
+              <p className="text-sm text-muted-foreground">
+                Se încarcă formularul...
+              </p>
+            }
+          >
             <AuthForm mode="login" />
           </Suspense>
         ) : (

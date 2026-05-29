@@ -13,7 +13,11 @@ type ComparisonItem = {
   title: string;
   createdAt: string;
   updatedAt: string;
-  items: Array<{ id: string; kind: string; location: any | null }>;
+  items: Array<{
+    id: string;
+    kind: string;
+    location: { name?: string } | null;
+  }>;
 };
 
 type ComparisonsListProps = {
@@ -27,7 +31,9 @@ export default function ComparisonsList({ items }: ComparisonsListProps) {
   async function handleDelete(id: string) {
     setDeletingId(id);
 
-    const response = await fetch(`/api/comparisons/${id}`, { method: "DELETE" });
+    const response = await fetch(`/api/comparisons/${id}`, {
+      method: "DELETE",
+    });
 
     setDeletingId(null);
 
@@ -45,7 +51,11 @@ export default function ComparisonsList({ items }: ComparisonsListProps) {
   }
 
   if (items.length === 0) {
-    return <p className="text-sm text-muted-foreground">Nu există comparații salvate.</p>;
+    return (
+      <p className="text-sm text-muted-foreground">
+        Nu există comparații salvate.
+      </p>
+    );
   }
 
   return (
@@ -60,15 +70,25 @@ export default function ComparisonsList({ items }: ComparisonsListProps) {
             className="min-w-0 flex-1"
             aria-label={`Deschide comparația ${comp.title}`}
           >
-            <div className="text-sm font-semibold text-foreground">{comp.title}</div>
+            <div className="text-sm font-semibold text-foreground">
+              {comp.title}
+            </div>
             <div className="text-xs text-muted-foreground">
               {comp.items.map((i) => i.location?.name ?? "?").join(", ")}
             </div>
           </Link>
 
           <div>
-            <Button variant="ghost" onClick={() => handleDelete(comp.id)} disabled={deletingId === comp.id}>
-              {deletingId === comp.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash className="h-4 w-4" />}
+            <Button
+              variant="ghost"
+              onClick={() => handleDelete(comp.id)}
+              disabled={deletingId === comp.id}
+            >
+              {deletingId === comp.id ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Trash className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </div>

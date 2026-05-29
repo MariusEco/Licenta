@@ -41,7 +41,7 @@ function difficultyRank(value: string | null) {
     VERY_HIGH: 4,
   };
 
-  return value ? ranks[value] ?? 99 : 99;
+  return value ? (ranks[value] ?? 99) : 99;
 }
 
 function getLatestCost(value: { monthlyCostEur: number | null }) {
@@ -52,7 +52,10 @@ function getLatestSalary(value: { averageSalaryEur: number | null }) {
   return value.averageSalaryEur ?? 0;
 }
 
-function compareByName<TItem extends { name: string }>(first: TItem, second: TItem) {
+function compareByName<TItem extends { name: string }>(
+  first: TItem,
+  second: TItem,
+) {
   return first.name.localeCompare(second.name);
 }
 
@@ -64,46 +67,53 @@ function matchesSearch(value: string | null | undefined, search: string) {
   return normalizeSearchValue(value).includes(normalizeSearchValue(search));
 }
 
-function sortLocations<TItem extends {
-  name: string;
-  monthlyCostEur: number | null;
-  averageSalaryEur: number | null;
-  emigrationDifficulty: string | null;
-}>(items: TItem[], sort: LocationListFilters["sort"]) {
+function sortLocations<
+  TItem extends {
+    name: string;
+    monthlyCostEur: number | null;
+    averageSalaryEur: number | null;
+    emigrationDifficulty: string | null;
+  },
+>(items: TItem[], sort: LocationListFilters["sort"]) {
   const sorted = [...items];
 
   if (sort === "cost_asc") {
     return sorted.sort(
       (first, second) =>
-        getLatestCost(first) - getLatestCost(second) || compareByName(first, second),
+        getLatestCost(first) - getLatestCost(second) ||
+        compareByName(first, second),
     );
   }
 
   if (sort === "cost_desc") {
     return sorted.sort(
       (first, second) =>
-        getLatestCost(second) - getLatestCost(first) || compareByName(first, second),
+        getLatestCost(second) - getLatestCost(first) ||
+        compareByName(first, second),
     );
   }
 
   if (sort === "salary_asc") {
     return sorted.sort(
       (first, second) =>
-        getLatestSalary(first) - getLatestSalary(second) || compareByName(first, second),
+        getLatestSalary(first) - getLatestSalary(second) ||
+        compareByName(first, second),
     );
   }
 
   if (sort === "salary_desc") {
     return sorted.sort(
       (first, second) =>
-        getLatestSalary(second) - getLatestSalary(first) || compareByName(first, second),
+        getLatestSalary(second) - getLatestSalary(first) ||
+        compareByName(first, second),
     );
   }
 
   if (sort === "difficulty_asc") {
     return sorted.sort(
       (first, second) =>
-        difficultyRank(first.emigrationDifficulty) - difficultyRank(second.emigrationDifficulty) ||
+        difficultyRank(first.emigrationDifficulty) -
+          difficultyRank(second.emigrationDifficulty) ||
         compareByName(first, second),
     );
   }
@@ -111,7 +121,8 @@ function sortLocations<TItem extends {
   if (sort === "difficulty_desc") {
     return sorted.sort(
       (first, second) =>
-        difficultyRank(second.emigrationDifficulty) - difficultyRank(first.emigrationDifficulty) ||
+        difficultyRank(second.emigrationDifficulty) -
+          difficultyRank(first.emigrationDifficulty) ||
         compareByName(first, second),
     );
   }
@@ -119,20 +130,11 @@ function sortLocations<TItem extends {
   return sorted.sort(compareByName);
 }
 
-function paginate<TItem>(
-  items: TItem[],
-  page = 1,
-  pageSize = defaultPageSize,
-): PaginatedResult<TItem> {
-  return {
-    items: items.slice((page - 1) * pageSize, page * pageSize),
-    total: items.length,
-    page,
-    pageSize,
-  };
-}
+// `paginate` helper removed — replaced by inlined pagination where used.
 
-function getCountryOrderBy(sort: LocationListFilters["sort"]): Prisma.CountryOrderByWithRelationInput[] {
+function getCountryOrderBy(
+  sort: LocationListFilters["sort"],
+): Prisma.CountryOrderByWithRelationInput[] {
   if (sort === "salary_desc") {
     return [{ averageSalaryEur: "desc" }, { name: "asc" }];
   }
@@ -152,7 +154,9 @@ function getCountryOrderBy(sort: LocationListFilters["sort"]): Prisma.CountryOrd
   return [{ name: "asc" }];
 }
 
-function getCityOrderBy(sort: LocationListFilters["sort"]): Prisma.CityOrderByWithRelationInput[] {
+function getCityOrderBy(
+  sort: LocationListFilters["sort"],
+): Prisma.CityOrderByWithRelationInput[] {
   if (sort === "salary_desc") {
     return [{ averageSalaryEur: "desc" }, { name: "asc" }];
   }
@@ -194,7 +198,8 @@ export async function getCountries(
 
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? defaultPageSize;
-  const sortInMemory = filters.sort === "cost_asc" || filters.sort === "cost_desc";
+  const sortInMemory =
+    filters.sort === "cost_asc" || filters.sort === "cost_desc";
 
   const countries = await prisma.country.findMany({
     where,
@@ -239,7 +244,9 @@ export async function getCountryBySlug(
     include: {
       cities: {
         orderBy: { name: "asc" },
-        include: { costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 } },
+        include: {
+          costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+        },
       },
       costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
       visaInfos: { where: { isActive: true }, orderBy: { title: "asc" } },
@@ -284,7 +291,8 @@ export async function getCities(
 
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? defaultPageSize;
-  const sortInMemory = filters.sort === "cost_asc" || filters.sort === "cost_desc";
+  const sortInMemory =
+    filters.sort === "cost_asc" || filters.sort === "cost_desc";
 
   const [total, cities] = await Promise.all([
     prisma.city.count({ where }),
@@ -320,7 +328,9 @@ export async function getCities(
   };
 }
 
-export async function getCityBySlug(slug: string): Promise<CityDetailView | null> {
+export async function getCityBySlug(
+  slug: string,
+): Promise<CityDetailView | null> {
   assertDatabaseUrl();
 
   const prisma = getPrismaClient();

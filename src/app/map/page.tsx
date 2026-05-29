@@ -1,6 +1,4 @@
-import type { Route } from "next";
 import { MapPinned } from "lucide-react";
-import Link from "next/link";
 
 import { InteractiveMap } from "@/components/features/map/interactive-map";
 import { Badge } from "@/components/ui/badge";

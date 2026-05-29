@@ -26,8 +26,8 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
     getCountries({ pageSize: 500, sort: "name" }),
     getCities({ pageSize: 500, sort: "name" }),
   ]);
-  const comparableLocations = [...countries.items, ...cities.items].sort((first, second) =>
-    first.name.localeCompare(second.name, "ro"),
+  const comparableLocations = [...countries.items, ...cities.items].sort(
+    (first, second) => first.name.localeCompare(second.name, "ro"),
   );
 
   let initialSelectedKeys: string[] = [];

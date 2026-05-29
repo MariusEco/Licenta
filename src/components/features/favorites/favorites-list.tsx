@@ -8,24 +8,33 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
+type LocationRef = {
+  kind: "COUNTRY" | "CITY";
+  id: string;
+  name?: string;
+  slug?: string;
+} | null;
+
 type FavoriteItem = {
   id: string;
   createdAt: string;
-  location: any | null;
+  location: LocationRef;
 };
 
 type FavoritesListProps = {
   items: FavoriteItem[];
 };
 
-function getFavoriteHref(location: any | null) {
+function getFavoriteHref(location: LocationRef) {
   if (!location) {
     return null;
   }
 
-  return (location.kind === "COUNTRY"
-    ? `/countries/${location.slug}`
-    : `/cities/${location.slug}`) as Route;
+  return (
+    location.kind === "COUNTRY"
+      ? `/countries/${location.slug}`
+      : `/cities/${location.slug}`
+  ) as Route;
 }
 
 export default function FavoritesList({ items }: FavoritesListProps) {
@@ -37,7 +46,11 @@ export default function FavoritesList({ items }: FavoritesListProps) {
 
     setLoadingId(fav.id);
 
-    const body: any = { kind: fav.location.kind };
+    const body: {
+      kind: "COUNTRY" | "CITY";
+      countryId?: string;
+      cityId?: string;
+    } = { kind: fav.location.kind };
     if (fav.location.kind === "COUNTRY") body.countryId = fav.location.id;
     if (fav.location.kind === "CITY") body.cityId = fav.location.id;
 
@@ -77,12 +90,16 @@ export default function FavoritesList({ items }: FavoritesListProps) {
           <Link
             href={getFavoriteHref(fav.location) ?? ("/favorites" as Route)}
             className={`min-w-0 flex-1 ${fav.location ? "cursor-pointer" : "pointer-events-none"}`}
-            aria-label={fav.location?.name ? `Deschide ${fav.location.name}` : undefined}
+            aria-label={
+              fav.location?.name ? `Deschide ${fav.location.name}` : undefined
+            }
           >
             <div className="text-sm font-semibold text-foreground">
               {fav.location?.name ?? "(Locație necunoscută)"}
             </div>
-            <div className="text-xs text-muted-foreground">{fav.location?.kind ?? ""}</div>
+            <div className="text-xs text-muted-foreground">
+              {fav.location?.kind ?? ""}
+            </div>
           </Link>
 
           <div>

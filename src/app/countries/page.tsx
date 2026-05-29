@@ -26,7 +26,9 @@ function numberParam(value: string | undefined) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
 }
 
-function buildCountriesQuery(params: Record<string, string | string[] | undefined>) {
+function buildCountriesQuery(
+  params: Record<string, string | string[] | undefined>,
+) {
   const search = firstParam(params.search);
   const difficulty = firstParam(params.difficulty) as
     | "LOW"
@@ -35,7 +37,9 @@ function buildCountriesQuery(params: Record<string, string | string[] | undefine
     | "VERY_HIGH"
     | undefined;
   const maxMonthlyCostEur = numberParam(firstParam(params.maxMonthlyCostEur));
-  const minAverageSalaryEur = numberParam(firstParam(params.minAverageSalaryEur));
+  const minAverageSalaryEur = numberParam(
+    firstParam(params.minAverageSalaryEur),
+  );
   const sort = firstParam(params.sort) as
     | "name"
     | "cost_asc"
@@ -62,8 +66,14 @@ export default async function CountriesPage({
 }: CountriesPageProps) {
   const params = await searchParams;
   const filters = buildCountriesQuery(params);
-  let countries = await getCountries({ ...filters, pageSize: countriesPageSize });
-  const totalPages = Math.max(1, Math.ceil(countries.total / countriesPageSize));
+  let countries = await getCountries({
+    ...filters,
+    pageSize: countriesPageSize,
+  });
+  const totalPages = Math.max(
+    1,
+    Math.ceil(countries.total / countriesPageSize),
+  );
   const currentPage = Math.min(filters.page, totalPages);
 
   if (countries.total > 0 && currentPage !== filters.page) {
@@ -76,7 +86,10 @@ export default async function CountriesPage({
 
   const currentItemsStart =
     countries.total === 0 ? 0 : (currentPage - 1) * countriesPageSize + 1;
-  const currentItemsEnd = Math.min(countries.total, currentPage * countriesPageSize);
+  const currentItemsEnd = Math.min(
+    countries.total,
+    currentPage * countriesPageSize,
+  );
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
@@ -95,7 +108,8 @@ export default async function CountriesPage({
           <p>{countries.total} rezultate</p>
           {countries.total > 0 ? (
             <p>
-              Afișează {currentItemsStart}-{currentItemsEnd} din {countries.total}
+              Afișează {currentItemsStart}-{currentItemsEnd} din{" "}
+              {countries.total}
             </p>
           ) : null}
         </div>

@@ -38,7 +38,11 @@ function getVisiblePages(currentPage: number, totalPages: number) {
   return pages;
 }
 
-function buildHref(basePath: string, query: Record<string, string | undefined>, page: number) {
+function buildHref(
+  basePath: string,
+  query: Record<string, string | undefined>,
+  page: number,
+) {
   const searchParams = new URLSearchParams();
 
   for (const [key, value] of Object.entries(query)) {
@@ -77,7 +81,8 @@ export function Pagination({
       className="flex flex-col gap-4 border border-border bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between"
     >
       <p className="text-sm text-muted-foreground">
-        Pagina <span className="font-semibold text-foreground">{currentPage}</span> din{" "}
+        Pagina{" "}
+        <span className="font-semibold text-foreground">{currentPage}</span> din{" "}
         <span className="font-semibold text-foreground">{totalPages}</span>
       </p>
 
@@ -87,7 +92,12 @@ export function Pagination({
           className={cn(currentPage <= 1 && "pointer-events-none opacity-50")}
           variant="secondary"
         >
-          <Link href={buildHref(basePath, query, Math.max(1, currentPage - 1)) as Route} aria-label="Pagina anterioară">
+          <Link
+            href={
+              buildHref(basePath, query, Math.max(1, currentPage - 1)) as Route
+            }
+            aria-label="Pagina anterioară"
+          >
             Anterioară
           </Link>
         </Button>
@@ -122,10 +132,21 @@ export function Pagination({
 
         <Button
           asChild
-          className={cn(currentPage >= totalPages && "pointer-events-none opacity-50")}
+          className={cn(
+            currentPage >= totalPages && "pointer-events-none opacity-50",
+          )}
           variant="secondary"
         >
-          <Link href={buildHref(basePath, query, Math.min(totalPages, currentPage + 1)) as Route} aria-label="Pagina următoare">
+          <Link
+            href={
+              buildHref(
+                basePath,
+                query,
+                Math.min(totalPages, currentPage + 1),
+              ) as Route
+            }
+            aria-label="Pagina următoare"
+          >
             Următoare
           </Link>
         </Button>

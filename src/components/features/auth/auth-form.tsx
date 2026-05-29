@@ -17,7 +17,8 @@ type AuthFormProps = {
 const authCopy = {
   login: {
     title: "Autentificare",
-    description: "Intră în cont pentru a accesa favoritele și comparațiile salvate.",
+    description:
+      "Intră în cont pentru a accesa favoritele și comparațiile salvate.",
     submit: "Autentifică-te",
     loading: "Se verifică datele",
     icon: LogIn,
@@ -31,7 +32,10 @@ const authCopy = {
   },
 };
 
-function setFieldValidity(input: HTMLInputElement | null, message: string | null) {
+function setFieldValidity(
+  input: HTMLInputElement | null,
+  message: string | null,
+) {
   if (!input) {
     return;
   }
@@ -39,7 +43,10 @@ function setFieldValidity(input: HTMLInputElement | null, message: string | null
   input.setCustomValidity(message ?? "");
 }
 
-function validateRegisterField(input: HTMLInputElement | null, message: string) {
+function validateRegisterField(
+  input: HTMLInputElement | null,
+  message: string,
+) {
   if (!input) {
     return true;
   }
@@ -112,13 +119,18 @@ async function checkEmailAvailability(email: string) {
 
   if (response.status === 409) {
     const payload = (await response.json()) as { error?: { message?: string } };
-    return { available: false, message: payload.error?.message ?? "Există deja un cont cu această adresă de email." };
+    return {
+      available: false,
+      message:
+        payload.error?.message ??
+        "Există deja un cont cu această adresă de email.",
+    };
   }
 
   if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as
-      | { error?: { message?: string } }
-      | null;
+    const payload = (await response.json().catch(() => null)) as {
+      error?: { message?: string };
+    } | null;
 
     return {
       available: false,
@@ -152,16 +164,28 @@ export function AuthForm({ mode }: AuthFormProps) {
     const email = String(formData.get("email") ?? "");
     const password = String(formData.get("password") ?? "");
     const fullName = String(formData.get("fullName") ?? "");
-    const fullNameInput = form.elements.namedItem("fullName") as HTMLInputElement | null;
-    const emailInput = form.elements.namedItem("email") as HTMLInputElement | null;
-    const passwordInput = form.elements.namedItem("password") as HTMLInputElement | null;
+    const fullNameInput = form.elements.namedItem(
+      "fullName",
+    ) as HTMLInputElement | null;
+    const emailInput = form.elements.namedItem(
+      "email",
+    ) as HTMLInputElement | null;
+    const passwordInput = form.elements.namedItem(
+      "password",
+    ) as HTMLInputElement | null;
 
     const isFullNameValid =
       mode === "register"
-        ? validateRegisterField(fullNameInput, "Te rog introdu un nume de utilizator.")
+        ? validateRegisterField(
+            fullNameInput,
+            "Te rog introdu un nume de utilizator.",
+          )
         : true;
     const isEmailValid = validateEmailField(emailInput);
-    const isPasswordValid = mode === "register" ? validatePasswordField(passwordInput) : validatePasswordPresence(passwordInput);
+    const isPasswordValid =
+      mode === "register"
+        ? validatePasswordField(passwordInput)
+        : validatePasswordPresence(passwordInput);
 
     if (!isFullNameValid || !isEmailValid || !isPasswordValid) {
       form.reportValidity();
@@ -174,7 +198,8 @@ export function AuthForm({ mode }: AuthFormProps) {
       const pwd = String(password ?? "");
       const hasUpper = /[A-Z]/.test(pwd);
       const hasDigit = /[0-9]/.test(pwd);
-      const hasSymbol = /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':"\\|<>\?,\.\/`~]/.test(pwd);
+      const hasSymbol =
+        /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':"\\|<>\?,\.\/`~]/.test(pwd);
 
       if (pwd.length >= 8 && (!hasUpper || !hasDigit || !hasSymbol)) {
         setFieldValidity(
@@ -211,7 +236,10 @@ export function AuthForm({ mode }: AuthFormProps) {
       const emailCheck = await checkEmailAvailability(email);
 
       if (!emailCheck.available) {
-        setError(emailCheck.message ?? "Există deja un cont cu această adresă de email.");
+        setError(
+          emailCheck.message ??
+            "Există deja un cont cu această adresă de email.",
+        );
         return;
       }
 
@@ -255,13 +283,17 @@ export function AuthForm({ mode }: AuthFormProps) {
     }
   }
 
-  function translateAuthError(err: any) {
+  function translateAuthError(err: unknown) {
     const fallback = "Email sau parolă incorecte.";
 
     if (!err) return fallback;
-    const msg = String(err.message ?? err).toLowerCase();
+    const msg = String(err instanceof Error ? err.message : err).toLowerCase();
 
-    if (msg.includes("invalid login credentials") || msg.includes("invalid email or password") || msg.includes("invalid_credentials")) {
+    if (
+      msg.includes("invalid login credentials") ||
+      msg.includes("invalid email or password") ||
+      msg.includes("invalid_credentials")
+    ) {
       return "Email sau parolă incorecte.";
     }
 
@@ -269,16 +301,22 @@ export function AuthForm({ mode }: AuthFormProps) {
       return "Cont inexistent.";
     }
 
-    return err.message ?? fallback;
+    return err instanceof Error
+      ? (err.message ?? fallback)
+      : String(err ?? fallback);
   }
 
-  function translateSignUpError(err: any) {
+  function translateSignUpError(err: unknown) {
     const fallback = "A apărut o eroare la crearea contului.";
 
     if (!err) return { message: fallback };
-    const raw = String(err.message ?? err).toLowerCase();
+    const raw = String(err instanceof Error ? err.message : err).toLowerCase();
 
-    if (raw.includes("already registered") || raw.includes("already been registered") || raw.includes("user already")) {
+    if (
+      raw.includes("already registered") ||
+      raw.includes("already been registered") ||
+      raw.includes("user already")
+    ) {
       return { message: "Există deja un cont cu această adresă de email." };
     }
 
@@ -288,17 +326,26 @@ export function AuthForm({ mode }: AuthFormProps) {
       const hasLower = raw.includes("abcdefghijklmnopqrstuvwxyz");
       const hasUpper = raw.includes("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
       const hasDigits = raw.includes("0123456789");
-      const hasSymbols = /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':"\\|<>\?,\.\/`~]/.test(raw);
+      const hasSymbols =
+        /[!@#\$%\^&\*\(\)_\+\-\=\[\]\{\};':"\\|<>\?,\.\/`~]/.test(raw);
 
-      if ((hasLower || hasUpper || hasDigits || hasSymbols) && (hasUpper || hasDigits || hasSymbols)) {
+      if (
+        (hasLower || hasUpper || hasDigits || hasSymbols) &&
+        (hasUpper || hasDigits || hasSymbols)
+      ) {
         return {
-          message: "Parola trebuie să conțină cel puțin o literă mare, o cifră și un simbol.",
+          message:
+            "Parola trebuie să conțină cel puțin o literă mare, o cifră și un simbol.",
           asField: "password",
         };
       }
 
       // If message mentions length, map to length message (inline behavior handled elsewhere).
-      if (raw.includes("8") || raw.includes("length") || raw.includes("at least 8")) {
+      if (
+        raw.includes("8") ||
+        raw.includes("length") ||
+        raw.includes("at least 8")
+      ) {
         return { message: "Parola trebuie să aibă cel puțin 8 caractere." };
       }
 
@@ -310,7 +357,12 @@ export function AuthForm({ mode }: AuthFormProps) {
       return { message: "Te rog introdu o adresă de email validă." };
     }
 
-    return { message: err.message ?? fallback };
+    return {
+      message:
+        err instanceof Error
+          ? (err.message ?? fallback)
+          : String(err ?? fallback),
+    };
   }
 
   return (

@@ -40,7 +40,9 @@ function getLocationKey(location: ComparableLocation) {
 }
 
 function getLocationSubtitle(location: ComparableLocation) {
-  return location.kind === "COUNTRY" ? location.continent : location.countryName;
+  return location.kind === "COUNTRY"
+    ? location.continent
+    : location.countryName;
 }
 
 function getLocationDetailPath(location: ComparableLocation) {
@@ -57,7 +59,9 @@ function formatMaybeText(value: string | null | undefined) {
   return value;
 }
 
-function getCostOfLiving(location: ComparableLocation | ComparableDetailLocation | null) {
+function getCostOfLiving(
+  location: ComparableLocation | ComparableDetailLocation | null,
+) {
   if (!location || !("costOfLiving" in location)) {
     return null;
   }
@@ -65,16 +69,28 @@ function getCostOfLiving(location: ComparableLocation | ComparableDetailLocation
   return location.costOfLiving;
 }
 
-function getCountryDetail(location: ComparableLocation | ComparableDetailLocation | null) {
-  if (!location || location.kind !== "COUNTRY" || !("generalDescription" in location)) {
+function getCountryDetail(
+  location: ComparableLocation | ComparableDetailLocation | null,
+) {
+  if (
+    !location ||
+    location.kind !== "COUNTRY" ||
+    !("generalDescription" in location)
+  ) {
     return null;
   }
 
   return location;
 }
 
-function getCityDetail(location: ComparableLocation | ComparableDetailLocation | null) {
-  if (!location || location.kind !== "CITY" || !("generalDescription" in location)) {
+function getCityDetail(
+  location: ComparableLocation | ComparableDetailLocation | null,
+) {
+  if (
+    !location ||
+    location.kind !== "CITY" ||
+    !("generalDescription" in location)
+  ) {
     return null;
   }
 
@@ -83,7 +99,9 @@ function getCityDetail(location: ComparableLocation | ComparableDetailLocation |
 
 type ComparisonRow = {
   label: string;
-  render: (location: ComparableLocation | ComparableDetailLocation | null) => string;
+  render: (
+    location: ComparableLocation | ComparableDetailLocation | null,
+  ) => string;
 };
 
 const comparisonRows: ComparisonRow[] = [
@@ -177,7 +195,8 @@ const comparisonRows: ComparisonRow[] = [
   },
   {
     label: "Dificultate emigrare",
-    render: (location) => formatDifficulty(location?.emigrationDifficulty ?? null),
+    render: (location) =>
+      formatDifficulty(location?.emigrationDifficulty ?? null),
   },
   {
     label: "Dificultate cetățenie",
@@ -186,7 +205,9 @@ const comparisonRows: ComparisonRow[] = [
         return "Nedisponibil";
       }
 
-      return formatDifficulty(getCountryDetail(location)?.citizenshipDifficulty ?? null);
+      return formatDifficulty(
+        getCountryDetail(location)?.citizenshipDifficulty ?? null,
+      );
     },
   },
   {
@@ -199,27 +220,33 @@ const comparisonRows: ComparisonRow[] = [
   },
   {
     label: "Chirie 1 dormitor",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.rentOneBedroomEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.rentOneBedroomEur ?? null),
   },
   {
     label: "Utilități",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.utilitiesEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.utilitiesEur ?? null),
   },
   {
     label: "Mâncare",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.groceriesEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.groceriesEur ?? null),
   },
   {
     label: "Transport",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.transportEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.transportEur ?? null),
   },
   {
     label: "Sănătate",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.healthcareEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.healthcareEur ?? null),
   },
   {
     label: "Internet",
-    render: (location) => formatCurrency(getCostOfLiving(location)?.internetEur ?? null),
+    render: (location) =>
+      formatCurrency(getCostOfLiving(location)?.internetEur ?? null),
   },
   {
     label: "Nivel taxe",
@@ -253,7 +280,9 @@ const comparisonRows: ComparisonRow[] = [
       }
 
       if (location.kind === "COUNTRY") {
-        return formatMaybeText(getCountryDetail(location)?.romanianCommunityNotes);
+        return formatMaybeText(
+          getCountryDetail(location)?.romanianCommunityNotes,
+        );
       }
 
       return formatMaybeText(getCityDetail(location)?.romanianCommunityNotes);
@@ -281,9 +310,13 @@ export function ComparisonBuilder({
   initialTitle,
 }: ComparisonBuilderProps) {
   const router = useRouter();
-  const [leftKey, setLeftKey] = useState<string | null>(null);
-  const [rightKey, setRightKey] = useState<string | null>(null);
-  const [title, setTitle] = useState("Comparație rapidă");
+  const [leftKey, setLeftKey] = useState<string | null>(
+    () => initialSelectedKeys?.[0] ?? null,
+  );
+  const [rightKey, setRightKey] = useState<string | null>(
+    () => initialSelectedKeys?.[1] ?? null,
+  );
+  const [title, setTitle] = useState(() => initialTitle ?? "Comparație rapidă");
   const [isSaving, setIsSaving] = useState(false);
   const [notification, setNotification] = useState<{
     tone: "success" | "error";
@@ -291,29 +324,25 @@ export function ComparisonBuilder({
   } | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loadingKeys, setLoadingKeys] = useState<string[]>([]);
-  const [details, setDetails] = useState<Record<string, ComparableDetailLocation>>({});
+  const [details, setDetails] = useState<
+    Record<string, ComparableDetailLocation>
+  >({});
 
   const locationByKey = useMemo(
-    () => new Map(locations.map((location) => [getLocationKey(location), location] as const)),
+    () =>
+      new Map(
+        locations.map(
+          (location) => [getLocationKey(location), location] as const,
+        ),
+      ),
     [locations],
   );
 
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    if (initialTitle) {
-      setTitle(initialTitle);
-    }
-  }, [initialTitle]);
-
-  useEffect(() => {
-    if (!initialSelectedKeys || initialSelectedKeys.length === 0) {
-      return;
-    }
-
-    setLeftKey(initialSelectedKeys[0] ?? null);
-    setRightKey(initialSelectedKeys[1] ?? null);
-  }, [initialSelectedKeys]);
+  // `initialTitle` and `initialSelectedKeys` are used to seed initial state
+  // via lazy initializers above. Avoid calling setState synchronously inside
+  // effects to satisfy the linter and prevent cascading renders.
 
   useEffect(() => {
     if (!notification) {
@@ -364,7 +393,9 @@ export function ComparisonBuilder({
         location.kind === "COUNTRY" && countryMatches.has(location.slug),
     );
 
-    matchingCountries.sort((first, second) => first.name.localeCompare(second.name, "ro"));
+    matchingCountries.sort((first, second) =>
+      first.name.localeCompare(second.name, "ro"),
+    );
 
     for (const country of matchingCountries) {
       groupedLocations.push(country);
@@ -374,7 +405,9 @@ export function ComparisonBuilder({
           (location): location is CitySummaryView =>
             location.kind === "CITY" && location.countrySlug === country.slug,
         )
-        .filter((city) => (cityMatches.size > 0 ? cityMatches.has(city.slug) : true))
+        .filter((city) =>
+          cityMatches.size > 0 ? cityMatches.has(city.slug) : true,
+        )
         .sort((first, second) => first.name.localeCompare(second.name, "ro"));
 
       groupedLocations.push(...countryCities);
@@ -383,28 +416,31 @@ export function ComparisonBuilder({
     return groupedLocations;
   }, [locations, search]);
 
-  const leftLocation = leftKey ? locationByKey.get(leftKey) ?? null : null;
-  const rightLocation = rightKey ? locationByKey.get(rightKey) ?? null : null;
+  const leftLocation = leftKey ? (locationByKey.get(leftKey) ?? null) : null;
+  const rightLocation = rightKey ? (locationByKey.get(rightKey) ?? null) : null;
 
-  const leftDisplay = leftKey ? locationByKey.get(leftKey) ?? null : null;
-  const rightDisplay = rightKey ? locationByKey.get(rightKey) ?? null : null;
+  const leftDisplay = leftKey ? (locationByKey.get(leftKey) ?? null) : null;
+  const rightDisplay = rightKey ? (locationByKey.get(rightKey) ?? null) : null;
 
   const selectedLocations = [leftLocation, rightLocation].filter(
     (location): location is ComparableLocation => Boolean(location),
   );
 
   useEffect(() => {
-    const keysToLoad = [leftKey, rightKey].filter(
-      (key): key is string => Boolean(key),
+    const keysToLoad = [leftKey, rightKey].filter((key): key is string =>
+      Boolean(key),
     );
 
     if (keysToLoad.length === 0) {
-      setLoadError(null);
-      setLoadingKeys([]);
+      // No keys to load — nothing to do. State clearing is handled by
+      // `clearAll()` when the user explicitly resets selections.
       return;
     }
 
     const controller = new AbortController();
+    // Allow setting loading keys for the async fetch sequence. This is
+    // intentionally done here to reflect the active fetch keys.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoadingKeys(keysToLoad);
 
     Promise.allSettled(
@@ -421,10 +457,14 @@ export function ComparisonBuilder({
         });
 
         if (!response.ok) {
-          throw new Error(`Detaliile pentru ${location.name} nu au putut fi încărcate.`);
+          throw new Error(
+            `Detaliile pentru ${location.name} nu au putut fi încărcate.`,
+          );
         }
 
-        const payload = (await response.json()) as { data: ComparableDetailLocation };
+        const payload = (await response.json()) as {
+          data: ComparableDetailLocation;
+        };
         return { key, detail: payload.data };
       }),
     ).then((results) => {
@@ -507,11 +547,15 @@ export function ComparisonBuilder({
     router.refresh();
   }
 
-  const leftSelected = leftKey ? locationByKey.get(leftKey) ?? null : null;
-  const rightSelected = rightKey ? locationByKey.get(rightKey) ?? null : null;
+  const leftSelected = leftKey ? (locationByKey.get(leftKey) ?? null) : null;
+  const rightSelected = rightKey ? (locationByKey.get(rightKey) ?? null) : null;
   const canSave = Boolean(leftSelected && rightSelected);
-  const leftComparisonLocation = leftKey ? details[leftKey] ?? leftSelected : null;
-  const rightComparisonLocation = rightKey ? details[rightKey] ?? rightSelected : null;
+  const leftComparisonLocation = leftKey
+    ? (details[leftKey] ?? leftSelected)
+    : null;
+  const rightComparisonLocation = rightKey
+    ? (details[rightKey] ?? rightSelected)
+    : null;
 
   function clearAll() {
     setLeftKey(null);
@@ -520,7 +564,10 @@ export function ComparisonBuilder({
     setLoadError(null);
   }
 
-  function renderSelectedCard(location: ComparableLocation | null, side: ComparisonSide) {
+  function renderSelectedCard(
+    location: ComparableLocation | null,
+    side: ComparisonSide,
+  ) {
     const key = location ? getLocationKey(location) : null;
     const loading = key ? loadingKeys.includes(key) : false;
 
@@ -544,8 +591,12 @@ export function ComparisonBuilder({
             <div className="inline-flex items-center rounded-full bg-muted px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
               {location.kind === "COUNTRY" ? "Țară" : "Oraș"}
             </div>
-            <h3 className="mt-2 text-lg font-semibold text-foreground">{location.name}</h3>
-            <p className="text-sm text-muted-foreground">{getLocationSubtitle(location)}</p>
+            <h3 className="mt-2 text-lg font-semibold text-foreground">
+              {location.name}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {getLocationSubtitle(location)}
+            </p>
           </div>
 
           <Button
@@ -600,7 +651,10 @@ export function ComparisonBuilder({
       <aside className="border border-border bg-white p-4 lg:sticky lg:top-6">
         <div className="mb-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <GitCompareArrows className="h-5 w-5 text-primary" aria-hidden="true" />
+            <GitCompareArrows
+              className="h-5 w-5 text-primary"
+              aria-hidden="true"
+            />
             <h2 className="font-semibold text-foreground">Caută locații</h2>
           </div>
           <Button type="button" variant="ghost" onClick={clearAll}>
@@ -610,7 +664,9 @@ export function ComparisonBuilder({
         </div>
 
         <label className="block">
-          <span className="mb-1 block text-sm font-medium text-foreground">Titlu</span>
+          <span className="mb-1 block text-sm font-medium text-foreground">
+            Titlu
+          </span>
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
@@ -623,7 +679,10 @@ export function ComparisonBuilder({
             Caută țări sau orașe
           </span>
           <div className="flex h-11 items-center gap-2 border border-border bg-white px-3">
-            <Search className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            <Search
+              className="h-4 w-4 text-muted-foreground"
+              aria-hidden="true"
+            />
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
@@ -660,7 +719,9 @@ export function ComparisonBuilder({
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-foreground">{location.name}</h3>
+                        <h3 className="font-semibold text-foreground">
+                          {location.name}
+                        </h3>
                         <span className="rounded-full bg-muted px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                           {location.kind === "COUNTRY" ? "Țară" : "Oraș"}
                         </span>
@@ -713,7 +774,9 @@ export function ComparisonBuilder({
         <section className="border border-border bg-white">
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div>
-              <h2 className="text-lg font-semibold text-foreground">Comparație</h2>
+              <h2 className="text-lg font-semibold text-foreground">
+                Comparație
+              </h2>
               <p className="text-sm text-muted-foreground">
                 {canSave
                   ? "Două locații sunt pregătite pentru comparație."
@@ -728,7 +791,10 @@ export function ComparisonBuilder({
                 className="shrink-0"
               >
                 {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                  <Loader2
+                    className="h-4 w-4 animate-spin"
+                    aria-hidden="true"
+                  />
                 ) : (
                   <Save className="h-4 w-4" aria-hidden="true" />
                 )}
@@ -773,7 +839,9 @@ export function ComparisonBuilder({
                     index % 2 === 0 ? "bg-white" : "bg-muted/20"
                   }`}
                 >
-                  <div className="px-4 py-3 font-medium text-foreground">{row.label}</div>
+                  <div className="px-4 py-3 font-medium text-foreground">
+                    {row.label}
+                  </div>
                   <div className="px-4 py-3 leading-6 text-muted-foreground">
                     {row.render(leftComparisonLocation)}
                   </div>
@@ -784,7 +852,6 @@ export function ComparisonBuilder({
               ))}
             </div>
           </div>
-
         </section>
       </div>
     </section>

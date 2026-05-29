@@ -31,7 +31,6 @@ function isCountry(
 
 export function LocationDetailSections({
   location,
-  type,
 }: LocationDetailSectionsProps) {
   if (isCountry(location)) {
     return (
@@ -52,11 +51,19 @@ export function LocationDetailSections({
                 Vize și pași legali
               </h2>
               {location.visaInfos.map((visa) => (
-                <article key={visa.id} className="border border-border bg-white p-5">
+                <article
+                  key={visa.id}
+                  className="border border-border bg-white p-5"
+                >
                   <div className="flex items-start gap-3">
-                    <FileText className="mt-1 h-5 w-5 text-primary" aria-hidden="true" />
+                    <FileText
+                      className="mt-1 h-5 w-5 text-primary"
+                      aria-hidden="true"
+                    />
                     <div>
-                      <h3 className="font-semibold text-foreground">{visa.title}</h3>
+                      <h3 className="font-semibold text-foreground">
+                        {visa.title}
+                      </h3>
                       <p className="mt-2 text-sm leading-6 text-muted-foreground">
                         {visa.summary}
                       </p>
@@ -84,7 +91,10 @@ export function LocationDetailSections({
             label="Dificultate cetățenie"
             value={formatDifficulty(location.citizenshipDifficulty)}
           />
-          <LocationStat label="Taxare" value={formatTaxLevel(location.taxLevel)} />
+          <LocationStat
+            label="Taxare"
+            value={formatTaxLevel(location.taxLevel)}
+          />
         </aside>
       </div>
     );
@@ -136,7 +146,6 @@ export function LocationDetailSections({
           </div>
           <CostBreakdownChart cost={location.costOfLiving} />
         </section>
-
       </section>
 
       <aside className="grid h-fit gap-3">

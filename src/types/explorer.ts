@@ -1,4 +1,9 @@
-import type { EmigrationDifficulty, LocationKind, TaxLevel, VisaCategory } from "@prisma/client";
+import type {
+  EmigrationDifficulty,
+  LocationKind,
+  TaxLevel,
+  VisaCategory,
+} from "@prisma/client";
 
 export type CostOfLivingView = {
   rentOneBedroomEur: number | null;

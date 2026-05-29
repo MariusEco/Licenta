@@ -22,8 +22,16 @@ export default async function ComparisonsPage() {
     include: {
       items: {
         include: {
-          country: { include: { costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 } } },
-          city: { include: { costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 } } },
+          country: {
+            include: {
+              costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+            },
+          },
+          city: {
+            include: {
+              costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+            },
+          },
         },
         orderBy: { position: "asc" },
       },
@@ -44,8 +52,8 @@ export default async function ComparisonsPage() {
         item.kind === "COUNTRY" && item.country
           ? serializeCountrySummary(item.country)
           : item.city
-          ? serializeCitySummary(item.city)
-          : null,
+            ? serializeCitySummary(item.city)
+            : null,
     })),
   }));
 
@@ -55,9 +63,12 @@ export default async function ComparisonsPage() {
         <div className="mb-3 flex h-11 w-11 items-center justify-center bg-primary text-primary-foreground">
           <GitCompareArrows className="h-5 w-5" aria-hidden="true" />
         </div>
-        <h1 className="text-3xl font-semibold text-foreground">Comparații salvate</h1>
+        <h1 className="text-3xl font-semibold text-foreground">
+          Comparații salvate
+        </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Comparațiile create de utilizator vor fi afișate aici și protejate prin Supabase Auth.
+          Comparațiile create de utilizator vor fi afișate aici și protejate
+          prin Supabase Auth.
         </p>
       </section>
 

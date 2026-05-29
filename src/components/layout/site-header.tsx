@@ -43,7 +43,11 @@ export async function SiteHeader() {
         <div className="flex items-center gap-2">
           {user ? (
             <>
-              <Button asChild variant="secondary" className="hidden sm:inline-flex">
+              <Button
+                asChild
+                variant="secondary"
+                className="hidden sm:inline-flex"
+              >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
               <LogoutButton />

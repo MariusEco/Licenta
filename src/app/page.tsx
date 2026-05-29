@@ -14,12 +14,14 @@ import { getCountries } from "@/services/locations/queries";
 const overviewItems = [
   {
     title: "Informații legale",
-    description: "Vize, documente, pași de emigrare și dificultatea cetățeniei.",
+    description:
+      "Vize, documente, pași de emigrare și dificultatea cetățeniei.",
     icon: ShieldCheck,
   },
   {
     title: "Date economice",
-    description: "Chirii, utilități, costuri alimentare, salarii medii și taxe.",
+    description:
+      "Chirii, utilități, costuri alimentare, salarii medii și taxe.",
     icon: BarChart3,
   },
   {

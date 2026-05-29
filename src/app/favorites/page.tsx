@@ -41,8 +41,8 @@ export default async function FavoritesPage() {
       favorite.kind === "COUNTRY" && favorite.country
         ? serializeCountrySummary(favorite.country)
         : favorite.city
-        ? serializeCitySummary(favorite.city)
-        : null,
+          ? serializeCitySummary(favorite.city)
+          : null,
   }));
 
   return (

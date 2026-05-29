@@ -117,7 +117,11 @@ export async function DELETE(request: Request) {
     });
 
     if (!favorite) {
-      throw new AppError("NOT_FOUND", "Locația favorită nu a fost găsită.", 404);
+      throw new AppError(
+        "NOT_FOUND",
+        "Locația favorită nu a fost găsită.",
+        404,
+      );
     }
 
     await prisma.favorite.delete({ where: { id: favorite.id } });

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+// Link not required on this page
 import { notFound } from "next/navigation";
 
 import { FavoriteButton } from "@/components/features/favorites/favorite-button";
 import { CountryCitySelector } from "@/components/features/locations/country-city-selector";
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
-import { formatDifficulty } from "@/lib/formatters";
+// formatDifficulty not required on this page
 import { getCurrentUser } from "@/lib/supabase/server";
 import { getPrismaClient } from "@/lib/prisma/client";
 import { getCountryBySlug } from "@/services/locations/queries";
@@ -47,10 +47,10 @@ export default async function CountryDetailPage({
   if (user) {
     const prisma = getPrismaClient();
     isFavorited = Boolean(
-      (await prisma.favorite.findFirst({
+      await prisma.favorite.findFirst({
         where: { userId: user.id, countryId: country.id },
         select: { id: true },
-      })),
+      }),
     );
   }
 

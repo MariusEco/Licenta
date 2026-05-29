@@ -59,7 +59,11 @@ export function CostBreakdownChart({ cost }: CostBreakdownChartProps) {
             formatter={(value) => [`${value} EUR`, "Cost lunar"]}
             cursor={{ fill: "rgb(15 118 110 / 0.08)" }}
           />
-          <Bar dataKey="value" fill="hsl(var(--primary))" radius={[3, 3, 0, 0]} />
+          <Bar
+            dataKey="value"
+            fill="hsl(var(--primary))"
+            radius={[3, 3, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

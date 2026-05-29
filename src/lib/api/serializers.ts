@@ -1,9 +1,4 @@
-import type {
-  City,
-  CostOfLiving,
-  Country,
-  VisaInfo,
-} from "@prisma/client";
+import type { City, CostOfLiving, Country, VisaInfo } from "@prisma/client";
 
 function toNumber(value: unknown) {
   return value === null || value === undefined ? null : Number(value);
