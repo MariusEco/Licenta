@@ -8,7 +8,6 @@ import { getCurrentUser } from "@/lib/supabase/server";
 
 const navigation = [
   { href: "/countries", label: "Țări" },
-  { href: "/cities", label: "Orașe" },
   { href: "/map", label: "Hartă" },
   { href: "/compare", label: "Comparare" },
 ] satisfies Array<{ href: Route; label: string }>;

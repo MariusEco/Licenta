@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { FavoriteButton } from "@/components/features/favorites/favorite-button";
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
+import { CountryCitySelector } from "@/components/features/locations/country-city-selector";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -63,33 +64,15 @@ export default async function CountryDetailPage({
         </div>
 
         <div className="grid gap-2 text-sm text-muted-foreground">
-          <span>Cost lunar: {formatCurrency(country.monthlyCostEur)}</span>
-          <span>Salariu mediu: {formatCurrency(country.averageSalaryEur)}</span>
-          <span>Taxare: {formatTaxLevel(country.taxLevel)}</span>
-          <FavoriteButton kind="COUNTRY" countryId={country.id} />
+          <Badge tone="neutral">Emigrare {formatDifficulty(country.emigrationDifficulty)}</Badge>
+          <Badge tone="neutral">Cetățenie {formatDifficulty(country.citizenshipDifficulty)}</Badge>
+          <Badge tone="neutral">Taxare {formatTaxLevel(country.taxLevel)}</Badge>
         </div>
       </section>
-
       <LocationDetailSections location={country} type="country" />
 
       {country.cities.length > 0 ? (
-        <section className="border-t border-border pt-8">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-foreground">
-                Orașe analizate
-              </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Orașe disponibile pentru această țară.
-              </p>
-            </div>
-            <Button asChild variant="secondary">
-              <Link href={`/cities?search=${encodeURIComponent(country.name)}`}>
-                Vezi orașele
-              </Link>
-            </Button>
-          </div>
-        </section>
+        <CountryCitySelector cities={country.cities} />
       ) : null}
     </main>
   );

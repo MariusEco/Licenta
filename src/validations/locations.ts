@@ -18,7 +18,15 @@ export const countryListQuerySchema = paginationSchema.extend({
   maxMonthlyCostEur: z.coerce.number().int().positive().optional(),
   minAverageSalaryEur: z.coerce.number().int().positive().optional(),
   sort: z
-    .enum(["name", "cost_asc", "salary_desc", "difficulty_asc"])
+    .enum([
+      "name",
+      "cost_asc",
+      "cost_desc",
+      "salary_asc",
+      "salary_desc",
+      "difficulty_asc",
+      "difficulty_desc",
+    ])
     .default("name"),
 });
 
@@ -29,7 +37,15 @@ export const cityListQuerySchema = paginationSchema.extend({
   maxMonthlyCostEur: z.coerce.number().int().positive().optional(),
   minAverageSalaryEur: z.coerce.number().int().positive().optional(),
   sort: z
-    .enum(["name", "cost_asc", "salary_desc", "difficulty_asc"])
+    .enum([
+      "name",
+      "cost_asc",
+      "cost_desc",
+      "salary_asc",
+      "salary_desc",
+      "difficulty_asc",
+      "difficulty_desc",
+    ])
     .default("name"),
 });
 

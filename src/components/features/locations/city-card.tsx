@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, formatDifficulty } from "@/lib/formatters";
 import type { CityDetailView } from "@/types/explorer";
+import { FavoriteButton } from "@/components/features/favorites/favorite-button";
 
 type CityCardProps = {
   city: CityDetailView;
@@ -64,6 +65,9 @@ export function CityCard({ city }: CityCardProps) {
         Vezi detalii
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
+      <div className="mt-3">
+        <FavoriteButton kind="CITY" cityId={city.id} />
+      </div>
     </article>
   );
 }

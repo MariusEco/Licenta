@@ -33,6 +33,63 @@ export function LocationDetailSections({
   location,
   type,
 }: LocationDetailSectionsProps) {
+  if (isCountry(location)) {
+    return (
+      <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
+        <section className="grid gap-6">
+          <div className="border border-border bg-white p-6">
+            <h2 className="text-xl font-semibold text-foreground">
+              Descriere generală
+            </h2>
+            <p className="mt-3 leading-7 text-muted-foreground">
+              {location.generalDescription}
+            </p>
+          </div>
+
+          {location.visaInfos.length > 0 ? (
+            <section className="grid gap-3">
+              <h2 className="text-xl font-semibold text-foreground">
+                Vize și pași legali
+              </h2>
+              {location.visaInfos.map((visa) => (
+                <article key={visa.id} className="border border-border bg-white p-5">
+                  <div className="flex items-start gap-3">
+                    <FileText className="mt-1 h-5 w-5 text-primary" aria-hidden="true" />
+                    <div>
+                      <h3 className="font-semibold text-foreground">{visa.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                        {visa.summary}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-4 grid gap-4 md:grid-cols-2">
+                    <Checklist title="Pași legali" items={visa.legalSteps} />
+                    <Checklist
+                      title="Documente necesare"
+                      items={visa.requiredDocuments}
+                    />
+                  </div>
+                </article>
+              ))}
+            </section>
+          ) : null}
+        </section>
+
+        <aside className="grid h-fit gap-3">
+          <LocationStat
+            label="Dificultate emigrare"
+            value={formatDifficulty(location.emigrationDifficulty)}
+          />
+          <LocationStat
+            label="Dificultate cetățenie"
+            value={formatDifficulty(location.citizenshipDifficulty)}
+          />
+          <LocationStat label="Taxare" value={formatTaxLevel(location.taxLevel)} />
+        </aside>
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
       <section className="grid gap-6">
@@ -80,33 +137,6 @@ export function LocationDetailSections({
           <CostBreakdownChart cost={location.costOfLiving} />
         </section>
 
-        {isCountry(location) && location.visaInfos.length > 0 ? (
-          <section className="grid gap-3">
-            <h2 className="text-xl font-semibold text-foreground">
-              Vize și pași legali
-            </h2>
-            {location.visaInfos.map((visa) => (
-              <article key={visa.id} className="border border-border bg-white p-5">
-                <div className="flex items-start gap-3">
-                  <FileText className="mt-1 h-5 w-5 text-primary" aria-hidden="true" />
-                  <div>
-                    <h3 className="font-semibold text-foreground">{visa.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      {visa.summary}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-4 grid gap-4 md:grid-cols-2">
-                  <Checklist title="Pași legali" items={visa.legalSteps} />
-                  <Checklist
-                    title="Documente necesare"
-                    items={visa.requiredDocuments}
-                  />
-                </div>
-              </article>
-            ))}
-          </section>
-        ) : null}
       </section>
 
       <aside className="grid h-fit gap-3">
@@ -122,22 +152,12 @@ export function LocationDetailSections({
           label="Dificultate emigrare"
           value={formatDifficulty(location.emigrationDifficulty)}
         />
-        {isCountry(location) ? (
-          <>
-            <LocationStat
-              label="Dificultate cetățenie"
-              value={formatDifficulty(location.citizenshipDifficulty)}
-            />
-            <LocationStat label="Taxare" value={formatTaxLevel(location.taxLevel)} />
-          </>
-        ) : (
-          <LocationStat
-            label="Populație"
-            value={formatNumber(location.population)}
-          />
-        )}
         <LocationStat
-          label={type === "country" ? "Coordonate țară" : "Coordonate oraș"}
+          label="Populație"
+          value={formatNumber(location.population)}
+        />
+        <LocationStat
+          label="Coordonate oraș"
           value={`${location.latitude ?? "?"}, ${location.longitude ?? "?"}`}
         />
       </aside>

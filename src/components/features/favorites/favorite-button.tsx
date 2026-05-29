@@ -2,7 +2,7 @@
 
 import { Bookmark, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,34 +16,99 @@ export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps)
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   async function handleFavorite() {
     setIsSubmitting(true);
     setMessage(null);
 
-    const response = await fetch("/api/favorites", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ kind, countryId, cityId }),
-    });
+    try {
+      if (!isFavorited) {
+        const response = await fetch("/api/favorites", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ kind, countryId, cityId }),
+        });
 
-    if (response.status === 401) {
-      router.push("/login");
-      return;
+        if (response.status === 401) {
+          router.push("/login");
+          return;
+        }
+
+        if (!response.ok) {
+          setMessage("Nu am putut salva favorita. Verifică baza de date și sesiunea.");
+          return;
+        }
+
+        setIsFavorited(true);
+        setMessage("Locația a fost salvată la favorite.");
+        router.refresh();
+        return;
+      }
+
+      // already favorited -> remove
+      const response = await fetch("/api/favorites", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kind, countryId, cityId }),
+      });
+
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (!response.ok) {
+        setMessage("Nu am putut elimina favorita.");
+        return;
+      }
+
+      setIsFavorited(false);
+      setMessage("Locația a fost eliminată din favorite.");
+      router.refresh();
+    } catch (err) {
+      setMessage("A apărut o eroare la salvarea favoritei.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
-
-    if (!response.ok) {
-      setMessage("Nu am putut salva favorita. Verifică baza de date și sesiunea.");
-      return;
-    }
-
-    setMessage("Locația a fost salvată la favorite.");
-    router.refresh();
   }
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function fetchFavorites() {
+      try {
+        const res = await fetch("/api/favorites");
+
+        if (res.status === 401) {
+          if (mounted) setIsFavorited(false);
+          return;
+        }
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        if (!Array.isArray(data)) return;
+
+        const match = data.find((f: any) => {
+          const loc = f.location;
+          if (!loc) return false;
+          if (kind === "COUNTRY") return loc.kind === "COUNTRY" && loc.id === countryId;
+          return loc.kind === "CITY" && loc.id === cityId;
+        });
+
+        if (mounted) setIsFavorited(Boolean(match));
+      } catch {
+        // ignore
+      }
+    }
+
+    fetchFavorites();
+
+    return () => {
+      mounted = false;
+    };
+  }, [kind, countryId, cityId]);
 
   return (
     <div className="grid gap-2">
@@ -53,7 +118,7 @@ export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps)
         ) : (
           <Bookmark className="h-4 w-4" aria-hidden="true" />
         )}
-        Salvează favorită
+        {isFavorited ? "Elimină din favorite" : "Salvează favorită"}
       </Button>
       {message ? (
         <p className="text-xs leading-5 text-muted-foreground">{message}</p>

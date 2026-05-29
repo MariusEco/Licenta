@@ -122,6 +122,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Germană",
       predominantReligion: "Creștinism",
+      latitude: 51.165691,
+      longitude: 10.451526,
       romanianCommunityNotes:
         "Comunități românești active în Berlin, München, Frankfurt și zona Ruhr.",
       jobMarketNotes:
@@ -132,8 +134,6 @@ async function main() {
         "Germania rămâne una dintre cele mai stabile destinații europene pentru muncă și relocare pe termen lung.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 51.165691,
-      longitude: 10.451526,
       averageSalaryEur: 3123,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
@@ -148,6 +148,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Germană",
       predominantReligion: "Creștinism",
+      latitude: 51.165691,
+      longitude: 10.451526,
       romanianCommunityNotes:
         "Comunități românești active în Berlin, München, Frankfurt și zona Ruhr.",
       jobMarketNotes:
@@ -158,8 +160,6 @@ async function main() {
         "Germania rămâne una dintre cele mai stabile destinații europene pentru muncă și relocare pe termen lung.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 51.165691,
-      longitude: 10.451526,
       averageSalaryEur: 3123,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
@@ -177,6 +177,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Neerlandeză",
       predominantReligion: "Creștinism",
+      latitude: 52.132633,
+      longitude: 5.291266,
       romanianCommunityNotes:
         "Comunități românești vizibile în Amsterdam, Rotterdam, Haga și Eindhoven.",
       jobMarketNotes:
@@ -187,8 +189,6 @@ async function main() {
         "Țările de Jos oferă o piață a muncii competitivă, infrastructură foarte bună și servicii publice eficiente.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 52.132633,
-      longitude: 5.291266,
       averageSalaryEur: 4335,
       taxLevel: "HIGH",
       incomeTaxRate: 49.5,
@@ -203,6 +203,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Neerlandeză",
       predominantReligion: "Creștinism",
+      latitude: 52.132633,
+      longitude: 5.291266,
       romanianCommunityNotes:
         "Comunități românești vizibile în Amsterdam, Rotterdam, Haga și Eindhoven.",
       jobMarketNotes:
@@ -213,8 +215,6 @@ async function main() {
         "Țările de Jos oferă o piață a muncii competitivă, infrastructură foarte bună și servicii publice eficiente.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 52.132633,
-      longitude: 5.291266,
       averageSalaryEur: 4335,
       taxLevel: "HIGH",
       incomeTaxRate: 49.5,
@@ -232,6 +232,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Spaniolă",
       predominantReligion: "Catolicism",
+      latitude: 40.463667,
+      longitude: -3.74922,
       romanianCommunityNotes:
         "Spania are una dintre cele mai mari comunități românești din Europa de Vest.",
       jobMarketNotes:
@@ -242,8 +244,6 @@ async function main() {
         "Spania oferă un echilibru bun între costul vieții, climă și integrarea în comunități internaționale.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 40.463667,
-      longitude: -3.74922,
       averageSalaryEur: 1763,
       taxLevel: "HIGH",
       incomeTaxRate: 47,
@@ -258,6 +258,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Spaniolă",
       predominantReligion: "Catolicism",
+      latitude: 40.463667,
+      longitude: -3.74922,
       romanianCommunityNotes:
         "Spania are una dintre cele mai mari comunități românești din Europa de Vest.",
       jobMarketNotes:
@@ -268,8 +270,6 @@ async function main() {
         "Spania oferă un echilibru bun între costul vieții, climă și integrarea în comunități internaționale.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 40.463667,
-      longitude: -3.74922,
       averageSalaryEur: 1763,
       taxLevel: "HIGH",
       incomeTaxRate: 47,
@@ -287,6 +287,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Franceză",
       predominantReligion: "Creștinism",
+      latitude: 48.8566,
+      longitude: 2.3522,
       romanianCommunityNotes:
         "Comunități românești consistente în Paris, Lyon, Marseille și Toulouse.",
       jobMarketNotes:
@@ -297,8 +299,6 @@ async function main() {
         "Franța oferă o economie mare și diversificată, cu oportunități solide în marile centre urbane.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 46.227638,
-      longitude: 2.213749,
       averageSalaryEur: 2740,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
@@ -313,6 +313,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Franceză",
       predominantReligion: "Creștinism",
+      latitude: 48.8566,
+      longitude: 2.3522,
       romanianCommunityNotes:
         "Comunități românești consistente în Paris, Lyon, Marseille și Toulouse.",
       jobMarketNotes:
@@ -323,8 +325,6 @@ async function main() {
         "Franța oferă o economie mare și diversificată, cu oportunități solide în marile centre urbane.",
       citizenshipDifficulty: "HIGH",
       emigrationDifficulty: "MEDIUM",
-      latitude: 46.227638,
-      longitude: 2.213749,
       averageSalaryEur: 2740,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
@@ -342,6 +342,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Italiană",
       predominantReligion: "Catolicism",
+      latitude: 41.9028,
+      longitude: 12.4964,
       romanianCommunityNotes:
         "Italia găzduiește o comunitate românească numeroasă în Roma, Milano, Torino și Bologna.",
       jobMarketNotes:
@@ -352,8 +354,6 @@ async function main() {
         "Italia combină centre economice dezvoltate cu un cost al vieții variabil între nord și sud.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 41.87194,
-      longitude: 12.56738,
       averageSalaryEur: 1900,
       taxLevel: "HIGH",
       incomeTaxRate: 43,
@@ -368,6 +368,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Italiană",
       predominantReligion: "Catolicism",
+      latitude: 41.9028,
+      longitude: 12.4964,
       romanianCommunityNotes:
         "Italia găzduiește o comunitate românească numeroasă în Roma, Milano, Torino și Bologna.",
       jobMarketNotes:
@@ -378,8 +380,6 @@ async function main() {
         "Italia combină centre economice dezvoltate cu un cost al vieții variabil între nord și sud.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 41.87194,
-      longitude: 12.56738,
       averageSalaryEur: 1900,
       taxLevel: "HIGH",
       incomeTaxRate: 43,
@@ -397,6 +397,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Portugheză",
       predominantReligion: "Catolicism",
+      latitude: 38.7223,
+      longitude: -9.1393,
       romanianCommunityNotes:
         "Comunități românești prezente în Lisabona, Porto și Setubal.",
       jobMarketNotes:
@@ -407,8 +409,6 @@ async function main() {
         "Portugalia este atractivă pentru climă, siguranță și costuri relativ echilibrate față de alte vest-europene.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 39.399872,
-      longitude: -8.224454,
       averageSalaryEur: 1330,
       taxLevel: "MEDIUM",
       incomeTaxRate: 48,
@@ -423,6 +423,8 @@ async function main() {
       currency: "EUR",
       officialLanguage: "Portugheză",
       predominantReligion: "Catolicism",
+      latitude: 38.7223,
+      longitude: -9.1393,
       romanianCommunityNotes:
         "Comunități românești prezente în Lisabona, Porto și Setubal.",
       jobMarketNotes:
@@ -433,8 +435,6 @@ async function main() {
         "Portugalia este atractivă pentru climă, siguranță și costuri relativ echilibrate față de alte vest-europene.",
       citizenshipDifficulty: "MEDIUM",
       emigrationDifficulty: "LOW",
-      latitude: 39.399872,
-      longitude: -8.224454,
       averageSalaryEur: 1330,
       taxLevel: "MEDIUM",
       incomeTaxRate: 48,
@@ -2883,6 +2883,8 @@ async function main() {
         currency: country.currency,
         officialLanguage: country.officialLanguage,
         predominantReligion: country.predominantReligion,
+        latitude: country.latitude,
+        longitude: country.longitude,
         romanianCommunityNotes:
           "Comunitățile românești sunt prezente în principalele centre urbane și variază în funcție de regiune.",
         jobMarketNotes:
@@ -2892,8 +2894,6 @@ async function main() {
         generalDescription: country.generalDescription,
         citizenshipDifficulty: country.citizenshipDifficulty,
         emigrationDifficulty: country.emigrationDifficulty,
-        latitude: country.latitude,
-        longitude: country.longitude,
         averageSalaryEur: country.averageSalaryEur,
         taxLevel: country.taxLevel,
         incomeTaxRate: country.incomeTaxRate,
@@ -2908,6 +2908,8 @@ async function main() {
         currency: country.currency,
         officialLanguage: country.officialLanguage,
         predominantReligion: country.predominantReligion,
+        latitude: country.latitude,
+        longitude: country.longitude,
         romanianCommunityNotes:
           "Comunitățile românești sunt prezente în principalele centre urbane și variază în funcție de regiune.",
         jobMarketNotes:
@@ -2917,8 +2919,6 @@ async function main() {
         generalDescription: country.generalDescription,
         citizenshipDifficulty: country.citizenshipDifficulty,
         emigrationDifficulty: country.emigrationDifficulty,
-        latitude: country.latitude,
-        longitude: country.longitude,
         averageSalaryEur: country.averageSalaryEur,
         taxLevel: country.taxLevel,
         incomeTaxRate: country.incomeTaxRate,

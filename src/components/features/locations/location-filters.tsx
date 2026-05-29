@@ -92,8 +92,11 @@ export function LocationFilters({
           >
             <option value="name">Nume</option>
             <option value="cost_asc">Cost crescător</option>
+            <option value="cost_desc">Cost descrescător</option>
+            <option value="salary_asc">Salariu crescător</option>
             <option value="salary_desc">Salariu descrescător</option>
             <option value="difficulty_asc">Dificultate crescătoare</option>
+            <option value="difficulty_desc">Dificultate descrescătoare</option>
           </select>
         </label>
         <Button className="mt-auto" type="submit">

@@ -4,19 +4,18 @@ import Link from "next/link";
 
 import { InteractiveMap } from "@/components/features/map/interactive-map";
 import { Badge } from "@/components/ui/badge";
-import { getCities, getCountries } from "@/services/locations/queries";
+import { getCountries } from "@/services/locations/queries";
 
 export const metadata = {
   title: "Hartă",
-  description: "Hartă interactivă cu țări și orașe pentru emigrare.",
+  description: "Hartă interactivă cu țări pentru emigrare.",
 };
 
 export default async function MapPage() {
-  const [countries, cities] = await Promise.all([
-    getCountries({ pageSize: 50 }),
-    getCities({ pageSize: 50 }),
-  ]);
-  const locations = [...countries.items, ...cities.items];
+  const countries = await getCountries({ pageSize: 50 });
+  const locations = countries.items.filter(
+    (country) => country.latitude != null && country.longitude != null,
+  );
 
   return (
     <main className="flex flex-1 flex-col">
@@ -28,33 +27,13 @@ export default async function MapPage() {
             </div>
             <h1 className="text-3xl font-semibold text-foreground">Hartă</h1>
             <p className="mt-3 text-muted-foreground">
-              Explorează țări și orașe pe hartă. Click pe marker afișează
-              detalii rapide, iar dublu click deschide pagina locației.
+              Explorează țările pe hartă. Click pe marker deschide detaliile
+              rapide, click pe numele țării din popup duce la pagina ei, iar
+              dublu click merge direct la țară.
             </p>
           </div>
 
           <Badge tone="success">{locations.length} locații disponibile</Badge>
-
-          <div className="grid gap-2">
-            {locations.slice(0, 8).map((location) => (
-              <Link
-                key={`${location.kind}-${location.id}`}
-                href={
-                  (location.kind === "COUNTRY"
-                    ? `/countries/${location.slug}`
-                    : `/cities/${location.slug}`) as Route
-                }
-                className="border border-border bg-white p-3 text-sm transition hover:border-primary"
-              >
-                <span className="font-semibold text-foreground">
-                  {location.name}
-                </span>
-                <span className="mt-1 block text-muted-foreground">
-                  {location.latitude}, {location.longitude}
-                </span>
-              </Link>
-            ))}
-          </div>
         </aside>
 
         <InteractiveMap locations={locations} />

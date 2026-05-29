@@ -13,7 +13,6 @@ import type {
   LocationListFilters,
   PaginatedResult,
 } from "@/types/explorer";
-import { demoCities, demoCountries } from "@/services/locations/demo-data";
 
 const defaultPageSize = 12;
 
@@ -21,16 +20,10 @@ function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
 
-function shouldFallbackToDemoData() {
-  return process.env.NODE_ENV !== "production";
-}
-
-function logDemoFallback(operation: string, error: unknown) {
-  if (process.env.NODE_ENV === "production") {
-    return;
+function assertDatabaseUrl() {
+  if (!hasDatabaseUrl()) {
+    throw new Error("DATABASE_URL nu este configurat.");
   }
-
-  console.warn(`[locations] Falling back to demo data for ${operation}`, error);
 }
 
 function difficultyRank(value: string | null) {
@@ -44,78 +37,71 @@ function difficultyRank(value: string | null) {
   return value ? ranks[value] ?? 99 : 99;
 }
 
-function filterCountries(filters: LocationListFilters) {
-  return demoCountries.filter((country) => {
-    const search = filters.search?.toLowerCase();
-
-    return (
-      (!search ||
-        country.name.toLowerCase().includes(search) ||
-        country.continent.toLowerCase().includes(search) ||
-        country.capital?.toLowerCase().includes(search)) &&
-      (!filters.difficulty ||
-        country.emigrationDifficulty === filters.difficulty) &&
-      (!filters.maxMonthlyCostEur ||
-        (country.monthlyCostEur ?? Number.MAX_SAFE_INTEGER) <=
-          filters.maxMonthlyCostEur) &&
-      (!filters.minAverageSalaryEur ||
-        (country.averageSalaryEur ?? 0) >= filters.minAverageSalaryEur)
-    );
-  });
+function getLatestCost(value: { monthlyCostEur: number | null }) {
+  return value.monthlyCostEur ?? Number.MAX_SAFE_INTEGER;
 }
 
-function filterCities(filters: LocationListFilters) {
-  return demoCities.filter((city) => {
-    const search = filters.search?.toLowerCase();
-
-    return (
-      (!search ||
-        city.name.toLowerCase().includes(search) ||
-        city.countryName.toLowerCase().includes(search) ||
-        city.region?.toLowerCase().includes(search)) &&
-      (!filters.difficulty || city.emigrationDifficulty === filters.difficulty) &&
-      (!filters.maxMonthlyCostEur ||
-        (city.monthlyCostEur ?? Number.MAX_SAFE_INTEGER) <=
-          filters.maxMonthlyCostEur) &&
-      (!filters.minAverageSalaryEur ||
-        (city.averageSalaryEur ?? 0) >= filters.minAverageSalaryEur)
-    );
-  });
+function getLatestSalary(value: { averageSalaryEur: number | null }) {
+  return value.averageSalaryEur ?? 0;
 }
 
-function sortLocations<TItem extends { name: string; monthlyCostEur: number | null; averageSalaryEur: number | null; emigrationDifficulty: string | null }>(
-  items: TItem[],
-  sort: LocationListFilters["sort"],
-) {
+function compareByName<TItem extends { name: string }>(first: TItem, second: TItem) {
+  return first.name.localeCompare(second.name);
+}
+
+function sortLocations<TItem extends {
+  name: string;
+  monthlyCostEur: number | null;
+  averageSalaryEur: number | null;
+  emigrationDifficulty: string | null;
+}>(items: TItem[], sort: LocationListFilters["sort"]) {
   const sorted = [...items];
 
   if (sort === "cost_asc") {
     return sorted.sort(
       (first, second) =>
-        (first.monthlyCostEur ?? Number.MAX_SAFE_INTEGER) -
-          (second.monthlyCostEur ?? Number.MAX_SAFE_INTEGER) ||
-        first.name.localeCompare(second.name),
+        getLatestCost(first) - getLatestCost(second) || compareByName(first, second),
+    );
+  }
+
+  if (sort === "cost_desc") {
+    return sorted.sort(
+      (first, second) =>
+        getLatestCost(second) - getLatestCost(first) || compareByName(first, second),
+    );
+  }
+
+  if (sort === "salary_asc") {
+    return sorted.sort(
+      (first, second) =>
+        getLatestSalary(first) - getLatestSalary(second) || compareByName(first, second),
     );
   }
 
   if (sort === "salary_desc") {
     return sorted.sort(
       (first, second) =>
-        (second.averageSalaryEur ?? 0) - (first.averageSalaryEur ?? 0) ||
-        first.name.localeCompare(second.name),
+        getLatestSalary(second) - getLatestSalary(first) || compareByName(first, second),
     );
   }
 
   if (sort === "difficulty_asc") {
     return sorted.sort(
       (first, second) =>
-        difficultyRank(first.emigrationDifficulty) -
-          difficultyRank(second.emigrationDifficulty) ||
-        first.name.localeCompare(second.name),
+        difficultyRank(first.emigrationDifficulty) - difficultyRank(second.emigrationDifficulty) ||
+        compareByName(first, second),
     );
   }
 
-  return sorted.sort((first, second) => first.name.localeCompare(second.name));
+  if (sort === "difficulty_desc") {
+    return sorted.sort(
+      (first, second) =>
+        difficultyRank(second.emigrationDifficulty) - difficultyRank(first.emigrationDifficulty) ||
+        compareByName(first, second),
+    );
+  }
+
+  return sorted.sort(compareByName);
 }
 
 function paginate<TItem>(
@@ -131,217 +117,215 @@ function paginate<TItem>(
   };
 }
 
+function getCountryOrderBy(sort: LocationListFilters["sort"]): Prisma.CountryOrderByWithRelationInput[] {
+  if (sort === "salary_desc") {
+    return [{ averageSalaryEur: "desc" }, { name: "asc" }];
+  }
+
+  if (sort === "salary_asc") {
+    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
+  }
+
+  if (sort === "difficulty_asc") {
+    return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
+  }
+
+  if (sort === "difficulty_desc") {
+    return [{ emigrationDifficulty: "desc" }, { name: "asc" }];
+  }
+
+  return [{ name: "asc" }];
+}
+
+function getCityOrderBy(sort: LocationListFilters["sort"]): Prisma.CityOrderByWithRelationInput[] {
+  if (sort === "salary_desc") {
+    return [{ averageSalaryEur: "desc" }, { name: "asc" }];
+  }
+
+  if (sort === "salary_asc") {
+    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
+  }
+
+  if (sort === "difficulty_asc") {
+    return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
+  }
+
+  if (sort === "difficulty_desc") {
+    return [{ emigrationDifficulty: "desc" }, { name: "asc" }];
+  }
+
+  return [{ name: "asc" }];
+}
+
 export async function getCountries(
   filters: LocationListFilters & { page?: number; pageSize?: number } = {},
 ): Promise<PaginatedResult<CountrySummaryView>> {
-  if (!hasDatabaseUrl()) {
-    return paginate(
-      sortLocations(filterCountries(filters), filters.sort),
-      filters.page,
-      filters.pageSize,
-    );
-  }
+  assertDatabaseUrl();
 
-  try {
-    const prisma = getPrismaClient();
-    const where: Prisma.CountryWhereInput = {
-      ...(filters.search
-        ? {
-            OR: [
-              { name: { contains: filters.search, mode: "insensitive" } },
-              { continent: { contains: filters.search, mode: "insensitive" } },
-              { capital: { contains: filters.search, mode: "insensitive" } },
-            ],
-          }
-        : {}),
-      ...(filters.difficulty
-        ? { emigrationDifficulty: filters.difficulty }
-        : {}),
-      ...(filters.minAverageSalaryEur
-        ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
-        : {}),
-      ...(filters.maxMonthlyCostEur
-        ? {
-            costOfLiving: {
-              some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
-            },
-          }
-        : {}),
-    };
+  const prisma = getPrismaClient();
+  const where: Prisma.CountryWhereInput = {
+    ...(filters.search
+      ? {
+          OR: [
+            { name: { contains: filters.search, mode: "insensitive" } },
+            { continent: { contains: filters.search, mode: "insensitive" } },
+            { capital: { contains: filters.search, mode: "insensitive" } },
+          ],
+        }
+      : {}),
+    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+    ...(filters.minAverageSalaryEur
+      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
+      : {}),
+    ...(filters.maxMonthlyCostEur
+      ? {
+          costOfLiving: {
+            some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
+          },
+        }
+      : {}),
+  };
 
-    const [total, countries] = await Promise.all([
-      prisma.country.count({ where }),
-      prisma.country.findMany({
-        where,
-        include: {
-          costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
-        },
-        orderBy:
-          filters.sort === "salary_desc"
-            ? [{ averageSalaryEur: "desc" }, { name: "asc" }]
-            : filters.sort === "difficulty_asc"
-              ? [{ emigrationDifficulty: "asc" }, { name: "asc" }]
-              : [{ name: "asc" }],
-        skip: ((filters.page ?? 1) - 1) * (filters.pageSize ?? defaultPageSize),
-        take: filters.pageSize ?? defaultPageSize,
-      }),
-    ]);
+  const page = filters.page ?? 1;
+  const pageSize = filters.pageSize ?? defaultPageSize;
+  const sortInMemory = filters.sort === "cost_asc" || filters.sort === "cost_desc";
 
-    return {
-      items: countries.map(serializeCountrySummary),
-      total,
-      page: filters.page ?? 1,
-      pageSize: filters.pageSize ?? defaultPageSize,
-    };
-  } catch (error) {
-    if (!shouldFallbackToDemoData()) {
-      throw error;
-    }
+  const [total, countries] = await Promise.all([
+    prisma.country.count({ where }),
+    prisma.country.findMany({
+      where,
+      include: {
+        costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+      },
+      orderBy: getCountryOrderBy(filters.sort),
+      ...(sortInMemory
+        ? {}
+        : {
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+          }),
+    }),
+  ]);
 
-    logDemoFallback("getCountries", error);
-    return paginate(
-      sortLocations(filterCountries(filters), filters.sort),
-      filters.page,
-      filters.pageSize,
-    );
-  }
+  const serializedCountries = countries.map(serializeCountrySummary);
+  const items = sortInMemory
+    ? sortLocations(serializedCountries, filters.sort).slice(
+        (page - 1) * pageSize,
+        page * pageSize,
+      )
+    : serializedCountries;
+
+  return {
+    items,
+    total,
+    page,
+    pageSize,
+  };
 }
 
 export async function getCountryBySlug(
   slug: string,
 ): Promise<CountryDetailView | null> {
-  if (!hasDatabaseUrl()) {
-    return demoCountries.find((country) => country.slug === slug) ?? null;
-  }
+  assertDatabaseUrl();
 
-  try {
-    const prisma = getPrismaClient();
-    const country = await prisma.country.findUnique({
-      where: { slug },
-      include: {
-        cities: {
-          orderBy: { name: "asc" },
-          include: { costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 } },
-        },
-        costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
-        visaInfos: { where: { isActive: true }, orderBy: { title: "asc" } },
+  const prisma = getPrismaClient();
+  const country = await prisma.country.findUnique({
+    where: { slug },
+    include: {
+      cities: {
+        orderBy: { name: "asc" },
+        include: { costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 } },
       },
-    });
+      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+      visaInfos: { where: { isActive: true }, orderBy: { title: "asc" } },
+    },
+  });
 
-    return country ? serializeCountry(country) : null;
-  } catch (error) {
-    if (!shouldFallbackToDemoData()) {
-      throw error;
-    }
-
-    logDemoFallback("getCountryBySlug", error);
-    return demoCountries.find((country) => country.slug === slug) ?? null;
-  }
+  return country ? serializeCountry(country) : null;
 }
 
 export async function getCities(
   filters: LocationListFilters & { page?: number; pageSize?: number } = {},
 ): Promise<PaginatedResult<CityDetailView>> {
-  if (!hasDatabaseUrl()) {
-    return paginate(
-      sortLocations(filterCities(filters), filters.sort),
-      filters.page,
-      filters.pageSize,
-    );
-  }
+  assertDatabaseUrl();
 
-  try {
-    const prisma = getPrismaClient();
-    const where: Prisma.CityWhereInput = {
-      ...(filters.search
-        ? {
-            OR: [
-              { name: { contains: filters.search, mode: "insensitive" } },
-              { region: { contains: filters.search, mode: "insensitive" } },
-              {
-                country: {
-                  name: { contains: filters.search, mode: "insensitive" },
-                },
+  const prisma = getPrismaClient();
+  const where: Prisma.CityWhereInput = {
+    ...(filters.search
+      ? {
+          OR: [
+            { name: { contains: filters.search, mode: "insensitive" } },
+            { region: { contains: filters.search, mode: "insensitive" } },
+            {
+              country: {
+                name: { contains: filters.search, mode: "insensitive" },
               },
-            ],
-          }
-        : {}),
-      ...(filters.difficulty
-        ? { emigrationDifficulty: filters.difficulty }
-        : {}),
-      ...(filters.minAverageSalaryEur
-        ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
-        : {}),
-      ...(filters.maxMonthlyCostEur
-        ? {
-            costOfLiving: {
-              some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
             },
-          }
-        : {}),
-    };
+          ],
+        }
+      : {}),
+    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+    ...(filters.minAverageSalaryEur
+      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
+      : {}),
+    ...(filters.maxMonthlyCostEur
+      ? {
+          costOfLiving: {
+            some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
+          },
+        }
+      : {}),
+  };
 
-    const [total, cities] = await Promise.all([
-      prisma.city.count({ where }),
-      prisma.city.findMany({
-        where,
-        include: {
-          country: true,
-          costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
-        },
-        orderBy:
-          filters.sort === "salary_desc"
-            ? [{ averageSalaryEur: "desc" }, { name: "asc" }]
-            : filters.sort === "difficulty_asc"
-              ? [{ emigrationDifficulty: "asc" }, { name: "asc" }]
-              : [{ name: "asc" }],
-        skip: ((filters.page ?? 1) - 1) * (filters.pageSize ?? defaultPageSize),
-        take: filters.pageSize ?? defaultPageSize,
-      }),
-    ]);
+  const page = filters.page ?? 1;
+  const pageSize = filters.pageSize ?? defaultPageSize;
+  const sortInMemory = filters.sort === "cost_asc" || filters.sort === "cost_desc";
 
-    return {
-      items: cities.map(serializeCity),
-      total,
-      page: filters.page ?? 1,
-      pageSize: filters.pageSize ?? defaultPageSize,
-    };
-  } catch (error) {
-    if (!shouldFallbackToDemoData()) {
-      throw error;
-    }
-
-    logDemoFallback("getCities", error);
-    return paginate(
-      sortLocations(filterCities(filters), filters.sort),
-      filters.page,
-      filters.pageSize,
-    );
-  }
-}
-
-export async function getCityBySlug(slug: string): Promise<CityDetailView | null> {
-  if (!hasDatabaseUrl()) {
-    return demoCities.find((city) => city.slug === slug) ?? null;
-  }
-
-  try {
-    const prisma = getPrismaClient();
-    const city = await prisma.city.findUnique({
-      where: { slug },
+  const [total, cities] = await Promise.all([
+    prisma.city.count({ where }),
+    prisma.city.findMany({
+      where,
       include: {
         country: true,
         costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
       },
-    });
+      orderBy: getCityOrderBy(filters.sort),
+      ...(sortInMemory
+        ? {}
+        : {
+            skip: (page - 1) * pageSize,
+            take: pageSize,
+          }),
+    }),
+  ]);
 
-    return city ? serializeCity(city) : null;
-  } catch (error) {
-    if (!shouldFallbackToDemoData()) {
-      throw error;
-    }
+  const serializedCities = cities.map(serializeCity);
+  const items = sortInMemory
+    ? sortLocations(serializedCities, filters.sort).slice(
+        (page - 1) * pageSize,
+        page * pageSize,
+      )
+    : serializedCities;
 
-    logDemoFallback("getCityBySlug", error);
-    return demoCities.find((city) => city.slug === slug) ?? null;
-  }
+  return {
+    items,
+    total,
+    page,
+    pageSize,
+  };
+}
+
+export async function getCityBySlug(slug: string): Promise<CityDetailView | null> {
+  assertDatabaseUrl();
+
+  const prisma = getPrismaClient();
+  const city = await prisma.city.findUnique({
+    where: { slug },
+    include: {
+      country: true,
+      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+    },
+  });
+
+  return city ? serializeCity(city) : null;
 }

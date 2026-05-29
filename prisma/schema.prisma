@@ -70,8 +70,8 @@ model Country {
   generalDescription     String
   citizenshipDifficulty  EmigrationDifficulty
   emigrationDifficulty   EmigrationDifficulty
-  latitude               Decimal               @db.Decimal(9, 6)
-  longitude              Decimal               @db.Decimal(9, 6)
+  latitude               Decimal?              @db.Decimal(9, 6)
+  longitude              Decimal?              @db.Decimal(9, 6)
   averageSalaryEur       Int?
   taxLevel               TaxLevel?
   incomeTaxRate          Decimal?              @db.Decimal(5, 2)

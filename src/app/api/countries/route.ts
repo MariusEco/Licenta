@@ -21,8 +21,16 @@ function getCountryOrderBy(
     return [{ averageSalaryEur: "desc" }, { name: "asc" }];
   }
 
+  if (sort === "salary_asc") {
+    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
+  }
+
   if (sort === "difficulty_asc") {
     return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
+  }
+
+  if (sort === "difficulty_desc") {
+    return [{ emigrationDifficulty: "desc" }, { name: "asc" }];
   }
 
   return [{ name: "asc" }];
@@ -67,7 +75,8 @@ export async function GET(request: Request) {
         where,
         include: countryInclude,
         orderBy: getCountryOrderBy(query.sort),
-        ...(query.sort === "cost_asc"
+        ...(
+          query.sort === "cost_asc" || query.sort === "cost_desc"
           ? {}
           : {
               skip: (query.page - 1) * query.pageSize,
@@ -77,7 +86,7 @@ export async function GET(request: Request) {
     ]);
 
     const sortedCountries =
-      query.sort === "cost_asc"
+      query.sort === "cost_asc" || query.sort === "cost_desc"
         ? [...countries]
             .sort((first, second) => {
               const firstCost =
@@ -86,6 +95,10 @@ export async function GET(request: Request) {
               const secondCost =
                 second.costOfLiving[0]?.totalMonthlyCostEur ??
                 Number.MAX_SAFE_INTEGER;
+
+              if (query.sort === "cost_desc") {
+                return secondCost - firstCost || first.name.localeCompare(second.name);
+              }
 
               return firstCost - secondCost || first.name.localeCompare(second.name);
             })

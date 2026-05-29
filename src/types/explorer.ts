@@ -85,7 +85,14 @@ export type LocationListFilters = {
   difficulty?: EmigrationDifficulty;
   maxMonthlyCostEur?: number;
   minAverageSalaryEur?: number;
-  sort?: "name" | "cost_asc" | "salary_desc" | "difficulty_asc";
+  sort?:
+    | "name"
+    | "cost_asc"
+    | "cost_desc"
+    | "salary_asc"
+    | "salary_desc"
+    | "difficulty_asc"
+    | "difficulty_desc";
 };
 
 export type PaginatedResult<TItem> = {
