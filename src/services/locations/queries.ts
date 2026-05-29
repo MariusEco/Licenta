@@ -16,6 +16,13 @@ import type {
 
 const defaultPageSize = 12;
 
+function normalizeSearchValue(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
 function hasDatabaseUrl() {
   return Boolean(process.env.DATABASE_URL);
 }
@@ -47,6 +54,14 @@ function getLatestSalary(value: { averageSalaryEur: number | null }) {
 
 function compareByName<TItem extends { name: string }>(first: TItem, second: TItem) {
   return first.name.localeCompare(second.name);
+}
+
+function matchesSearch(value: string | null | undefined, search: string) {
+  if (!value) {
+    return false;
+  }
+
+  return normalizeSearchValue(value).includes(normalizeSearchValue(search));
 }
 
 function sortLocations<TItem extends {
@@ -164,15 +179,6 @@ export async function getCountries(
 
   const prisma = getPrismaClient();
   const where: Prisma.CountryWhereInput = {
-    ...(filters.search
-      ? {
-          OR: [
-            { name: { contains: filters.search, mode: "insensitive" } },
-            { continent: { contains: filters.search, mode: "insensitive" } },
-            { capital: { contains: filters.search, mode: "insensitive" } },
-          ],
-        }
-      : {}),
     ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
     ...(filters.minAverageSalaryEur
       ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
@@ -190,30 +196,29 @@ export async function getCountries(
   const pageSize = filters.pageSize ?? defaultPageSize;
   const sortInMemory = filters.sort === "cost_asc" || filters.sort === "cost_desc";
 
-  const [total, countries] = await Promise.all([
-    prisma.country.count({ where }),
-    prisma.country.findMany({
-      where,
-      include: {
-        costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
-      },
-      orderBy: getCountryOrderBy(filters.sort),
-      ...(sortInMemory
-        ? {}
-        : {
-            skip: (page - 1) * pageSize,
-            take: pageSize,
-          }),
-    }),
-  ]);
+  const countries = await prisma.country.findMany({
+    where,
+    include: {
+      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+    },
+    orderBy: getCountryOrderBy(filters.sort),
+  });
 
   const serializedCountries = countries.map(serializeCountrySummary);
-  const items = sortInMemory
-    ? sortLocations(serializedCountries, filters.sort).slice(
-        (page - 1) * pageSize,
-        page * pageSize,
+  const filteredCountries = filters.search
+    ? serializedCountries.filter((country) =>
+        [country.name, country.continent].some((value) =>
+          matchesSearch(value, filters.search ?? ""),
+        ),
       )
     : serializedCountries;
+
+  const sortedCountries = sortInMemory
+    ? sortLocations(filteredCountries, filters.sort)
+    : filteredCountries;
+
+  const total = sortedCountries.length;
+  const items = sortedCountries.slice((page - 1) * pageSize, page * pageSize);
 
   return {
     items,

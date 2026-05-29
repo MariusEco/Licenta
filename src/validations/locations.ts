@@ -82,7 +82,7 @@ export const comparisonCreateSchema = z.object({
   items: z
     .array(favoriteMutationSchema)
     .min(2, "O comparație trebuie să conțină cel puțin două locații.")
-    .max(5, "O comparație poate include cel mult cinci locații."),
+    .max(2, "O comparație poate include exact două locații."),
 });
 
 export const idParamsSchema = z.object({

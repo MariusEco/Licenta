@@ -7,7 +7,9 @@ import { FavoriteButton } from "@/components/features/favorites/favorite-button"
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatCurrency, formatDifficulty, formatNumber } from "@/lib/formatters";
+import { formatDifficulty } from "@/lib/formatters";
+import { getCurrentUser } from "@/lib/supabase/server";
+import { getPrismaClient } from "@/lib/prisma/client";
 import { getCityBySlug } from "@/services/locations/queries";
 
 type CityDetailPageProps = {
@@ -39,6 +41,18 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
   }
 
   const countryHref = `/countries/${city.countrySlug}` as Route;
+  const user = await getCurrentUser();
+  let isFavorited = false;
+
+  if (user) {
+    const prisma = getPrismaClient();
+    isFavorited = Boolean(
+      (await prisma.favorite.findFirst({
+        where: { userId: user.id, cityId: city.id },
+        select: { id: true },
+      })),
+    );
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
@@ -59,21 +73,20 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
           </p>
         </div>
 
-        <div className="grid gap-2 text-sm text-muted-foreground">
-          <span>Cost lunar: {formatCurrency(city.monthlyCostEur)}</span>
-          <span>Salariu mediu: {formatCurrency(city.averageSalaryEur)}</span>
-          <span>Populație: {formatNumber(city.population)}</span>
-          <FavoriteButton kind="CITY" cityId={city.id} />
+        <div className="grid gap-3 text-sm text-muted-foreground">
+          <Button asChild variant="secondary">
+            <Link href={countryHref}>Vezi țara</Link>
+          </Button>
+          <FavoriteButton
+            kind="CITY"
+            cityId={city.id}
+            saveLabel="Salvează favorit"
+            initialFavorited={isFavorited}
+          />
         </div>
       </section>
 
       <LocationDetailSections location={city} type="city" />
-
-      <section className="border-t border-border pt-8">
-        <Button asChild variant="secondary">
-          <Link href={countryHref}>Vezi țara</Link>
-        </Button>
-      </section>
     </main>
   );
 }

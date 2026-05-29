@@ -1,6 +1,8 @@
 "use client";
 
 import { Trash, Loader2 } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -49,11 +51,20 @@ export default function ComparisonsList({ items }: ComparisonsListProps) {
   return (
     <div className="grid gap-3">
       {items.map((comp) => (
-        <div key={comp.id} className="flex items-center justify-between gap-4 border border-border bg-white p-4">
-          <div>
+        <div
+          key={comp.id}
+          className="flex items-center justify-between gap-4 border border-border bg-white p-4"
+        >
+          <Link
+            href={`/compare?comparisonId=${comp.id}` as Route}
+            className="min-w-0 flex-1"
+            aria-label={`Deschide comparația ${comp.title}`}
+          >
             <div className="text-sm font-semibold text-foreground">{comp.title}</div>
-            <div className="text-xs text-muted-foreground">{comp.items.map((i) => i.location?.name ?? "?").join(", ")}</div>
-          </div>
+            <div className="text-xs text-muted-foreground">
+              {comp.items.map((i) => i.location?.name ?? "?").join(", ")}
+            </div>
+          </Link>
 
           <div>
             <Button variant="ghost" onClick={() => handleDelete(comp.id)} disabled={deletingId === comp.id}>

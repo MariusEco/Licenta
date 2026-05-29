@@ -1,4 +1,4 @@
-import { Globe2 } from "lucide-react";
+import { Landmark } from "lucide-react";
 
 import { CountryCard } from "@/components/features/locations/country-card";
 import { LocationFilters } from "@/components/features/locations/location-filters";
@@ -83,7 +83,7 @@ export default async function CountriesPage({
       <section className="flex flex-col gap-4 border-b border-border pb-8 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <div className="mb-3 flex h-11 w-11 items-center justify-center bg-primary text-primary-foreground">
-            <Globe2 className="h-5 w-5" aria-hidden="true" />
+            <Landmark className="h-5 w-5" aria-hidden="true" />
           </div>
           <h1 className="text-3xl font-semibold text-foreground">Țări</h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">

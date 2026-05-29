@@ -1,6 +1,8 @@
 "use client";
 
 import { Trash, Loader2 } from "lucide-react";
+import type { Route } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -15,6 +17,16 @@ type FavoriteItem = {
 type FavoritesListProps = {
   items: FavoriteItem[];
 };
+
+function getFavoriteHref(location: any | null) {
+  if (!location) {
+    return null;
+  }
+
+  return (location.kind === "COUNTRY"
+    ? `/countries/${location.slug}`
+    : `/cities/${location.slug}`) as Route;
+}
 
 export default function FavoritesList({ items }: FavoritesListProps) {
   const router = useRouter();
@@ -58,13 +70,20 @@ export default function FavoritesList({ items }: FavoritesListProps) {
   return (
     <div className="grid gap-3">
       {items.map((fav) => (
-        <div key={fav.id} className="flex items-center justify-between gap-4 border border-border bg-white p-4">
-          <div>
+        <div
+          key={fav.id}
+          className="flex items-center justify-between gap-4 border border-border bg-white p-4"
+        >
+          <Link
+            href={getFavoriteHref(fav.location) ?? ("/favorites" as Route)}
+            className={`min-w-0 flex-1 ${fav.location ? "cursor-pointer" : "pointer-events-none"}`}
+            aria-label={fav.location?.name ? `Deschide ${fav.location.name}` : undefined}
+          >
             <div className="text-sm font-semibold text-foreground">
               {fav.location?.name ?? "(Locație necunoscută)"}
             </div>
             <div className="text-xs text-muted-foreground">{fav.location?.kind ?? ""}</div>
-          </div>
+          </Link>
 
           <div>
             <Button

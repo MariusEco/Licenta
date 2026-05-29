@@ -10,13 +10,33 @@ type FavoriteButtonProps = {
   kind: "COUNTRY" | "CITY";
   countryId?: string;
   cityId?: string;
+  saveLabel?: string;
+  initialFavorited?: boolean;
 };
 
-export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps) {
+export function FavoriteButton({
+  cityId,
+  countryId,
+  kind,
+  initialFavorited,
+  saveLabel,
+}: FavoriteButtonProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [isFavorited, setIsFavorited] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(Boolean(initialFavorited));
+
+  useEffect(() => {
+    if (!message) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+
+    return () => window.clearTimeout(timeout);
+  }, [message]);
 
   async function handleFavorite() {
     setIsSubmitting(true);
@@ -74,6 +94,10 @@ export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps)
   }
 
   useEffect(() => {
+    if (initialFavorited !== undefined) {
+      return;
+    }
+
     let mounted = true;
 
     async function fetchFavorites() {
@@ -108,7 +132,7 @@ export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps)
     return () => {
       mounted = false;
     };
-  }, [kind, countryId, cityId]);
+  }, [kind, countryId, cityId, initialFavorited]);
 
   return (
     <div className="grid gap-2">
@@ -118,7 +142,7 @@ export function FavoriteButton({ cityId, countryId, kind }: FavoriteButtonProps)
         ) : (
           <Bookmark className="h-4 w-4" aria-hidden="true" />
         )}
-        {isFavorited ? "Elimină din favorite" : "Salvează favorită"}
+        {isFavorited ? "Elimină din favorite" : saveLabel ?? "Salvează favorită"}
       </Button>
       {message ? (
         <p className="text-xs leading-5 text-muted-foreground">{message}</p>
