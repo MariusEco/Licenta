@@ -52,7 +52,7 @@ export function CountryCard({ country }: CountryCardProps) {
         <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
           <dt className="flex items-center gap-2 text-muted-foreground">
             <Landmark className="h-4 w-4" aria-hidden="true" />
-            Emigrare
+            Dificultate Emigrare
           </dt>
           <dd className="font-semibold text-foreground">
             {formatDifficulty(country.emigrationDifficulty)}

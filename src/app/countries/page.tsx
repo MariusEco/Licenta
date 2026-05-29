@@ -87,8 +87,8 @@ export default async function CountriesPage({
           </div>
           <h1 className="text-3xl font-semibold text-foreground">Țări</h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">
-            Compară țări după vize, costuri lunare, salarii medii, taxe,
-            comunități românești și dificultatea emigrării.
+            Caută și filtrează țări după nume, dificultatea emigrării, bugetul
+            lunar și salariul mediu pentru a găsi mai rapid opțiunile potrivite.
           </p>
         </div>
         <div className="text-sm font-medium text-muted-foreground">

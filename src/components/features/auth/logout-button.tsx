@@ -28,7 +28,7 @@ export function LogoutButton() {
       className="hidden sm:inline-flex"
     >
       <LogOut className="h-4 w-4" aria-hidden="true" />
-      Ieșire
+      Deconectare
     </Button>
   );
 }

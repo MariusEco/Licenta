@@ -61,9 +61,6 @@ export default async function CountryDetailPage({
           <div className="flex flex-wrap items-center gap-2">
             <Badge>{country.continent}</Badge>
             <Badge>{country.isoCode}</Badge>
-            <Badge tone="success">
-              Emigrare {formatDifficulty(country.emigrationDifficulty)}
-            </Badge>
           </div>
           <h1 className="mt-4 text-4xl font-semibold text-foreground">
             {country.name}

@@ -24,7 +24,7 @@ const overviewItems = [
   },
   {
     title: "Hartă globală",
-    description: "Țări și orașe pregătite pentru pin-uri interactive.",
+    description: "Țări pregătite prin pin-uri interactive.",
     icon: MapPinned,
   },
 ];

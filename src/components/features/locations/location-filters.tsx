@@ -31,7 +31,7 @@ export function LocationFilters({
           <input
             name="search"
             defaultValue={search}
-            placeholder="Țară, oraș sau regiune"
+            placeholder="Nume țară"
             className="h-11 w-full border border-border bg-white pl-9 pr-3 text-sm outline-none transition focus:border-primary"
           />
         </span>
@@ -50,7 +50,6 @@ export function LocationFilters({
           <option value="LOW">Scăzută</option>
           <option value="MEDIUM">Medie</option>
           <option value="HIGH">Ridicată</option>
-          <option value="VERY_HIGH">Foarte ridicată</option>
         </select>
       </label>
 

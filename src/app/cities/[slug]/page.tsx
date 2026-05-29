@@ -60,10 +60,6 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <Badge>{city.countryName}</Badge>
-            {city.region ? <Badge>{city.region}</Badge> : null}
-            <Badge tone="success">
-              Emigrare {formatDifficulty(city.emigrationDifficulty)}
-            </Badge>
           </div>
           <h1 className="mt-4 text-4xl font-semibold text-foreground">
             {city.name}
