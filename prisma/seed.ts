@@ -1,4 +1,4 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+﻿import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import { Pool } from "pg";
 
@@ -19,8 +19,7 @@ const prisma = new PrismaClient({
   adapter: new PrismaPg(pool),
 });
 
-type Difficulty = "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
-type SeedTaxLevel = "LOW" | "MEDIUM" | "HIGH";
+type Difficulty = "SCAZUTA" | "MEDIE" | "RIDICATA" | "FOARTE_RIDICATA";
 
 type SeedCountry = {
   name: string;
@@ -33,11 +32,16 @@ type SeedCountry = {
   latitude: number;
   longitude: number;
   averageSalaryEur: number;
-  taxLevel: SeedTaxLevel;
-  incomeTaxRate: number;
+  population?: number;
   citizenshipDifficulty: Difficulty;
   emigrationDifficulty: Difficulty;
   generalDescription: string;
+  // Legacy/removed fields may still appear in seed data; accept them and ignore later.
+  taxLevel?: "LOW" | "MEDIUM" | "HIGH";
+  incomeTaxRate?: number;
+  romanianCommunityNotes?: string;
+  localLawNotes?: string;
+  jobMarketNotes?: string;
 };
 
 type SeedCity = {
@@ -51,6 +55,526 @@ type SeedCity = {
   averageSalaryEur: number;
   emigrationDifficulty: Difficulty;
   generalDescription: string;
+};
+
+const countryDifficultyAssessments: Record<
+  string,
+  {
+    citizenshipDifficulty: Difficulty;
+    emigrationDifficulty: Difficulty;
+  }
+> = {
+  albania: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  andorra: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  armenia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  austria: { citizenshipDifficulty: "RIDICATA", emigrationDifficulty: "MEDIE" },
+  azerbaidjan: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  belarus: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  belgia: { citizenshipDifficulty: "RIDICATA", emigrationDifficulty: "MEDIE" },
+  "bosnia-si-hertegovina": {
+    citizenshipDifficulty: "MEDIE",
+    emigrationDifficulty: "MEDIE",
+  },
+  bulgaria: {
+    citizenshipDifficulty: "MEDIE",
+    emigrationDifficulty: "SCAZUTA",
+  },
+  cehia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  cipru: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  croatia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  danemarca: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  estonia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  finlanda: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  franta: { citizenshipDifficulty: "RIDICATA", emigrationDifficulty: "MEDIE" },
+  georgia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  germania: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  grecia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  ungaria: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  islanda: { citizenshipDifficulty: "RIDICATA", emigrationDifficulty: "MEDIE" },
+  irlanda: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  italia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  kosovo: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  letonia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  liechtenstein: {
+    citizenshipDifficulty: "FOARTE_RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  lituania: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  luxemburg: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  malta: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  moldova: {
+    citizenshipDifficulty: "SCAZUTA",
+    emigrationDifficulty: "SCAZUTA",
+  },
+  monaco: {
+    citizenshipDifficulty: "FOARTE_RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  muntenegru: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  "macedonia-de-nord": {
+    citizenshipDifficulty: "MEDIE",
+    emigrationDifficulty: "MEDIE",
+  },
+  "tarile-de-jos": {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  norvegia: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "MEDIE",
+  },
+  polonia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  portugalia: {
+    citizenshipDifficulty: "MEDIE",
+    emigrationDifficulty: "SCAZUTA",
+  },
+  romania: {
+    citizenshipDifficulty: "SCAZUTA",
+    emigrationDifficulty: "SCAZUTA",
+  },
+  rusia: {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  "san-marino": {
+    citizenshipDifficulty: "FOARTE_RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  serbia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  slovacia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  slovenia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  spania: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "SCAZUTA" },
+  suedia: { citizenshipDifficulty: "RIDICATA", emigrationDifficulty: "MEDIE" },
+  elvetia: {
+    citizenshipDifficulty: "FOARTE_RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  turcia: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "MEDIE" },
+  ucraina: { citizenshipDifficulty: "MEDIE", emigrationDifficulty: "RIDICATA" },
+  "regatul-unit": {
+    citizenshipDifficulty: "RIDICATA",
+    emigrationDifficulty: "RIDICATA",
+  },
+  vatican: {
+    citizenshipDifficulty: "FOARTE_RIDICATA",
+    emigrationDifficulty: "FOARTE_RIDICATA",
+  },
+};
+
+const countryNumbeoEstimates: Record<
+  string,
+  {
+    averageSalaryEur: number | null;
+    totalMonthlyCostEur: number | null;
+    sourceUrl: string;
+  }
+> = {
+  albania: {
+    averageSalaryEur: 634,
+    totalMonthlyCostEur: 610,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Albania",
+  },
+  andorra: {
+    averageSalaryEur: 2587,
+    totalMonthlyCostEur: 766,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Andorra",
+  },
+  armenia: {
+    averageSalaryEur: 629,
+    totalMonthlyCostEur: 609,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Armenia",
+  },
+  austria: {
+    averageSalaryEur: 2604,
+    totalMonthlyCostEur: 1062,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Austria",
+  },
+  azerbaidjan: {
+    averageSalaryEur: 375,
+    totalMonthlyCostEur: 454,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Azerbaijan",
+  },
+  belarus: {
+    averageSalaryEur: 668,
+    totalMonthlyCostEur: 492,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Belarus",
+  },
+  belgia: {
+    averageSalaryEur: 2625,
+    totalMonthlyCostEur: 960,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Belgium",
+  },
+  "bosnia-si-hertegovina": {
+    averageSalaryEur: 734,
+    totalMonthlyCostEur: 588,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Bosnia%20And%20Herzegovina",
+  },
+  bulgaria: {
+    averageSalaryEur: 1002,
+    totalMonthlyCostEur: 610,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Bulgaria",
+  },
+  cehia: {
+    averageSalaryEur: 1564,
+    totalMonthlyCostEur: 778,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Czech%20Republic",
+  },
+  cipru: {
+    averageSalaryEur: 1623,
+    totalMonthlyCostEur: 851,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Cyprus",
+  },
+  croatia: {
+    averageSalaryEur: 1370,
+    totalMonthlyCostEur: 760,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Croatia",
+  },
+  danemarca: {
+    averageSalaryEur: 3661,
+    totalMonthlyCostEur: 1122,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Denmark",
+  },
+  estonia: {
+    averageSalaryEur: 1650,
+    totalMonthlyCostEur: 869,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Estonia",
+  },
+  finlanda: {
+    averageSalaryEur: 2635,
+    totalMonthlyCostEur: 1006,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Finland",
+  },
+  franta: {
+    averageSalaryEur: 2455,
+    totalMonthlyCostEur: 1003,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=France",
+  },
+  georgia: {
+    averageSalaryEur: 482,
+    totalMonthlyCostEur: 512,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Georgia",
+  },
+  germania: {
+    averageSalaryEur: 2961,
+    totalMonthlyCostEur: 998,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Germany",
+  },
+  grecia: {
+    averageSalaryEur: 1021,
+    totalMonthlyCostEur: 858,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Greece",
+  },
+  ungaria: {
+    averageSalaryEur: 1213,
+    totalMonthlyCostEur: 730,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Hungary",
+  },
+  islanda: {
+    averageSalaryEur: 3953,
+    totalMonthlyCostEur: 1230,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Iceland",
+  },
+  irlanda: {
+    averageSalaryEur: 3064,
+    totalMonthlyCostEur: 1105,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Ireland",
+  },
+  italia: {
+    averageSalaryEur: 1685,
+    totalMonthlyCostEur: 893,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Italy",
+  },
+  kosovo: {
+    averageSalaryEur: 528,
+    totalMonthlyCostEur: 460,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Kosovo%20(Disputed%20Territory)",
+  },
+  letonia: {
+    averageSalaryEur: 1151,
+    totalMonthlyCostEur: 788,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Latvia",
+  },
+  liechtenstein: {
+    averageSalaryEur: 8462,
+    totalMonthlyCostEur: 1400,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Liechtenstein",
+  },
+  lituania: {
+    averageSalaryEur: 1385,
+    totalMonthlyCostEur: 748,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Lithuania",
+  },
+  luxemburg: {
+    averageSalaryEur: 4812,
+    totalMonthlyCostEur: 1109,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Luxembourg",
+  },
+  malta: {
+    averageSalaryEur: 1608,
+    totalMonthlyCostEur: 910,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Malta",
+  },
+  moldova: {
+    averageSalaryEur: 658,
+    totalMonthlyCostEur: 490,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Moldova",
+  },
+  monaco: {
+    averageSalaryEur: 8213,
+    totalMonthlyCostEur: 1394,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Monaco",
+  },
+  muntenegru: {
+    averageSalaryEur: 906,
+    totalMonthlyCostEur: 608,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Montenegro",
+  },
+  "macedonia-de-nord": {
+    averageSalaryEur: 669,
+    totalMonthlyCostEur: 507,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=North%20Macedonia",
+  },
+  "tarile-de-jos": {
+    averageSalaryEur: 3395,
+    totalMonthlyCostEur: 1063,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Netherlands",
+  },
+  norvegia: {
+    averageSalaryEur: 3602,
+    totalMonthlyCostEur: 1110,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Norway",
+  },
+  polonia: {
+    averageSalaryEur: 1492,
+    totalMonthlyCostEur: 778,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Poland",
+  },
+  portugalia: {
+    averageSalaryEur: 1153,
+    totalMonthlyCostEur: 748,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Portugal",
+  },
+  romania: {
+    averageSalaryEur: 920,
+    totalMonthlyCostEur: 652,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Romania",
+  },
+  rusia: {
+    averageSalaryEur: 843,
+    totalMonthlyCostEur: 628,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Russia",
+  },
+  "san-marino": {
+    averageSalaryEur: 3452,
+    totalMonthlyCostEur: 900,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=San%20Marino",
+  },
+  serbia: {
+    averageSalaryEur: 839,
+    totalMonthlyCostEur: 618,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Serbia",
+  },
+  slovacia: {
+    averageSalaryEur: 1161,
+    totalMonthlyCostEur: 778,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Slovakia",
+  },
+  slovenia: {
+    averageSalaryEur: 1506,
+    totalMonthlyCostEur: 831,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Slovenia",
+  },
+  spania: {
+    averageSalaryEur: 1762,
+    totalMonthlyCostEur: 775,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Spain",
+  },
+  suedia: {
+    averageSalaryEur: 2838,
+    totalMonthlyCostEur: 986,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Sweden",
+  },
+  elvetia: {
+    averageSalaryEur: 6401,
+    totalMonthlyCostEur: 1473,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Switzerland",
+  },
+  turcia: {
+    averageSalaryEur: 706,
+    totalMonthlyCostEur: 568,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Turkey",
+  },
+  ucraina: {
+    averageSalaryEur: 424,
+    totalMonthlyCostEur: 414,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Ukraine",
+  },
+  "regatul-unit": {
+    averageSalaryEur: 2927,
+    totalMonthlyCostEur: 980,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=United%20Kingdom",
+  },
+  vatican: {
+    averageSalaryEur: null,
+    totalMonthlyCostEur: null,
+    sourceUrl:
+      "https://www.numbeo.com/cost-of-living/country_result.jsp?country=Vatican%20City",
+  },
+};
+
+const countryDescriptions: Record<string, string> = {
+  albania:
+    "Albania este situatÄƒ Ã®n sud-estul Europei, Ã®n vestul Balcanilor, È™i are graniÈ›e cu Macedonia la est, Grecia la sud È™i Kosovo È™i Muntenegru la nord. Are acces la Marea AdriaticÄƒ È™i Marea IonicÄƒ la vest È™i sud-vest, fiind la mai puÈ›in de 72 de kilometri distanÈ›Äƒ de Italia. OferÄƒ costuri de viaÈ›Äƒ mai reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism È™i construcÈ›ii.",
+  andorra:
+    "Andorra este situatÄƒ Ã®n MunÈ›ii Pirinei, Ã®ntre FranÈ›a È™i Spania. Economia se bazeazÄƒ pe turism, retail È™i servicii financiare; oferÄƒ oportunitÄƒÈ›i Ã®n ospitalitate È™i comerÈ›, iar costurile pot fi ridicate Ã®n zonele turistice.",
+  armenia:
+    "Armenia se aflÄƒ la intersecÈ›ia dintre Europa È™i Asia, Ã®n regiunea Caucazului de Sud, È™i are graniÈ›e cu Georgia, Azerbaidjan, Turcia È™i Iran. DezvoltÄƒ un sector IT Ã®n creÈ™tere È™i servicii locale; costurile de viaÈ›Äƒ sunt Ã®n general reduse.",
+  austria:
+    "Austria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®nvecinatÄƒ cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, ElveÈ›ia È™i Liechtenstein. OferÄƒ stabilitate economicÄƒ, infrastructurÄƒ performantÄƒ È™i oportunitÄƒÈ›i Ã®n industrie, sÄƒnÄƒtate È™i servicii; costurile sunt moderate spre ridicate.",
+  azerbaidjan:
+    "Azerbaidjan se Ã®ntinde Ã®n regiunea Caucazului, la Marea CaspicÄƒ, È™i are o economie puternic legatÄƒ de energie; existÄƒ oportunitÄƒÈ›i Ã®n infrastructurÄƒ, servicii È™i dezvoltare urbanÄƒ.",
+  bulgaria:
+    "Bulgaria este situatÄƒ Ã®n sud-estul Europei, la Marea NeagrÄƒ, È™i are graniÈ›e cu RomÃ¢nia, Serbia, Macedonia de Nord, Grecia È™i Turcia. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n IT, outsourcing, agriculturÄƒ È™i turism.",
+  croatia:
+    "CroaÈ›ia se Ã®ntinde de-a lungul coastei MÄƒrii Adriatice Ã®n sud-estul Europei, avÃ¢nd graniÈ›e cu Slovenia, Ungaria, Serbia È™i Bosnia. Turismul, porturile È™i serviciile maritime sunt sectoare cheie; costurile variazÄƒ Ã®ntre litoral È™i interior.",
+  cipru:
+    "Cipru este o insulÄƒ din estul MÄƒrii Mediterane, cu poziÈ›ie strategicÄƒ Ã®ntre Europa È™i Orientul Mijlociu. Economia este axatÄƒ pe turism, servicii financiare È™i shipping; costurile pot fi moderate spre ridicate Ã®n zonele turistice.",
+  cehia:
+    "Cehia este situatÄƒ Ã®n Europa CentralÄƒ, Ã®ntre Germania, Polonia, Slovacia È™i Austria. Are o industrie puternicÄƒ Ã®n producÈ›ie, automotive È™i IT, cu costuri de viaÈ›Äƒ moderate È™i un sector de servicii dinamic.",
+  danemarca:
+    "Danemarca se aflÄƒ Ã®n Europa de Nord, compusÄƒ din peninsula Jutlanda È™i multe insule, avÃ¢nd graniÈ›Äƒ terestrÄƒ cu Germania. OferÄƒ salarii ridicate, servicii publice solide È™i oportunitÄƒÈ›i Ã®n tehnologie È™i energie verde; costurile sunt ridicate.",
+  estonia:
+    "Estonia este o È›arÄƒ balticÄƒ la Marea BalticÄƒ, recunoscutÄƒ pentru digitalizare È™i un mediu prietenos pentru startup-uri; oferÄƒ oportunitÄƒÈ›i Ã®n tehnologie È™i servicii cu costuri moderate.",
+  finlanda:
+    "Finlanda este situatÄƒ Ã®n nordul Europei, Ã®ntre Suedia È™i Rusia, cu ieÈ™ire la Marea BalticÄƒ. OferÄƒ calitate ridicatÄƒ a vieÈ›ii È™i oportunitÄƒÈ›i Ã®n tehnologie, industrie È™i servicii; costurile sunt ridicate.",
+  georgia:
+    "Georgia se aflÄƒ Ã®n regiunea Caucazului, la Marea NeagrÄƒ, È™i are graniÈ›e cu Turcia, Armenia, Azerbaidjan È™i Rusia. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n turism, servicii È™i agriculturÄƒ.",
+  grecia:
+    "Grecia este situatÄƒ Ã®n sud-estul Europei, cu numeroase insule Ã®n Marea MediteranÄƒ, È™i are graniÈ›e cu Albania, Macedonia de Nord, Bulgaria È™i Turcia. Economia este puternic orientatÄƒ spre turism È™i servicii; costurile variazÄƒ mult Ã®ntre regiuni.",
+  ungaria:
+    "Ungaria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®n bazinul Carpatin, avÃ¢nd graniÈ›e cu Austria, Slovacia, Ucraina, RomÃ¢nia, Serbia, CroaÈ›ia È™i Slovenia. Economia este diversificatÄƒ, cu oportunitÄƒÈ›i Ã®n IT, producÈ›ie È™i servicii; costurile sunt moderate.",
+  islanda:
+    "Islanda este o insulÄƒ Ã®n Nordul Atlanticului, cunoscutÄƒ pentru resursele de energie geotermalÄƒ È™i pescuit. OferÄƒ salarii ridicate È™i oportunitÄƒÈ›i Ã®n energie, pescuit È™i turism; costurile sunt ridicate.",
+  irlanda:
+    "Irlanda este o insulÄƒ Ã®n vestul Europei, la Oceanul Atlantic, È™i gÄƒzduieÈ™te centre importante pentru tehnologie, pharma È™i servicii financiare; costurile Ã®n capitalÄƒ sunt ridicate.",
+  kosovo:
+    "Kosovo este situat Ã®n Peninsula BalcanicÄƒ È™i are graniÈ›e cu Serbia, Albania, Macedonia de Nord È™i Muntenegru. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n servicii, comerÈ› È™i sectoare publice.",
+  letonia:
+    "Letonia este o È›arÄƒ balticÄƒ la Marea BalticÄƒ, Ã®ntre Estonia È™i Lituania. Are un sector deschis orientat spre servicii, transport È™i tehnologie; costurile sunt moderate.",
+  liechtenstein:
+    "Liechtenstein este un microstat alpin Ã®ntre ElveÈ›ia È™i Austria, cu economie axatÄƒ pe industrie È™i servicii financiare; oferÄƒ costuri È™i salarii ridicate.",
+  lituania:
+    "Lituania este situatÄƒ Ã®n regiunea balticÄƒ, cu acces la Marea BalticÄƒ; are un ecosistem tech Ã®n creÈ™tere È™i oportunitÄƒÈ›i Ã®n servicii È™i logisticÄƒ.",
+  luxemburg:
+    "Luxemburg este un mic stat Ã®n Europa de Vest, Ã®ntre Belgia, FranÈ›a È™i Germania, cunoscut pentru sectorul financiar È™i salariile ridicate; costurile sunt ridicate.",
+  malta:
+    "Malta este o insulÄƒ din Marea MediteranÄƒ, la sud de Sicilia, cu economie axatÄƒ pe turism, gaming, fintech È™i servicii; costurile sunt moderate spre ridicate Ã®n zonele urbane.",
+  moldova:
+    "Moldova se aflÄƒ Ã®ntre RomÃ¢nia È™i Ucraina Ã®n Europa de Est; oferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n agriculturÄƒ, servicii È™i IT local.",
+  monaco:
+    "Monaco este un microstat pe Coasta de Azur, orientat spre servicii financiare È™i turism de lux; costurile sunt foarte ridicate.",
+  muntenegru:
+    "Muntenegru este situat pe coasta MÄƒrii Adriatice Ã®n Peninsula BalcanicÄƒ, oferind oportunitÄƒÈ›i Ã®n turism, servicii È™i imobiliare; costurile sunt moderate.",
+  "macedonia-de-nord":
+    "Macedonia de Nord este situatÄƒ Ã®n Peninsula BalcanicÄƒ, avÃ¢nd graniÈ›e cu Kosovo, Serbia, Bulgaria, Grecia È™i Albania. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, industrie uÈ™oarÄƒ È™i agriculturÄƒ.",
+  norvegia:
+    "Norvegia este situatÄƒ Ã®n Peninsula ScandinavÄƒ, avÃ¢nd graniÈ›e cu Suedia, Finlanda È™i Rusia; este cunoscutÄƒ pentru resurse energetice, salarii ridicate È™i costuri de viaÈ›Äƒ ridicate.",
+  polonia:
+    "Polonia este situatÄƒ Ã®n Europa CentralÄƒ È™i de Est, avÃ¢nd graniÈ›e cu Germania, Cehia, Slovacia, Ucraina, Belorusia È™i Lituania; este o economie dinamicÄƒ Ã®n industrie È™i servicii, cu costuri moderate.",
+  romania:
+    "RomÃ¢nia este situatÄƒ Ã®n sud-estul Europei, cuprinzÃ¢nd regiuni istorice precum Transilvania È™i Muntenia È™i avÃ¢nd graniÈ›e cu Bulgaria, Serbia, Ungaria, Ucraina È™i Moldova. OferÄƒ centre IT puternice È™i oportunitÄƒÈ›i Ã®n servicii, industrie È™i agriculturÄƒ; costurile sunt moderate.",
+  rusia:
+    "Rusia se Ã®ntinde Ã®ntre Europa È™i Asia, fiind cel mai mare stat terestru din lume, cu pieÈ›e urbane mari Ã®n Moscova È™i Sankt Petersburg; oferÄƒ oportunitÄƒÈ›i Ã®n energie, industrie È™i servicii, cu costuri foarte variabile.",
+  "san-marino":
+    "San Marino este un microstat Ã®nconjurat de Italia, cu economie orientatÄƒ spre servicii È™i turism; are costuri moderate spre ridicate Ã®n zonele turistice.",
+  serbia:
+    "Serbia este situatÄƒ Ã®n sud-estul Europei, Ã®n Peninsula BalcanicÄƒ, cu graniÈ›e la Ungaria, RomÃ¢nia, Bulgaria, Macedonia de Nord, Kosovo, Bosnia È™i CroaÈ›ia. OferÄƒ costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii, IT È™i producÈ›ie.",
+  slovacia:
+    "Slovacia este situatÄƒ Ã®n Europa CentralÄƒ, Ã®ntre Polonia, Cehia, Austria, Ungaria È™i Ucraina; are o economie industrialÄƒ puternicÄƒ È™i cerere Ã®n automotive È™i servicii.",
+  slovenia:
+    "Slovenia se aflÄƒ la interferenÈ›a Alpilor È™i MÄƒrii Adriatice, Ã®ntre Italia, Austria, Ungaria È™i CroaÈ›ia; oferÄƒ un echilibru bun Ã®ntre costuri, servicii publice È™i oportunitÄƒÈ›i Ã®n industrie È™i turism.",
+  suedia:
+    "Suedia este situatÄƒ Ã®n Peninsula ScandinavÄƒ, Ã®ntre Norvegia È™i Finlanda, cu coastÄƒ la Marea BalticÄƒ; are economie avansatÄƒ Ã®n tehnologie, industrie È™i servicii publice, dar costurile sunt ridicate.",
+  elvetia:
+    "ElveÈ›ia este situatÄƒ Ã®n Europa CentralÄƒ, la poalele Alpilor, È™i are graniÈ›e cu Germania, FranÈ›a, Italia È™i Austria. OferÄƒ salarii foarte ridicate È™i oportunitÄƒÈ›i Ã®n finanÈ›e, pharma È™i tehnologie; costurile sunt foarte ridicate.",
+  turcia:
+    "Turcia este o È›arÄƒ transcontinentalÄƒ cu partea europeanÄƒ Ã®n Tracia È™i o mare parte Ã®n Anatolia; are ieÈ™ire la Marea Egee, Marea MediteranÄƒ È™i Marea NeagrÄƒ. OferÄƒ pieÈ›e mari, industrie diversificatÄƒ È™i oportunitÄƒÈ›i Ã®n servicii È™i comerÈ›.",
+  ucraina:
+    "Ucraina este situatÄƒ Ã®n Europa de Est, mÄƒrginitÄƒ de Rusia, Belarus, Polonia, Slovacia, Ungaria, RomÃ¢nia È™i Moldova; are un potenÈ›ial agricol È™i industrial mare, cu oportunitÄƒÈ›i Ã®n reconstrucÈ›ie È™i servicii.",
+  "regatul-unit":
+    "Regatul Unit este o insulÄƒ Ã®n vestul Europei, compus din Anglia, ScoÈ›ia, Èšara Galilor È™i Irlanda de Nord; are centre globale Ã®n finanÈ›e, tehnologie È™i servicii, Ã®n special Ã®n Londra.",
+  vatican:
+    "Vaticanul este un microstat Ã®n inima Romei, nucleul administrativ È™i spiritual al Bisericii Catolice; activitatea economicÄƒ este foarte restrÃ¢nsÄƒ È™i axatÄƒ pe servicii religioase È™i turism.",
 };
 
 function clamp(value: number, min: number, max: number): number {
@@ -120,24 +644,16 @@ async function main() {
       continent: "Europa",
       capital: "Berlin",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 51.165691,
       longitude: 10.451526,
-      romanianCommunityNotes:
-        "Comunități românești active în Berlin, München, Frankfurt și zona Ruhr.",
-      jobMarketNotes:
-        "Piață bună pentru IT, inginerie, logistică, producție și servicii medicale.",
-      localLawNotes:
-        "Înregistrarea domiciliului (Anmeldung) și asigurarea medicală sunt pași administrativi obligatorii la relocare.",
       generalDescription:
-        "Germania rămâne una dintre cele mai stabile destinații europene pentru muncă și relocare pe termen lung.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "Germania este situatÄƒ Ã®n Europa CentralÄƒ, mÄƒrginitÄƒ de Danemarca la nord, Polonia È™i Cehia la est, Austria È™i ElveÈ›ia la sud, È™i FranÈ›a, Luxemburg, Belgia È™i ÈšÄƒrile de Jos la vest. Este o putere industrialÄƒ È™i tehnologicÄƒ cu oportunitÄƒÈ›i Ã®n inginerie, IT, producÈ›ie È™i servicii; costurile de viaÈ›Äƒ sunt moderate spre ridicate.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3123,
-      taxLevel: "HIGH",
-      incomeTaxRate: 45,
-      isFeatured: true,
+      population: 83200000,
     },
     create: {
       name: "Germania",
@@ -146,79 +662,53 @@ async function main() {
       continent: "Europa",
       capital: "Berlin",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 51.165691,
       longitude: 10.451526,
-      romanianCommunityNotes:
-        "Comunități românești active în Berlin, München, Frankfurt și zona Ruhr.",
-      jobMarketNotes:
-        "Piață bună pentru IT, inginerie, logistică, producție și servicii medicale.",
-      localLawNotes:
-        "Înregistrarea domiciliului (Anmeldung) și asigurarea medicală sunt pași administrativi obligatorii la relocare.",
       generalDescription:
-        "Germania rămâne una dintre cele mai stabile destinații europene pentru muncă și relocare pe termen lung.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "Germania rÄƒmÃ¢ne una dintre cele mai stabile destinaÈ›ii europene pentru muncÄƒ È™i relocare pe termen lung.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3123,
-      taxLevel: "HIGH",
-      incomeTaxRate: 45,
-      isFeatured: true,
     },
   });
 
   const netherlands = await prisma.country.upsert({
     where: { slug: "tarile-de-jos" },
     update: {
-      name: "Țările de Jos",
+      name: "ÈšÄƒrile de Jos",
       isoCode: "NL",
       continent: "Europa",
       capital: "Amsterdam",
       currency: "EUR",
-      officialLanguage: "Neerlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 52.132633,
       longitude: 5.291266,
-      romanianCommunityNotes:
-        "Comunități românești vizibile în Amsterdam, Rotterdam, Haga și Eindhoven.",
-      jobMarketNotes:
-        "Cerere ridicată în tehnologie, logistică, inginerie și servicii internaționale.",
-      localLawNotes:
-        "Înregistrarea la municipalitate și obținerea BSN sunt esențiale pentru muncă și servicii publice.",
       generalDescription:
-        "Țările de Jos oferă o piață a muncii competitivă, infrastructură foarte bună și servicii publice eficiente.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "ÈšÄƒrile de Jos sunt situate Ã®n Europa de Vest, pe coasta MÄƒrii Nordului, avÃ¢nd graniÈ›e cu Germania È™i Belgia. OferÄƒ infrastructurÄƒ excelentÄƒ, porturi È™i un sector logistic dezvoltat, cu oportunitÄƒÈ›i Ã®n tehnologie, logisticÄƒ È™i servicii; costurile de viaÈ›Äƒ sunt ridicate Ã®n oraÈ™ele mari.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 4335,
-      taxLevel: "HIGH",
-      incomeTaxRate: 49.5,
-      isFeatured: true,
+      population: 17950000,
     },
     create: {
-      name: "Țările de Jos",
+      name: "ÈšÄƒrile de Jos",
       slug: "tarile-de-jos",
       isoCode: "NL",
       continent: "Europa",
       capital: "Amsterdam",
       currency: "EUR",
-      officialLanguage: "Neerlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 52.132633,
       longitude: 5.291266,
-      romanianCommunityNotes:
-        "Comunități românești vizibile în Amsterdam, Rotterdam, Haga și Eindhoven.",
-      jobMarketNotes:
-        "Cerere ridicată în tehnologie, logistică, inginerie și servicii internaționale.",
-      localLawNotes:
-        "Înregistrarea la municipalitate și obținerea BSN sunt esențiale pentru muncă și servicii publice.",
       generalDescription:
-        "Țările de Jos oferă o piață a muncii competitivă, infrastructură foarte bună și servicii publice eficiente.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "ÈšÄƒrile de Jos oferÄƒ o piaÈ›Äƒ a muncii competitivÄƒ, infrastructurÄƒ foarte bunÄƒ È™i servicii publice eficiente.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 4335,
-      taxLevel: "HIGH",
-      incomeTaxRate: 49.5,
-      isFeatured: true,
     },
   });
 
@@ -230,24 +720,16 @@ async function main() {
       continent: "Europa",
       capital: "Madrid",
       currency: "EUR",
-      officialLanguage: "Spaniolă",
+      officialLanguage: "SpaniolÄƒ",
       predominantReligion: "Catolicism",
       latitude: 40.463667,
       longitude: -3.74922,
-      romanianCommunityNotes:
-        "Spania are una dintre cele mai mari comunități românești din Europa de Vest.",
-      jobMarketNotes:
-        "Oportunități în servicii, turism, logistică, construcții, sănătate și IT.",
-      localLawNotes:
-        "Pentru formalități administrative este necesar de regulă NIE și înregistrare locală.",
       generalDescription:
-        "Spania oferă un echilibru bun între costul vieții, climă și integrarea în comunități internaționale.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Spania este situatÄƒ Ã®n sud-vestul Europei, ocupÃ¢nd mare parte din Peninsula IbericÄƒ, avÃ¢nd graniÈ›Äƒ cu Portugalia È™i FranÈ›a È™i ieÈ™ire la Marea MediteranÄƒ È™i Oceanul Atlantic. OferÄƒ oportunitÄƒÈ›i Ã®n turism, servicii, logisticÄƒ È™i agrobusiness; costurile variazÄƒ mult Ã®ntre regiuni.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1763,
-      taxLevel: "HIGH",
-      incomeTaxRate: 47,
-      isFeatured: true,
+      population: 48680000,
     },
     create: {
       name: "Spania",
@@ -256,79 +738,55 @@ async function main() {
       continent: "Europa",
       capital: "Madrid",
       currency: "EUR",
-      officialLanguage: "Spaniolă",
+      officialLanguage: "SpaniolÄƒ",
       predominantReligion: "Catolicism",
       latitude: 40.463667,
       longitude: -3.74922,
-      romanianCommunityNotes:
-        "Spania are una dintre cele mai mari comunități românești din Europa de Vest.",
-      jobMarketNotes:
-        "Oportunități în servicii, turism, logistică, construcții, sănătate și IT.",
-      localLawNotes:
-        "Pentru formalități administrative este necesar de regulă NIE și înregistrare locală.",
       generalDescription:
-        "Spania oferă un echilibru bun între costul vieții, climă și integrarea în comunități internaționale.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Spania oferÄƒ un echilibru bun Ã®ntre costul vieÈ›ii, climÄƒ È™i integrarea Ã®n comunitÄƒÈ›i internaÈ›ionale.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1763,
-      taxLevel: "HIGH",
-      incomeTaxRate: 47,
-      isFeatured: true,
     },
   });
 
   const france = await prisma.country.upsert({
     where: { slug: "franta" },
     update: {
-      name: "Franța",
+      name: "FranÈ›a",
       isoCode: "FR",
       continent: "Europa",
       capital: "Paris",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.8566,
       longitude: 2.3522,
-      romanianCommunityNotes:
-        "Comunități românești consistente în Paris, Lyon, Marseille și Toulouse.",
-      jobMarketNotes:
-        "Piață puternică în servicii, IT, inginerie, finanțe și sănătate.",
-      localLawNotes:
-        "Pentru integrare administrativă sunt utile înregistrarea locală și formalitățile pentru sistemul fiscal și medical.",
+
       generalDescription:
-        "Franța oferă o economie mare și diversificată, cu oportunități solide în marile centre urbane.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "FranÈ›a se aflÄƒ Ã®n Europa de Vest, Ã®ntre Oceanul Atlantic È™i Marea MediteranÄƒ, avÃ¢nd graniÈ›e cu mai multe state europene. Economia este diversificatÄƒ, cu oportunitÄƒÈ›i Ã®n servicii, industrie, agriculturÄƒ È™i tehnologie; costurile depind de regiune.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2740,
-      taxLevel: "HIGH",
-      incomeTaxRate: 45,
-      isFeatured: true,
+      population: 68400000,
     },
     create: {
-      name: "Franța",
+      name: "FranÈ›a",
       slug: "franta",
       isoCode: "FR",
       continent: "Europa",
       capital: "Paris",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.8566,
       longitude: 2.3522,
-      romanianCommunityNotes:
-        "Comunități românești consistente în Paris, Lyon, Marseille și Toulouse.",
-      jobMarketNotes:
-        "Piață puternică în servicii, IT, inginerie, finanțe și sănătate.",
-      localLawNotes:
-        "Pentru integrare administrativă sunt utile înregistrarea locală și formalitățile pentru sistemul fiscal și medical.",
+
       generalDescription:
-        "Franța oferă o economie mare și diversificată, cu oportunități solide în marile centre urbane.",
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+        "FranÈ›a oferÄƒ o economie mare È™i diversificatÄƒ, cu oportunitÄƒÈ›i solide Ã®n marile centre urbane.",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2740,
-      taxLevel: "HIGH",
-      incomeTaxRate: 45,
-      isFeatured: true,
     },
   });
 
@@ -340,24 +798,17 @@ async function main() {
       continent: "Europa",
       capital: "Roma",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9028,
       longitude: 12.4964,
-      romanianCommunityNotes:
-        "Italia găzduiește o comunitate românească numeroasă în Roma, Milano, Torino și Bologna.",
-      jobMarketNotes:
-        "Oportunități în producție, logistică, servicii, construcții, sănătate și IT.",
-      localLawNotes:
-        "Înregistrarea rezidenței și formalitățile fiscale locale sunt pași importanți pentru stabilire.",
+
       generalDescription:
-        "Italia combină centre economice dezvoltate cu un cost al vieții variabil între nord și sud.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Italia este situatÄƒ Ã®n sudul Europei, pe Peninsula ItalicÄƒ, cu numeroase ieÈ™iri la Marea MediteranÄƒ È™i graniÈ›e cu FranÈ›a, ElveÈ›ia, Austria È™i Slovenia. OferÄƒ oportunitÄƒÈ›i Ã®n turism, industrie, producÈ›ie È™i servicii; costul vieÈ›ii variazÄƒ semnificativ nord-sud.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      taxLevel: "HIGH",
-      incomeTaxRate: 43,
-      isFeatured: true,
+      population: 58990000,
     },
     create: {
       name: "Italia",
@@ -366,24 +817,15 @@ async function main() {
       continent: "Europa",
       capital: "Roma",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9028,
       longitude: 12.4964,
-      romanianCommunityNotes:
-        "Italia găzduiește o comunitate românească numeroasă în Roma, Milano, Torino și Bologna.",
-      jobMarketNotes:
-        "Oportunități în producție, logistică, servicii, construcții, sănătate și IT.",
-      localLawNotes:
-        "Înregistrarea rezidenței și formalitățile fiscale locale sunt pași importanți pentru stabilire.",
       generalDescription:
-        "Italia combină centre economice dezvoltate cu un cost al vieții variabil între nord și sud.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Italia combinÄƒ centre economice dezvoltate cu un cost al vieÈ›ii variabil Ã®ntre nord È™i sud.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      taxLevel: "HIGH",
-      incomeTaxRate: 43,
-      isFeatured: true,
     },
   });
 
@@ -395,24 +837,15 @@ async function main() {
       continent: "Europa",
       capital: "Lisabona",
       currency: "EUR",
-      officialLanguage: "Portugheză",
+      officialLanguage: "PortughezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 38.7223,
       longitude: -9.1393,
-      romanianCommunityNotes:
-        "Comunități românești prezente în Lisabona, Porto și Setubal.",
-      jobMarketNotes:
-        "Cerere bună în turism, servicii, centre de suport, logistică și tehnologie.",
-      localLawNotes:
-        "Sunt necesare formalități administrative locale pentru rezidență fiscală și acces la servicii.",
       generalDescription:
-        "Portugalia este atractivă pentru climă, siguranță și costuri relativ echilibrate față de alte vest-europene.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Portugalia se aflÄƒ Ã®n vestul Peninsulei Iberice, la Oceanul Atlantic, avÃ¢nd graniÈ›Äƒ doar cu Spania. Este atractivÄƒ pentru climÄƒ È™i turism, cu oportunitÄƒÈ›i Ã®n servicii, tehnologie È™i ospitalitate; costurile sunt Ã®n general moderate.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1330,
-      taxLevel: "MEDIUM",
-      incomeTaxRate: 48,
-      isFeatured: true,
     },
     create: {
       name: "Portugalia",
@@ -421,24 +854,15 @@ async function main() {
       continent: "Europa",
       capital: "Lisabona",
       currency: "EUR",
-      officialLanguage: "Portugheză",
+      officialLanguage: "PortughezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 38.7223,
       longitude: -9.1393,
-      romanianCommunityNotes:
-        "Comunități românești prezente în Lisabona, Porto și Setubal.",
-      jobMarketNotes:
-        "Cerere bună în turism, servicii, centre de suport, logistică și tehnologie.",
-      localLawNotes:
-        "Sunt necesare formalități administrative locale pentru rezidență fiscală și acces la servicii.",
       generalDescription:
-        "Portugalia este atractivă pentru climă, siguranță și costuri relativ echilibrate față de alte vest-europene.",
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+        "Portugalia este atractivÄƒ pentru climÄƒ, siguranÈ›Äƒ È™i costuri relativ echilibrate faÈ›Äƒ de alte vest-europene.",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1330,
-      taxLevel: "MEDIUM",
-      incomeTaxRate: 48,
-      isFeatured: true,
     },
   });
 
@@ -552,17 +976,17 @@ async function main() {
       longitude: 13.405,
       population: 3677000,
       generalDescription:
-        "Berlin este un centru european important pentru tehnologie, startup-uri, industrii creative și cercetare.",
+        "Berlin este un centru european important pentru tehnologie, startup-uri, industrii creative È™i cercetare.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu grupuri profesionale și evenimente culturale.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu grupuri profesionale È™i evenimente culturale.",
       jobMarketNotes:
-        "Cerere ridicată pentru specialiști IT, ingineri, personal medical și logistică.",
+        "Cerere ridicatÄƒ pentru specialiÈ™ti IT, ingineri, personal medical È™i logisticÄƒ.",
       localLawNotes:
-        "Anmeldung și înregistrarea la casa de asigurări sunt pași obligatorii după mutare.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Anmeldung È™i Ã®nregistrarea la casa de asigurÄƒri sunt paÈ™i obligatorii dupÄƒ mutare.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3123,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: germany.id,
@@ -573,17 +997,17 @@ async function main() {
       longitude: 13.405,
       population: 3677000,
       generalDescription:
-        "Berlin este un centru european important pentru tehnologie, startup-uri, industrii creative și cercetare.",
+        "Berlin este un centru european important pentru tehnologie, startup-uri, industrii creative È™i cercetare.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu grupuri profesionale și evenimente culturale.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu grupuri profesionale È™i evenimente culturale.",
       jobMarketNotes:
-        "Cerere ridicată pentru specialiști IT, ingineri, personal medical și logistică.",
+        "Cerere ridicatÄƒ pentru specialiÈ™ti IT, ingineri, personal medical È™i logisticÄƒ.",
       localLawNotes:
-        "Anmeldung și înregistrarea la casa de asigurări sunt pași obligatorii după mutare.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Anmeldung È™i Ã®nregistrarea la casa de asigurÄƒri sunt paÈ™i obligatorii dupÄƒ mutare.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3123,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -597,17 +1021,17 @@ async function main() {
       longitude: 4.9041,
       population: 921000,
       generalDescription:
-        "Amsterdam este un hub internațional pentru servicii, tehnologie, finanțe și industrii creative.",
+        "Amsterdam este un hub internaÈ›ional pentru servicii, tehnologie, finanÈ›e È™i industrii creative.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Amsterdam și zona Randstad.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Amsterdam È™i zona Randstad.",
       jobMarketNotes:
-        "Piață competitivă cu cerere bună pentru roluri tech, data, logistică și servicii internaționale.",
+        "PiaÈ›Äƒ competitivÄƒ cu cerere bunÄƒ pentru roluri tech, data, logisticÄƒ È™i servicii internaÈ›ionale.",
       localLawNotes:
-        "BSN și înregistrarea la municipalitate sunt necesare pentru majoritatea serviciilor.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "BSN È™i Ã®nregistrarea la municipalitate sunt necesare pentru majoritatea serviciilor.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 4335,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: netherlands.id,
@@ -618,17 +1042,17 @@ async function main() {
       longitude: 4.9041,
       population: 921000,
       generalDescription:
-        "Amsterdam este un hub internațional pentru servicii, tehnologie, finanțe și industrii creative.",
+        "Amsterdam este un hub internaÈ›ional pentru servicii, tehnologie, finanÈ›e È™i industrii creative.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Amsterdam și zona Randstad.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Amsterdam È™i zona Randstad.",
       jobMarketNotes:
-        "Piață competitivă cu cerere bună pentru roluri tech, data, logistică și servicii internaționale.",
+        "PiaÈ›Äƒ competitivÄƒ cu cerere bunÄƒ pentru roluri tech, data, logisticÄƒ È™i servicii internaÈ›ionale.",
       localLawNotes:
-        "BSN și înregistrarea la municipalitate sunt necesare pentru majoritatea serviciilor.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "BSN È™i Ã®nregistrarea la municipalitate sunt necesare pentru majoritatea serviciilor.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 4335,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -642,17 +1066,17 @@ async function main() {
       longitude: -3.7038,
       population: 3280000,
       generalDescription:
-        "Madrid combină oportunități bune de muncă cu costuri mai accesibile decât multe capitale vest-europene.",
+        "Madrid combinÄƒ oportunitÄƒÈ›i bune de muncÄƒ cu costuri mai accesibile decÃ¢t multe capitale vest-europene.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și bine integrată.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i bine integratÄƒ.",
       jobMarketNotes:
-        "Cerere în servicii, sănătate, logistică, turism și roluri tehnice în companii internaționale.",
+        "Cerere Ã®n servicii, sÄƒnÄƒtate, logisticÄƒ, turism È™i roluri tehnice Ã®n companii internaÈ›ionale.",
       localLawNotes:
-        "NIE și înregistrarea locală sunt pași uzuali pentru muncă, bancă și formalități administrative.",
+        "NIE È™i Ã®nregistrarea localÄƒ sunt paÈ™i uzuali pentru muncÄƒ, bancÄƒ È™i formalitÄƒÈ›i administrative.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2200,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: spain.id,
@@ -663,17 +1087,17 @@ async function main() {
       longitude: -3.7038,
       population: 3280000,
       generalDescription:
-        "Madrid combină oportunități bune de muncă cu costuri mai accesibile decât multe capitale vest-europene.",
+        "Madrid combinÄƒ oportunitÄƒÈ›i bune de muncÄƒ cu costuri mai accesibile decÃ¢t multe capitale vest-europene.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și bine integrată.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i bine integratÄƒ.",
       jobMarketNotes:
-        "Cerere în servicii, sănătate, logistică, turism și roluri tehnice în companii internaționale.",
+        "Cerere Ã®n servicii, sÄƒnÄƒtate, logisticÄƒ, turism È™i roluri tehnice Ã®n companii internaÈ›ionale.",
       localLawNotes:
-        "NIE și înregistrarea locală sunt pași uzuali pentru muncă, bancă și formalități administrative.",
+        "NIE È™i Ã®nregistrarea localÄƒ sunt paÈ™i uzuali pentru muncÄƒ, bancÄƒ È™i formalitÄƒÈ›i administrative.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2200,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -687,17 +1111,17 @@ async function main() {
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Paris este unul dintre cele mai mari centre europene pentru finanțe, tehnologie, servicii și industrii creative.",
+        "Paris este unul dintre cele mai mari centre europene pentru finanÈ›e, tehnologie, servicii È™i industrii creative.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu reÈ›ele profesionale È™i organizaÈ›ii culturale.",
       jobMarketNotes:
-        "Cerere ridicată în servicii, tech, consulting, retail premium și sănătate.",
+        "Cerere ridicatÄƒ Ã®n servicii, tech, consulting, retail premium È™i sÄƒnÄƒtate.",
       localLawNotes:
-        "Formalitățile administrative locale sunt importante pentru contracte, taxe și asigurare medicală.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale sunt importante pentru contracte, taxe È™i asigurare medicalÄƒ.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2740,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: france.id,
@@ -708,17 +1132,17 @@ async function main() {
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Paris este unul dintre cele mai mari centre europene pentru finanțe, tehnologie, servicii și industrii creative.",
+        "Paris este unul dintre cele mai mari centre europene pentru finanÈ›e, tehnologie, servicii È™i industrii creative.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu reÈ›ele profesionale È™i organizaÈ›ii culturale.",
       jobMarketNotes:
-        "Cerere ridicată în servicii, tech, consulting, retail premium și sănătate.",
+        "Cerere ridicatÄƒ Ã®n servicii, tech, consulting, retail premium È™i sÄƒnÄƒtate.",
       localLawNotes:
-        "Formalitățile administrative locale sunt importante pentru contracte, taxe și asigurare medicală.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale sunt importante pentru contracte, taxe È™i asigurare medicalÄƒ.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2740,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -732,17 +1156,17 @@ async function main() {
       longitude: 9.19,
       population: 1366000,
       generalDescription:
-        "Milano este motor economic al Italiei, cu oportunități în finanțe, modă, servicii și tehnologie.",
+        "Milano este motor economic al Italiei, cu oportunitÄƒÈ›i Ã®n finanÈ›e, modÄƒ, servicii È™i tehnologie.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă în Milano și zona metropolitană.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ Ã®n Milano È™i zona metropolitanÄƒ.",
       jobMarketNotes:
-        "Cerere ridicată pentru servicii, logistică, finanțe, construcții și roluri tehnice.",
+        "Cerere ridicatÄƒ pentru servicii, logisticÄƒ, finanÈ›e, construcÈ›ii È™i roluri tehnice.",
       localLawNotes:
-        "Sunt necesare formalități administrative locale pentru rezidență, fiscalitate și sănătate.",
+        "Sunt necesare formalitÄƒÈ›i administrative locale pentru rezidenÈ›Äƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2100,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: italy.id,
@@ -753,17 +1177,17 @@ async function main() {
       longitude: 9.19,
       population: 1366000,
       generalDescription:
-        "Milano este motor economic al Italiei, cu oportunități în finanțe, modă, servicii și tehnologie.",
+        "Milano este motor economic al Italiei, cu oportunitÄƒÈ›i Ã®n finanÈ›e, modÄƒ, servicii È™i tehnologie.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă în Milano și zona metropolitană.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ Ã®n Milano È™i zona metropolitanÄƒ.",
       jobMarketNotes:
-        "Cerere ridicată pentru servicii, logistică, finanțe, construcții și roluri tehnice.",
+        "Cerere ridicatÄƒ pentru servicii, logisticÄƒ, finanÈ›e, construcÈ›ii È™i roluri tehnice.",
       localLawNotes:
-        "Sunt necesare formalități administrative locale pentru rezidență, fiscalitate și sănătate.",
+        "Sunt necesare formalitÄƒÈ›i administrative locale pentru rezidenÈ›Äƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2100,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -777,17 +1201,17 @@ async function main() {
       longitude: -9.1393,
       population: 545000,
       generalDescription:
-        "Lisabona atrage tot mai mulți profesioniști internaționali prin ecosistemul tech și calitatea vieții.",
+        "Lisabona atrage tot mai mulÈ›i profesioniÈ™ti internaÈ›ionali prin ecosistemul tech È™i calitatea vieÈ›ii.",
       romanianCommunityNotes:
-        "Comunitate românească în creștere, activă în servicii și domenii tehnice.",
+        "Comunitate romÃ¢neascÄƒ Ã®n creÈ™tere, activÄƒ Ã®n servicii È™i domenii tehnice.",
       jobMarketNotes:
-        "Roluri căutate în IT, BPO, turism, logistică și servicii pentru piețe externe.",
+        "Roluri cÄƒutate Ã®n IT, BPO, turism, logisticÄƒ È™i servicii pentru pieÈ›e externe.",
       localLawNotes:
-        "Formalitățile locale includ înregistrări administrative pentru muncă, fiscalitate și sănătate.",
+        "FormalitÄƒÈ›ile locale includ Ã®nregistrÄƒri administrative pentru muncÄƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1700,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: portugal.id,
@@ -798,17 +1222,17 @@ async function main() {
       longitude: -9.1393,
       population: 545000,
       generalDescription:
-        "Lisabona atrage tot mai mulți profesioniști internaționali prin ecosistemul tech și calitatea vieții.",
+        "Lisabona atrage tot mai mulÈ›i profesioniÈ™ti internaÈ›ionali prin ecosistemul tech È™i calitatea vieÈ›ii.",
       romanianCommunityNotes:
-        "Comunitate românească în creștere, activă în servicii și domenii tehnice.",
+        "Comunitate romÃ¢neascÄƒ Ã®n creÈ™tere, activÄƒ Ã®n servicii È™i domenii tehnice.",
       jobMarketNotes:
-        "Roluri căutate în IT, BPO, turism, logistică și servicii pentru piețe externe.",
+        "Roluri cÄƒutate Ã®n IT, BPO, turism, logisticÄƒ È™i servicii pentru pieÈ›e externe.",
       localLawNotes:
-        "Formalitățile locale includ înregistrări administrative pentru muncă, fiscalitate și sănătate.",
+        "FormalitÄƒÈ›ile locale includ Ã®nregistrÄƒri administrative pentru muncÄƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1700,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -816,44 +1240,44 @@ async function main() {
     where: { slug: "munchen" },
     update: {
       countryId: germany.id,
-      name: "München",
+      name: "MÃ¼nchen",
       region: "Bavaria",
       latitude: 48.1351,
       longitude: 11.582,
       population: 1512000,
       generalDescription:
-        "München este un centru economic major în Germania, puternic în industrie, auto, IT și cercetare.",
+        "MÃ¼nchen este un centru economic major Ã®n Germania, puternic Ã®n industrie, auto, IT È™i cercetare.",
       romanianCommunityNotes:
-        "Comunitate românească bine reprezentată în zona metropolitană München.",
+        "Comunitate romÃ¢neascÄƒ bine reprezentatÄƒ Ã®n zona metropolitanÄƒ MÃ¼nchen.",
       jobMarketNotes:
-        "Cerere ridicată pentru ingineri, specialiști IT, personal medical și logistică.",
+        "Cerere ridicatÄƒ pentru ingineri, specialiÈ™ti IT, personal medical È™i logisticÄƒ.",
       localLawNotes:
-        "Procedurile administrative locale includ înregistrarea adresei și asigurarea medicală obligatorie.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Procedurile administrative locale includ Ã®nregistrarea adresei È™i asigurarea medicalÄƒ obligatorie.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3500,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: germany.id,
-      name: "München",
+      name: "MÃ¼nchen",
       slug: "munchen",
       region: "Bavaria",
       latitude: 48.1351,
       longitude: 11.582,
       population: 1512000,
       generalDescription:
-        "München este un centru economic major în Germania, puternic în industrie, auto, IT și cercetare.",
+        "MÃ¼nchen este un centru economic major Ã®n Germania, puternic Ã®n industrie, auto, IT È™i cercetare.",
       romanianCommunityNotes:
-        "Comunitate românească bine reprezentată în zona metropolitană München.",
+        "Comunitate romÃ¢neascÄƒ bine reprezentatÄƒ Ã®n zona metropolitanÄƒ MÃ¼nchen.",
       jobMarketNotes:
-        "Cerere ridicată pentru ingineri, specialiști IT, personal medical și logistică.",
+        "Cerere ridicatÄƒ pentru ingineri, specialiÈ™ti IT, personal medical È™i logisticÄƒ.",
       localLawNotes:
-        "Procedurile administrative locale includ înregistrarea adresei și asigurarea medicală obligatorie.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Procedurile administrative locale includ Ã®nregistrarea adresei È™i asigurarea medicalÄƒ obligatorie.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3500,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -867,17 +1291,17 @@ async function main() {
       longitude: 8.6821,
       population: 773000,
       generalDescription:
-        "Frankfurt este centru financiar european și hub logistic important.",
+        "Frankfurt este centru financiar european È™i hub logistic important.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Rhein-Main.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Rhein-Main.",
       jobMarketNotes:
-        "Oportunități bune în finanțe, IT, logistică și servicii corporate.",
+        "OportunitÄƒÈ›i bune Ã®n finanÈ›e, IT, logisticÄƒ È™i servicii corporate.",
       localLawNotes:
-        "Sunt necesare formalități administrative standard pentru rezidență și muncă.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Sunt necesare formalitÄƒÈ›i administrative standard pentru rezidenÈ›Äƒ È™i muncÄƒ.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3400,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: germany.id,
@@ -888,17 +1312,17 @@ async function main() {
       longitude: 8.6821,
       population: 773000,
       generalDescription:
-        "Frankfurt este centru financiar european și hub logistic important.",
+        "Frankfurt este centru financiar european È™i hub logistic important.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Rhein-Main.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Rhein-Main.",
       jobMarketNotes:
-        "Oportunități bune în finanțe, IT, logistică și servicii corporate.",
+        "OportunitÄƒÈ›i bune Ã®n finanÈ›e, IT, logisticÄƒ È™i servicii corporate.",
       localLawNotes:
-        "Sunt necesare formalități administrative standard pentru rezidență și muncă.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Sunt necesare formalitÄƒÈ›i administrative standard pentru rezidenÈ›Äƒ È™i muncÄƒ.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3400,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -912,17 +1336,17 @@ async function main() {
       longitude: 4.4777,
       population: 663000,
       generalDescription:
-        "Rotterdam este un oraș-port major, cu economie puternică în logistică, industrie și servicii.",
+        "Rotterdam este un oraÈ™-port major, cu economie puternicÄƒ Ã®n logisticÄƒ, industrie È™i servicii.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în Rotterdam și împrejurimi.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n Rotterdam È™i Ã®mprejurimi.",
       jobMarketNotes:
-        "Cerere bună în logistică portuară, inginerie, tehnologie și servicii.",
+        "Cerere bunÄƒ Ã®n logisticÄƒ portuarÄƒ, inginerie, tehnologie È™i servicii.",
       localLawNotes:
-        "BSN și înregistrarea locală sunt pași esențiali după relocare.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "BSN È™i Ã®nregistrarea localÄƒ sunt paÈ™i esenÈ›iali dupÄƒ relocare.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3800,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: netherlands.id,
@@ -933,17 +1357,17 @@ async function main() {
       longitude: 4.4777,
       population: 663000,
       generalDescription:
-        "Rotterdam este un oraș-port major, cu economie puternică în logistică, industrie și servicii.",
+        "Rotterdam este un oraÈ™-port major, cu economie puternicÄƒ Ã®n logisticÄƒ, industrie È™i servicii.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în Rotterdam și împrejurimi.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n Rotterdam È™i Ã®mprejurimi.",
       jobMarketNotes:
-        "Cerere bună în logistică portuară, inginerie, tehnologie și servicii.",
+        "Cerere bunÄƒ Ã®n logisticÄƒ portuarÄƒ, inginerie, tehnologie È™i servicii.",
       localLawNotes:
-        "BSN și înregistrarea locală sunt pași esențiali după relocare.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "BSN È™i Ã®nregistrarea localÄƒ sunt paÈ™i esenÈ›iali dupÄƒ relocare.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3800,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -957,17 +1381,17 @@ async function main() {
       longitude: 4.3007,
       population: 563000,
       generalDescription:
-        "Haga este centru administrativ și internațional, cu multe instituții europene și globale.",
+        "Haga este centru administrativ È™i internaÈ›ional, cu multe instituÈ›ii europene È™i globale.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Haga-Rotterdam.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Haga-Rotterdam.",
       jobMarketNotes:
-        "Oportunități în servicii publice, juridic, IT și organizații internaționale.",
+        "OportunitÄƒÈ›i Ã®n servicii publice, juridic, IT È™i organizaÈ›ii internaÈ›ionale.",
       localLawNotes:
-        "Formalitățile administrative locale urmează regulile generale pentru cetățeni UE.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ regulile generale pentru cetÄƒÈ›eni UE.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3900,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: netherlands.id,
@@ -978,17 +1402,17 @@ async function main() {
       longitude: 4.3007,
       population: 563000,
       generalDescription:
-        "Haga este centru administrativ și internațional, cu multe instituții europene și globale.",
+        "Haga este centru administrativ È™i internaÈ›ional, cu multe instituÈ›ii europene È™i globale.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Haga-Rotterdam.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Haga-Rotterdam.",
       jobMarketNotes:
-        "Oportunități în servicii publice, juridic, IT și organizații internaționale.",
+        "OportunitÄƒÈ›i Ã®n servicii publice, juridic, IT È™i organizaÈ›ii internaÈ›ionale.",
       localLawNotes:
-        "Formalitățile administrative locale urmează regulile generale pentru cetățeni UE.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ regulile generale pentru cetÄƒÈ›eni UE.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 3900,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1002,17 +1426,17 @@ async function main() {
       longitude: 2.1734,
       population: 1664000,
       generalDescription:
-        "Barcelona este un hub economic și tehnologic major, cu sector puternic în servicii și turism.",
+        "Barcelona este un hub economic È™i tehnologic major, cu sector puternic Ã®n servicii È™i turism.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și activă în Barcelona.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i activÄƒ Ã®n Barcelona.",
       jobMarketNotes:
-        "Cerere bună în IT, turism, retail, logistică și servicii.",
+        "Cerere bunÄƒ Ã®n IT, turism, retail, logisticÄƒ È™i servicii.",
       localLawNotes:
-        "Pentru muncă și servicii locale sunt necesare formalități administrative standard.",
+        "Pentru muncÄƒ È™i servicii locale sunt necesare formalitÄƒÈ›i administrative standard.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2300,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: spain.id,
@@ -1023,17 +1447,17 @@ async function main() {
       longitude: 2.1734,
       population: 1664000,
       generalDescription:
-        "Barcelona este un hub economic și tehnologic major, cu sector puternic în servicii și turism.",
+        "Barcelona este un hub economic È™i tehnologic major, cu sector puternic Ã®n servicii È™i turism.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și activă în Barcelona.",
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i activÄƒ Ã®n Barcelona.",
       jobMarketNotes:
-        "Cerere bună în IT, turism, retail, logistică și servicii.",
+        "Cerere bunÄƒ Ã®n IT, turism, retail, logisticÄƒ È™i servicii.",
       localLawNotes:
-        "Pentru muncă și servicii locale sunt necesare formalități administrative standard.",
+        "Pentru muncÄƒ È™i servicii locale sunt necesare formalitÄƒÈ›i administrative standard.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2300,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1047,17 +1471,17 @@ async function main() {
       longitude: -0.3763,
       population: 792000,
       generalDescription:
-        "Valencia are costuri relativ echilibrate și o piață locală bună în servicii și logistică.",
+        "Valencia are costuri relativ echilibrate È™i o piaÈ›Äƒ localÄƒ bunÄƒ Ã®n servicii È™i logisticÄƒ.",
       romanianCommunityNotes:
-        "Comunitate românească stabilă și activă în regiune.",
+        "Comunitate romÃ¢neascÄƒ stabilÄƒ È™i activÄƒ Ã®n regiune.",
       jobMarketNotes:
-        "Oportunități în logistică, servicii, turism, construcții și sănătate.",
+        "OportunitÄƒÈ›i Ã®n logisticÄƒ, servicii, turism, construcÈ›ii È™i sÄƒnÄƒtate.",
       localLawNotes:
-        "Formalitățile UE de rezidență și muncă se aplică în mod standard.",
+        "FormalitÄƒÈ›ile UE de rezidenÈ›Äƒ È™i muncÄƒ se aplicÄƒ Ã®n mod standard.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: spain.id,
@@ -1068,17 +1492,17 @@ async function main() {
       longitude: -0.3763,
       population: 792000,
       generalDescription:
-        "Valencia are costuri relativ echilibrate și o piață locală bună în servicii și logistică.",
+        "Valencia are costuri relativ echilibrate È™i o piaÈ›Äƒ localÄƒ bunÄƒ Ã®n servicii È™i logisticÄƒ.",
       romanianCommunityNotes:
-        "Comunitate românească stabilă și activă în regiune.",
+        "Comunitate romÃ¢neascÄƒ stabilÄƒ È™i activÄƒ Ã®n regiune.",
       jobMarketNotes:
-        "Oportunități în logistică, servicii, turism, construcții și sănătate.",
+        "OportunitÄƒÈ›i Ã®n logisticÄƒ, servicii, turism, construcÈ›ii È™i sÄƒnÄƒtate.",
       localLawNotes:
-        "Formalitățile UE de rezidență și muncă se aplică în mod standard.",
+        "FormalitÄƒÈ›ile UE de rezidenÈ›Äƒ È™i muncÄƒ se aplicÄƒ Ã®n mod standard.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1092,16 +1516,16 @@ async function main() {
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Lyon este un pol economic important în Franța, cu industrie, sănătate și servicii dezvoltate.",
+        "Lyon este un pol economic important Ã®n FranÈ›a, cu industrie, sÄƒnÄƒtate È™i servicii dezvoltate.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Lyon și zonele apropiate.",
-      jobMarketNotes: "Cerere bună în inginerie, pharma, servicii și IT.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Lyon È™i zonele apropiate.",
+      jobMarketNotes: "Cerere bunÄƒ Ã®n inginerie, pharma, servicii È™i IT.",
       localLawNotes:
-        "Procedurile administrative locale sunt similare cu cele din restul Franței.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Procedurile administrative locale sunt similare cu cele din restul FranÈ›ei.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2500,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: france.id,
@@ -1112,16 +1536,16 @@ async function main() {
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Lyon este un pol economic important în Franța, cu industrie, sănătate și servicii dezvoltate.",
+        "Lyon este un pol economic important Ã®n FranÈ›a, cu industrie, sÄƒnÄƒtate È™i servicii dezvoltate.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Lyon și zonele apropiate.",
-      jobMarketNotes: "Cerere bună în inginerie, pharma, servicii și IT.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Lyon È™i zonele apropiate.",
+      jobMarketNotes: "Cerere bunÄƒ Ã®n inginerie, pharma, servicii È™i IT.",
       localLawNotes:
-        "Procedurile administrative locale sunt similare cu cele din restul Franței.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "Procedurile administrative locale sunt similare cu cele din restul FranÈ›ei.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2500,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1135,17 +1559,17 @@ async function main() {
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Marseille este un oraș-port major, cu economie în servicii, transport și comerț.",
+        "Marseille este un oraÈ™-port major, cu economie Ã®n servicii, transport È™i comerÈ›.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în zona metropolitană Marseille.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n zona metropolitanÄƒ Marseille.",
       jobMarketNotes:
-        "Oportunități în logistică, servicii, sănătate și turism.",
+        "OportunitÄƒÈ›i Ã®n logisticÄƒ, servicii, sÄƒnÄƒtate È™i turism.",
       localLawNotes:
-        "Formalitățile administrative locale urmează cadrul național francez.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ cadrul naÈ›ional francez.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2300,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: france.id,
@@ -1156,17 +1580,17 @@ async function main() {
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Marseille este un oraș-port major, cu economie în servicii, transport și comerț.",
+        "Marseille este un oraÈ™-port major, cu economie Ã®n servicii, transport È™i comerÈ›.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în zona metropolitană Marseille.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n zona metropolitanÄƒ Marseille.",
       jobMarketNotes:
-        "Oportunități în logistică, servicii, sănătate și turism.",
+        "OportunitÄƒÈ›i Ã®n logisticÄƒ, servicii, sÄƒnÄƒtate È™i turism.",
       localLawNotes:
-        "Formalitățile administrative locale urmează cadrul național francez.",
-      predominantReligion: "Creștinism",
-      emigrationDifficulty: "MEDIUM",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ cadrul naÈ›ional francez.",
+      predominantReligion: "CreÈ™tinism",
+      emigrationDifficulty: "MEDIE",
       averageSalaryEur: 2300,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1180,17 +1604,17 @@ async function main() {
       longitude: 12.4964,
       population: 2873000,
       generalDescription:
-        "Roma este centrul administrativ al Italiei, cu o economie variată în servicii și turism.",
+        "Roma este centrul administrativ al Italiei, cu o economie variatÄƒ Ã®n servicii È™i turism.",
       romanianCommunityNotes:
-        "Comunitate românească foarte numeroasă și bine organizată.",
+        "Comunitate romÃ¢neascÄƒ foarte numeroasÄƒ È™i bine organizatÄƒ.",
       jobMarketNotes:
-        "Cerere în servicii, turism, sănătate, retail și administrație.",
+        "Cerere Ã®n servicii, turism, sÄƒnÄƒtate, retail È™i administraÈ›ie.",
       localLawNotes:
-        "Sunt necesare formalități locale pentru rezidență, fiscalitate și sănătate.",
+        "Sunt necesare formalitÄƒÈ›i locale pentru rezidenÈ›Äƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2000,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: italy.id,
@@ -1201,17 +1625,17 @@ async function main() {
       longitude: 12.4964,
       population: 2873000,
       generalDescription:
-        "Roma este centrul administrativ al Italiei, cu o economie variată în servicii și turism.",
+        "Roma este centrul administrativ al Italiei, cu o economie variatÄƒ Ã®n servicii È™i turism.",
       romanianCommunityNotes:
-        "Comunitate românească foarte numeroasă și bine organizată.",
+        "Comunitate romÃ¢neascÄƒ foarte numeroasÄƒ È™i bine organizatÄƒ.",
       jobMarketNotes:
-        "Cerere în servicii, turism, sănătate, retail și administrație.",
+        "Cerere Ã®n servicii, turism, sÄƒnÄƒtate, retail È™i administraÈ›ie.",
       localLawNotes:
-        "Sunt necesare formalități locale pentru rezidență, fiscalitate și sănătate.",
+        "Sunt necesare formalitÄƒÈ›i locale pentru rezidenÈ›Äƒ, fiscalitate È™i sÄƒnÄƒtate.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 2000,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1225,16 +1649,17 @@ async function main() {
       longitude: 7.6869,
       population: 848000,
       generalDescription:
-        "Torino este un oraș industrial important, cu tradiție în automotive și inginerie.",
+        "Torino este un oraÈ™ industrial important, cu tradiÈ›ie Ã®n automotive È™i inginerie.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Torino și suburbii.",
-      jobMarketNotes: "Oportunități în industrie, logistică, servicii și IT.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Torino È™i suburbii.",
+      jobMarketNotes:
+        "OportunitÄƒÈ›i Ã®n industrie, logisticÄƒ, servicii È™i IT.",
       localLawNotes:
-        "Formalitățile locale sunt similare cu restul marilor orașe italiene.",
+        "FormalitÄƒÈ›ile locale sunt similare cu restul marilor oraÈ™e italiene.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: italy.id,
@@ -1245,16 +1670,17 @@ async function main() {
       longitude: 7.6869,
       population: 848000,
       generalDescription:
-        "Torino este un oraș industrial important, cu tradiție în automotive și inginerie.",
+        "Torino este un oraÈ™ industrial important, cu tradiÈ›ie Ã®n automotive È™i inginerie.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Torino și suburbii.",
-      jobMarketNotes: "Oportunități în industrie, logistică, servicii și IT.",
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Torino È™i suburbii.",
+      jobMarketNotes:
+        "OportunitÄƒÈ›i Ã®n industrie, logisticÄƒ, servicii È™i IT.",
       localLawNotes:
-        "Formalitățile locale sunt similare cu restul marilor orașe italiene.",
+        "FormalitÄƒÈ›ile locale sunt similare cu restul marilor oraÈ™e italiene.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1900,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1268,16 +1694,17 @@ async function main() {
       longitude: -8.6291,
       population: 237000,
       generalDescription:
-        "Porto este un centru economic din nordul Portugaliei, cu servicii, comerț și industrie ușoară.",
+        "Porto este un centru economic din nordul Portugaliei, cu servicii, comerÈ› È™i industrie uÈ™oarÄƒ.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă și în creștere în zona Porto.",
-      jobMarketNotes: "Cerere în servicii, logistică, turism și suport tehnic.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ È™i Ã®n creÈ™tere Ã®n zona Porto.",
+      jobMarketNotes:
+        "Cerere Ã®n servicii, logisticÄƒ, turism È™i suport tehnic.",
       localLawNotes:
-        "Formalitățile administrative locale urmează cadrul național portughez.",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ cadrul naÈ›ional portughez.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1450,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: portugal.id,
@@ -1288,16 +1715,17 @@ async function main() {
       longitude: -8.6291,
       population: 237000,
       generalDescription:
-        "Porto este un centru economic din nordul Portugaliei, cu servicii, comerț și industrie ușoară.",
+        "Porto este un centru economic din nordul Portugaliei, cu servicii, comerÈ› È™i industrie uÈ™oarÄƒ.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă și în creștere în zona Porto.",
-      jobMarketNotes: "Cerere în servicii, logistică, turism și suport tehnic.",
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ È™i Ã®n creÈ™tere Ã®n zona Porto.",
+      jobMarketNotes:
+        "Cerere Ã®n servicii, logisticÄƒ, turism È™i suport tehnic.",
       localLawNotes:
-        "Formalitățile administrative locale urmează cadrul național portughez.",
+        "FormalitÄƒÈ›ile administrative locale urmeazÄƒ cadrul naÈ›ional portughez.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1450,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1311,17 +1739,17 @@ async function main() {
       longitude: -8.4103,
       population: 143000,
       generalDescription:
-        "Coimbra este cunoscut pentru mediul universitar și costuri relativ moderate.",
+        "Coimbra este cunoscut pentru mediul universitar È™i costuri relativ moderate.",
       romanianCommunityNotes:
-        "Comunitate românească mai mică, dar activă în zona universitară.",
+        "Comunitate romÃ¢neascÄƒ mai micÄƒ, dar activÄƒ Ã®n zona universitarÄƒ.",
       jobMarketNotes:
-        "Oportunități în educație, servicii, sănătate și roluri locale tech.",
+        "OportunitÄƒÈ›i Ã®n educaÈ›ie, servicii, sÄƒnÄƒtate È™i roluri locale tech.",
       localLawNotes:
-        "Procedurile administrative locale sunt accesibile și similare cu restul Portugaliei.",
+        "Procedurile administrative locale sunt accesibile È™i similare cu restul Portugaliei.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1300,
-      isFeatured: true,
+      isFeatured: false,
     },
     create: {
       countryId: portugal.id,
@@ -1332,17 +1760,17 @@ async function main() {
       longitude: -8.4103,
       population: 143000,
       generalDescription:
-        "Coimbra este cunoscut pentru mediul universitar și costuri relativ moderate.",
+        "Coimbra este cunoscut pentru mediul universitar È™i costuri relativ moderate.",
       romanianCommunityNotes:
-        "Comunitate românească mai mică, dar activă în zona universitară.",
+        "Comunitate romÃ¢neascÄƒ mai micÄƒ, dar activÄƒ Ã®n zona universitarÄƒ.",
       jobMarketNotes:
-        "Oportunități în educație, servicii, sănătate și roluri locale tech.",
+        "OportunitÄƒÈ›i Ã®n educaÈ›ie, servicii, sÄƒnÄƒtate È™i roluri locale tech.",
       localLawNotes:
-        "Procedurile administrative locale sunt accesibile și similare cu restul Portugaliei.",
+        "Procedurile administrative locale sunt accesibile È™i similare cu restul Portugaliei.",
       predominantReligion: "Catolicism",
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       averageSalaryEur: 1300,
-      isFeatured: true,
+      isFeatured: false,
     },
   });
 
@@ -1613,286 +2041,6 @@ async function main() {
     ],
   });
 
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000001" },
-    update: {
-      countryId: germany.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români, ca cetățeni UE, pot locui și munci în Germania fără viză, cu respectarea formalităților locale.",
-      legalSteps: [
-        "Înregistrarea adresei de domiciliu la autoritatea locală.",
-        "Înregistrarea pentru asigurare medicală.",
-        "Înregistrarea contractului de muncă sau a activității independente.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Contract de închiriere sau dovadă adresă",
-        "Contract de muncă sau dovadă venit",
-      ],
-      estimatedDuration: "1-4 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000001",
-      countryId: germany.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români, ca cetățeni UE, pot locui și munci în Germania fără viză, cu respectarea formalităților locale.",
-      legalSteps: [
-        "Înregistrarea adresei de domiciliu la autoritatea locală.",
-        "Înregistrarea pentru asigurare medicală.",
-        "Înregistrarea contractului de muncă sau a activității independente.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Contract de închiriere sau dovadă adresă",
-        "Contract de muncă sau dovadă venit",
-      ],
-      estimatedDuration: "1-4 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-  });
-
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000002" },
-    update: {
-      countryId: netherlands.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români au drept de muncă în Țările de Jos fără viză, cu înregistrare administrativă locală.",
-      legalSteps: [
-        "Înregistrarea la municipalitate.",
-        "Obținerea BSN pentru acces la servicii și angajare.",
-        "Activarea asigurării medicale obligatorii.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Țările de Jos",
-        "Contract de muncă sau dovadă resurse financiare",
-      ],
-      estimatedDuration: "1-3 săptămâni",
-      officialUrl: "https://ind.nl/en/eu-eea-or-swiss-citizens",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000002",
-      countryId: netherlands.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români au drept de muncă în Țările de Jos fără viză, cu înregistrare administrativă locală.",
-      legalSteps: [
-        "Înregistrarea la municipalitate.",
-        "Obținerea BSN pentru acces la servicii și angajare.",
-        "Activarea asigurării medicale obligatorii.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Țările de Jos",
-        "Contract de muncă sau dovadă resurse financiare",
-      ],
-      estimatedDuration: "1-3 săptămâni",
-      officialUrl: "https://ind.nl/en/eu-eea-or-swiss-citizens",
-      isActive: true,
-    },
-  });
-
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000003" },
-    update: {
-      countryId: spain.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și lucra în Spania fără viză, fiind necesare formalități de înregistrare locale.",
-      legalSteps: [
-        "Înregistrare locală pentru rezidență (după stabilire).",
-        "Obținerea numărului fiscal/identificatorului administrativ pentru formalități.",
-        "Înregistrarea pentru asigurare medicală și contract de muncă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Spania",
-        "Contract de muncă sau dovadă mijloace financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000003",
-      countryId: spain.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și lucra în Spania fără viză, fiind necesare formalități de înregistrare locale.",
-      legalSteps: [
-        "Înregistrare locală pentru rezidență (după stabilire).",
-        "Obținerea numărului fiscal/identificatorului administrativ pentru formalități.",
-        "Înregistrarea pentru asigurare medicală și contract de muncă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Spania",
-        "Contract de muncă sau dovadă mijloace financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-  });
-
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000004" },
-    update: {
-      countryId: france.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și lucra în Franța fără viză, cu formalități administrative locale.",
-      legalSteps: [
-        "Înregistrare administrativă locală după stabilire.",
-        "Înregistrare fiscală și acces la asigurare medicală.",
-        "Contract de muncă sau dovadă de activitate independentă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Franța",
-        "Contract de muncă sau dovadă resurse financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000004",
-      countryId: france.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și lucra în Franța fără viză, cu formalități administrative locale.",
-      legalSteps: [
-        "Înregistrare administrativă locală după stabilire.",
-        "Înregistrare fiscală și acces la asigurare medicală.",
-        "Contract de muncă sau dovadă de activitate independentă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Franța",
-        "Contract de muncă sau dovadă resurse financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-  });
-
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000005" },
-    update: {
-      countryId: italy.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot lucra și locui în Italia fără viză, cu înregistrare locală unde este necesar.",
-      legalSteps: [
-        "Înregistrare locală după stabilire.",
-        "Înregistrare pentru fiscalitate și sistemul medical.",
-        "Contract de muncă sau dovadă activitate independentă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Italia",
-        "Contract de muncă sau dovadă venit",
-      ],
-      estimatedDuration: "2-5 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000005",
-      countryId: italy.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot lucra și locui în Italia fără viză, cu înregistrare locală unde este necesar.",
-      legalSteps: [
-        "Înregistrare locală după stabilire.",
-        "Înregistrare pentru fiscalitate și sistemul medical.",
-        "Contract de muncă sau dovadă activitate independentă.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Italia",
-        "Contract de muncă sau dovadă venit",
-      ],
-      estimatedDuration: "2-5 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-  });
-
-  await prisma.visaInfo.upsert({
-    where: { id: "00000000-0000-0000-0000-000000000006" },
-    update: {
-      countryId: portugal.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și munci în Portugalia fără viză, conform drepturilor UE de liberă circulație.",
-      legalSteps: [
-        "Înregistrare administrativă locală după stabilire.",
-        "Înregistrare fiscală și pentru sănătate.",
-        "Contract de muncă sau dovadă activitate economică.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Portugalia",
-        "Contract de muncă sau dovadă mijloace financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-    create: {
-      id: "00000000-0000-0000-0000-000000000006",
-      countryId: portugal.id,
-      category: "WORK",
-      title: "Drept de ședere și muncă pentru cetățeni UE",
-      summary:
-        "Cetățenii români pot locui și munci în Portugalia fără viză, conform drepturilor UE de liberă circulație.",
-      legalSteps: [
-        "Înregistrare administrativă locală după stabilire.",
-        "Înregistrare fiscală și pentru sănătate.",
-        "Contract de muncă sau dovadă activitate economică.",
-      ],
-      requiredDocuments: [
-        "Carte de identitate sau pașaport valabil",
-        "Dovadă adresă în Portugalia",
-        "Contract de muncă sau dovadă mijloace financiare",
-      ],
-      estimatedDuration: "2-6 săptămâni",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    },
-  });
-
   const additionalEuropeanCountries: SeedCountry[] = [
     {
       name: "Albania",
@@ -1900,17 +2048,18 @@ async function main() {
       isoCode: "AL",
       capital: "Tirana",
       currency: "ALL",
-      officialLanguage: "Albaneză",
+      officialLanguage: "AlbanezÄƒ",
       predominantReligion: "Islam",
       latitude: 41.1533,
       longitude: 20.1683,
       averageSalaryEur: 950,
+      population: 2862000,
       taxLevel: "LOW",
       incomeTaxRate: 23,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Albania oferă costuri de viață mai reduse și oportunități în servicii, turism și construcții.",
+        "Albania este situatÄƒ Ã®n sud-estul Europei, Ã®n vestul Balcanilor, È™i are graniÈ›e cu Macedonia la est, Grecia la sud È™i Kosovo È™i Muntenegru la nord. Are acces la Marea AdriaticÄƒ È™i Marea IonicÄƒ la vest È™i sud-vest, fiind la mai puÈ›in de 72 de kilometri de Italia. OferÄƒ costuri de viaÈ›Äƒ mai reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism È™i construcÈ›ii.",
     },
     {
       name: "Andorra",
@@ -1918,17 +2067,17 @@ async function main() {
       isoCode: "AD",
       capital: "Andorra la Vella",
       currency: "EUR",
-      officialLanguage: "Catalană",
+      officialLanguage: "CatalanÄƒ",
       predominantReligion: "Catolicism",
       latitude: 42.5063,
       longitude: 1.5218,
       averageSalaryEur: 2200,
       taxLevel: "LOW",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Andorra este o economie mică axată pe turism, retail și servicii financiare.",
+        "Andorra este situatÄƒ Ã®n MunÈ›ii Pirinei, Ã®ntre FranÈ›a È™i Spania. Economia se bazeazÄƒ pe turism, retail È™i servicii financiare; oferÄƒ oportunitÄƒÈ›i Ã®n ospitalitate È™i comerÈ›, iar costurile pot fi ridicate Ã®n zonele turistice.",
     },
     {
       name: "Armenia",
@@ -1936,17 +2085,17 @@ async function main() {
       isoCode: "AM",
       capital: "Yerevan",
       currency: "AMD",
-      officialLanguage: "Armeană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "ArmeanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 40.0691,
       longitude: 45.0382,
       averageSalaryEur: 900,
       taxLevel: "LOW",
       incomeTaxRate: 20,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Armenia are o piață în creștere în IT, servicii și industrii creative.",
+        "Armenia se aflÄƒ la intersecÈ›ia dintre Europa È™i Asia, Ã®n regiunea Caucazului de Sud, avÃ¢nd graniÈ›e cu Georgia, Azerbaidjan, Turcia È™i Iran. DezvoltÄƒ un sector IT Ã®n creÈ™tere È™i servicii locale, oferind costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i pentru antreprenori È™i specialiÈ™ti IT.",
     },
     {
       name: "Austria",
@@ -1954,17 +2103,17 @@ async function main() {
       isoCode: "AT",
       capital: "Viena",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.5162,
       longitude: 14.5501,
       averageSalaryEur: 3400,
       taxLevel: "HIGH",
       incomeTaxRate: 55,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Austria oferă stabilitate economică și oportunități bune în industrie, sănătate și servicii.",
+        "Austria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®nvecinatÄƒ cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, ElveÈ›ia È™i Liechtenstein. OferÄƒ stabilitate economicÄƒ, infrastructurÄƒ performantÄƒ È™i oportunitÄƒÈ›i Ã®n industrie, sÄƒnÄƒtate È™i servicii; costurile sunt moderate spre ridicate.",
     },
     {
       name: "Azerbaidjan",
@@ -1972,17 +2121,17 @@ async function main() {
       isoCode: "AZ",
       capital: "Baku",
       currency: "AZN",
-      officialLanguage: "Azeră",
+      officialLanguage: "AzerÄƒ",
       predominantReligion: "Islam",
       latitude: 40.1431,
       longitude: 47.5769,
       averageSalaryEur: 1000,
       taxLevel: "LOW",
       incomeTaxRate: 25,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Azerbaidjan are economie orientată spre energie, servicii și infrastructură urbană.",
+        "Azerbaidjan se Ã®ntinde Ã®n regiunea Caucazului, cu coastÄƒ la Marea CaspicÄƒ. Economia este puternic legatÄƒ de sectorul energetic, dar existÄƒ oportunitÄƒÈ›i Ã®n infrastructurÄƒ, servicii È™i dezvoltare urbanÄƒ; costurile sunt Ã®n general moderate.",
     },
     {
       name: "Belarus",
@@ -1990,17 +2139,17 @@ async function main() {
       isoCode: "BY",
       capital: "Minsk",
       currency: "BYN",
-      officialLanguage: "Belarusă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "BelarusÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 53.7098,
       longitude: 27.9534,
       averageSalaryEur: 800,
       taxLevel: "LOW",
       incomeTaxRate: 13,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Belarus are costuri moderate și o piață locală concentrată în industrie și servicii.",
+        "Belarus este situatÄƒ Ã®n Europa de Est, Ã®ntre Polonia, Lituania, Letonia, Rusia È™i Ucraina. Economia este concentratÄƒ Ã®n industrie È™i servicii publice; costurile de viaÈ›Äƒ sunt relativ scÄƒzute È™i existÄƒ cerere Ã®n sectoare industriale È™i logistice.",
     },
     {
       name: "Belgia",
@@ -2008,35 +2157,35 @@ async function main() {
       isoCode: "BE",
       capital: "Bruxelles",
       currency: "EUR",
-      officialLanguage: "Neerlandeză/Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ/FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 50.5039,
       longitude: 4.4699,
       averageSalaryEur: 3600,
       taxLevel: "HIGH",
       incomeTaxRate: 50,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Belgia este un centru european pentru servicii, instituții internaționale și logistică.",
+        "Belgia se aflÄƒ Ã®n Europa de Vest, Ã®ntre FranÈ›a, Germania, Luxemburg È™i ÈšÄƒrile de Jos, cu acces la Marea Nordului. Este un centru pentru instituÈ›ii europene, logisticÄƒ È™i servicii, oferind oportunitÄƒÈ›i Ã®n finanÈ›e, funcÈ›ii internaÈ›ionale È™i logisticÄƒ; costurile sunt ridicate Ã®n Bruxelles.",
     },
     {
-      name: "Bosnia și Herțegovina",
+      name: "Bosnia È™i HerÈ›egovina",
       slug: "bosnia-si-hertegovina",
       isoCode: "BA",
       capital: "Sarajevo",
       currency: "BAM",
-      officialLanguage: "Bosniacă",
+      officialLanguage: "BosniacÄƒ",
       predominantReligion: "Islam",
       latitude: 43.9159,
       longitude: 17.6791,
       averageSalaryEur: 900,
       taxLevel: "LOW",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Bosnia și Herțegovina are costuri reduse și oportunități în servicii și industrie locală.",
+        "Bosnia È™i HerÈ›egovina este situatÄƒ Ã®n Peninsula BalcanicÄƒ, cu graniÈ›e la CroaÈ›ia, Serbia È™i Muntenegru. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism local È™i industrie; pieÈ›ele regionale sunt Ã®n dezvoltare.",
     },
     {
       name: "Bulgaria",
@@ -2044,35 +2193,35 @@ async function main() {
       isoCode: "BG",
       capital: "Sofia",
       currency: "BGN",
-      officialLanguage: "Bulgară",
-      predominantReligion: "Creștinism",
+      officialLanguage: "BulgarÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.7339,
       longitude: 25.4858,
       averageSalaryEur: 1200,
       taxLevel: "LOW",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Bulgaria oferă costuri moderate și cerere bună în IT, servicii și outsourcing.",
+        "Bulgaria este situatÄƒ Ã®n sud-estul Europei, la Marea NeagrÄƒ, avÃ¢nd graniÈ›e cu RomÃ¢nia, Serbia, Macedonia de Nord, Grecia È™i Turcia. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n IT, outsourcing, agriculturÄƒ È™i turism.",
     },
     {
-      name: "Croația",
+      name: "CroaÈ›ia",
       slug: "croatia",
       isoCode: "HR",
       capital: "Zagreb",
       currency: "EUR",
-      officialLanguage: "Croată",
+      officialLanguage: "CroatÄƒ",
       predominantReligion: "Catolicism",
       latitude: 45.1,
       longitude: 15.2,
       averageSalaryEur: 1500,
       taxLevel: "MEDIUM",
       incomeTaxRate: 30,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Croația combină economie turistică puternică cu servicii și industrie locală.",
+        "CroaÈ›ia este situatÄƒ Ã®n sud-estul Europei, pe coasta MÄƒrii Adriatice, cu graniÈ›e la Slovenia, Ungaria, Serbia È™i Bosnia È™i HerÈ›egovina. Turismul, porturile È™i serviciile maritime oferÄƒ oportunitÄƒÈ›i; costurile variazÄƒ Ã®ntre litoral È™i interior.",
     },
     {
       name: "Cipru",
@@ -2080,17 +2229,17 @@ async function main() {
       isoCode: "CY",
       capital: "Nicosia",
       currency: "EUR",
-      officialLanguage: "Greacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GreacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 35.1264,
       longitude: 33.4299,
       averageSalaryEur: 2200,
       taxLevel: "MEDIUM",
       incomeTaxRate: 35,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Cipru are economie orientată spre servicii, turism, finanțe și shipping.",
+        "Cipru are economie orientatÄƒ spre servicii, turism, finanÈ›e È™i shipping.",
     },
     {
       name: "Cehia",
@@ -2098,17 +2247,17 @@ async function main() {
       isoCode: "CZ",
       capital: "Praga",
       currency: "CZK",
-      officialLanguage: "Cehă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "CehÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 49.8175,
       longitude: 15.473,
       averageSalaryEur: 2100,
       taxLevel: "MEDIUM",
       incomeTaxRate: 23,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Cehia are piață solidă în producție, IT, automotive și servicii.",
+        "Cehia are piaÈ›Äƒ solidÄƒ Ã®n producÈ›ie, IT, automotive È™i servicii.",
     },
     {
       name: "Danemarca",
@@ -2116,17 +2265,17 @@ async function main() {
       isoCode: "DK",
       capital: "Copenhaga",
       currency: "DKK",
-      officialLanguage: "Daneză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "DanezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 56.2639,
       longitude: 9.5018,
       averageSalaryEur: 4700,
       taxLevel: "HIGH",
       incomeTaxRate: 55,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Danemarca oferă salarii mari, servicii publice puternice și piață competitivă.",
+        "Danemarca oferÄƒ salarii mari, servicii publice puternice È™i piaÈ›Äƒ competitivÄƒ.",
     },
     {
       name: "Estonia",
@@ -2134,17 +2283,17 @@ async function main() {
       isoCode: "EE",
       capital: "Tallinn",
       currency: "EUR",
-      officialLanguage: "Estonă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EstonÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 58.5953,
       longitude: 25.0136,
       averageSalaryEur: 2200,
       taxLevel: "MEDIUM",
       incomeTaxRate: 20,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Estonia este recunoscută pentru digitalizare, tehnologie și administrație eficientă.",
+        "Estonia este recunoscutÄƒ pentru digitalizare, tehnologie È™i administraÈ›ie eficientÄƒ.",
     },
     {
       name: "Finlanda",
@@ -2152,17 +2301,17 @@ async function main() {
       isoCode: "FI",
       capital: "Helsinki",
       currency: "EUR",
-      officialLanguage: "Finlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FinlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 61.9241,
       longitude: 25.7482,
       averageSalaryEur: 3900,
       taxLevel: "HIGH",
       incomeTaxRate: 51,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Finlanda oferă calitate ridicată a vieții și oportunități în tech, industrie și servicii.",
+        "Finlanda oferÄƒ calitate ridicatÄƒ a vieÈ›ii È™i oportunitÄƒÈ›i Ã®n tech, industrie È™i servicii.",
     },
     {
       name: "Georgia",
@@ -2170,17 +2319,17 @@ async function main() {
       isoCode: "GE",
       capital: "Tbilisi",
       currency: "GEL",
-      officialLanguage: "Georgiană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GeorgianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.3154,
       longitude: 43.3569,
       averageSalaryEur: 900,
       taxLevel: "LOW",
       incomeTaxRate: 20,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Georgia are costuri accesibile și un sector de servicii în creștere.",
+        "Georgia are costuri accesibile È™i un sector de servicii Ã®n creÈ™tere.",
     },
     {
       name: "Grecia",
@@ -2188,17 +2337,17 @@ async function main() {
       isoCode: "GR",
       capital: "Atena",
       currency: "EUR",
-      officialLanguage: "Greacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GreacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 39.0742,
       longitude: 21.8243,
       averageSalaryEur: 1500,
       taxLevel: "HIGH",
       incomeTaxRate: 44,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Grecia oferă oportunități în turism, servicii, shipping și comerț.",
+        "Grecia oferÄƒ oportunitÄƒÈ›i Ã®n turism, servicii, shipping È™i comerÈ›.",
     },
     {
       name: "Ungaria",
@@ -2206,17 +2355,17 @@ async function main() {
       isoCode: "HU",
       capital: "Budapesta",
       currency: "HUF",
-      officialLanguage: "Maghiară",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MaghiarÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.1625,
       longitude: 19.5033,
       averageSalaryEur: 1700,
       taxLevel: "MEDIUM",
       incomeTaxRate: 15,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Ungaria are o piață industrială și de servicii stabilă, concentrată urban.",
+        "Ungaria are o piaÈ›Äƒ industrialÄƒ È™i de servicii stabilÄƒ, concentratÄƒ urban.",
     },
     {
       name: "Islanda",
@@ -2224,17 +2373,17 @@ async function main() {
       isoCode: "IS",
       capital: "Reykjavik",
       currency: "ISK",
-      officialLanguage: "Islandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "IslandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 64.9631,
       longitude: -19.0208,
       averageSalaryEur: 4300,
       taxLevel: "HIGH",
       incomeTaxRate: 46,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Islanda oferă salarii ridicate și piață locală orientată spre servicii și energie.",
+        "Islanda oferÄƒ salarii ridicate È™i piaÈ›Äƒ localÄƒ orientatÄƒ spre servicii È™i energie.",
     },
     {
       name: "Irlanda",
@@ -2242,17 +2391,17 @@ async function main() {
       isoCode: "IE",
       capital: "Dublin",
       currency: "EUR",
-      officialLanguage: "Engleză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EnglezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 53.1424,
       longitude: -7.6921,
       averageSalaryEur: 4200,
       taxLevel: "HIGH",
       incomeTaxRate: 40,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Irlanda este un hub european pentru tech, pharma și servicii financiare.",
+        "Irlanda este un hub european pentru tech, pharma È™i servicii financiare.",
     },
     {
       name: "Kosovo",
@@ -2260,17 +2409,17 @@ async function main() {
       isoCode: "XK",
       capital: "Pristina",
       currency: "EUR",
-      officialLanguage: "Albaneză",
+      officialLanguage: "AlbanezÄƒ",
       predominantReligion: "Islam",
       latitude: 42.6026,
       longitude: 20.903,
       averageSalaryEur: 700,
       taxLevel: "LOW",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Kosovo are costuri reduse și oportunități în servicii, comerț și sector public.",
+        "Kosovo are costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, comerÈ› È™i sector public.",
     },
     {
       name: "Letonia",
@@ -2278,17 +2427,17 @@ async function main() {
       isoCode: "LV",
       capital: "Riga",
       currency: "EUR",
-      officialLanguage: "Letonă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "LetonÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 56.8796,
       longitude: 24.6032,
       averageSalaryEur: 1700,
       taxLevel: "MEDIUM",
       incomeTaxRate: 31,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Letonia are o economie deschisă, cu accent pe servicii, transport și tehnologie.",
+        "Letonia are o economie deschisÄƒ, cu accent pe servicii, transport È™i tehnologie.",
     },
     {
       name: "Liechtenstein",
@@ -2296,17 +2445,17 @@ async function main() {
       isoCode: "LI",
       capital: "Vaduz",
       currency: "CHF",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.166,
       longitude: 9.5554,
       averageSalaryEur: 5600,
       taxLevel: "LOW",
       incomeTaxRate: 22,
-      citizenshipDifficulty: "VERY_HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "FOARTE_RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Liechtenstein este o economie mică și foarte competitivă, axată pe industrie și finanțe.",
+        "Liechtenstein este o economie micÄƒ È™i foarte competitivÄƒ, axatÄƒ pe industrie È™i finanÈ›e.",
     },
     {
       name: "Lituania",
@@ -2314,17 +2463,17 @@ async function main() {
       isoCode: "LT",
       capital: "Vilnius",
       currency: "EUR",
-      officialLanguage: "Lituaniană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "LituanianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 55.1694,
       longitude: 23.8813,
       averageSalaryEur: 1900,
       taxLevel: "MEDIUM",
       incomeTaxRate: 32,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Lituania are piață de muncă în creștere în servicii, fintech și logistică.",
+        "Lituania are piaÈ›Äƒ de muncÄƒ Ã®n creÈ™tere Ã®n servicii, fintech È™i logisticÄƒ.",
     },
     {
       name: "Luxemburg",
@@ -2332,17 +2481,17 @@ async function main() {
       isoCode: "LU",
       capital: "Luxemburg",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 49.8153,
       longitude: 6.1296,
       averageSalaryEur: 5900,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Luxemburg oferă salarii foarte ridicate și oportunități în finanțe și servicii premium.",
+        "Luxemburg oferÄƒ salarii foarte ridicate È™i oportunitÄƒÈ›i Ã®n finanÈ›e È™i servicii premium.",
     },
     {
       name: "Malta",
@@ -2350,35 +2499,35 @@ async function main() {
       isoCode: "MT",
       capital: "Valletta",
       currency: "EUR",
-      officialLanguage: "Engleză",
+      officialLanguage: "EnglezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 35.9375,
       longitude: 14.3754,
       averageSalaryEur: 2100,
       taxLevel: "MEDIUM",
       incomeTaxRate: 35,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Malta este atractivă pentru servicii, gaming, fintech și turism.",
+        "Malta este atractivÄƒ pentru servicii, gaming, fintech È™i turism.",
     },
     {
       name: "Moldova",
       slug: "moldova",
       isoCode: "MD",
-      capital: "Chișinău",
+      capital: "ChiÈ™inÄƒu",
       currency: "MDL",
-      officialLanguage: "Română",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RomÃ¢nÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.4116,
       longitude: 28.3699,
       averageSalaryEur: 700,
       taxLevel: "LOW",
       incomeTaxRate: 12,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Moldova oferă costuri reduse și oportunități în servicii, agricultură și IT local.",
+        "Moldova oferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, agriculturÄƒ È™i IT local.",
     },
     {
       name: "Monaco",
@@ -2386,17 +2535,17 @@ async function main() {
       isoCode: "MC",
       capital: "Monaco",
       currency: "EUR",
-      officialLanguage: "Franceză",
+      officialLanguage: "FrancezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 43.7384,
       longitude: 7.4246,
       averageSalaryEur: 4500,
       taxLevel: "LOW",
       incomeTaxRate: 0,
-      citizenshipDifficulty: "VERY_HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "FOARTE_RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Monaco este un microstat premium orientat spre servicii financiare și ospitalitate.",
+        "Monaco este un microstat premium orientat spre servicii financiare È™i ospitalitate.",
     },
     {
       name: "Muntenegru",
@@ -2404,17 +2553,17 @@ async function main() {
       isoCode: "ME",
       capital: "Podgorica",
       currency: "EUR",
-      officialLanguage: "Muntenegreană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MuntenegreanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.7087,
       longitude: 19.3744,
       averageSalaryEur: 1000,
       taxLevel: "LOW",
       incomeTaxRate: 15,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Muntenegru are economie bazată pe turism, servicii și investiții imobiliare.",
+        "Muntenegru are economie bazatÄƒ pe turism, servicii È™i investiÈ›ii imobiliare.",
     },
     {
       name: "Macedonia de Nord",
@@ -2422,17 +2571,17 @@ async function main() {
       isoCode: "MK",
       capital: "Skopje",
       currency: "MKD",
-      officialLanguage: "Macedoneană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MacedoneanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 41.6086,
       longitude: 21.7453,
       averageSalaryEur: 850,
       taxLevel: "LOW",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Macedonia de Nord oferă costuri moderate și oportunități în servicii și industrie ușoară.",
+        "Macedonia de Nord oferÄƒ costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii È™i industrie uÈ™oarÄƒ.",
     },
     {
       name: "Norvegia",
@@ -2440,53 +2589,53 @@ async function main() {
       isoCode: "NO",
       capital: "Oslo",
       currency: "NOK",
-      officialLanguage: "Norvegiană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NorvegianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 60.472,
       longitude: 8.4689,
       averageSalaryEur: 5200,
       taxLevel: "HIGH",
       incomeTaxRate: 47,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Norvegia are salarii ridicate și oportunități în energie, tehnologie și servicii.",
+        "Norvegia are salarii ridicate È™i oportunitÄƒÈ›i Ã®n energie, tehnologie È™i servicii.",
     },
     {
       name: "Polonia",
       slug: "polonia",
       isoCode: "PL",
-      capital: "Varșovia",
+      capital: "VarÈ™ovia",
       currency: "PLN",
-      officialLanguage: "Poloneză",
+      officialLanguage: "PolonezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 51.9194,
       longitude: 19.1451,
       averageSalaryEur: 1800,
       taxLevel: "MEDIUM",
       incomeTaxRate: 32,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Polonia este una dintre cele mai dinamice economii europene în industrie și servicii.",
+        "Polonia este una dintre cele mai dinamice economii europene Ã®n industrie È™i servicii.",
     },
     {
-      name: "România",
+      name: "RomÃ¢nia",
       slug: "romania",
       isoCode: "RO",
-      capital: "București",
+      capital: "BucureÈ™ti",
       currency: "RON",
-      officialLanguage: "Română",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RomÃ¢nÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 45.9432,
       longitude: 24.9668,
       averageSalaryEur: 1500,
       taxLevel: "MEDIUM",
       incomeTaxRate: 10,
-      citizenshipDifficulty: "LOW",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "SCAZUTA",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "România are centre urbane puternice în IT, servicii, industrie și logistică.",
+        "RomÃ¢nia are centre urbane puternice Ã®n IT, servicii, industrie È™i logisticÄƒ.",
     },
     {
       name: "Rusia",
@@ -2494,17 +2643,17 @@ async function main() {
       isoCode: "RU",
       capital: "Moscova",
       currency: "RUB",
-      officialLanguage: "Rusă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RusÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 61.524,
       longitude: 105.3188,
       averageSalaryEur: 1300,
       taxLevel: "LOW",
       incomeTaxRate: 15,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Rusia are piețe urbane mari, cu oportunități în industrie, energie și servicii.",
+        "Rusia are pieÈ›e urbane mari, cu oportunitÄƒÈ›i Ã®n industrie, energie È™i servicii.",
     },
     {
       name: "San Marino",
@@ -2512,17 +2661,17 @@ async function main() {
       isoCode: "SM",
       capital: "San Marino",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 43.9424,
       longitude: 12.4578,
       averageSalaryEur: 2300,
       taxLevel: "LOW",
       incomeTaxRate: 35,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "San Marino este microstat european cu economie de servicii și turism.",
+        "San Marino este microstat european cu economie de servicii È™i turism.",
     },
     {
       name: "Serbia",
@@ -2530,17 +2679,17 @@ async function main() {
       isoCode: "RS",
       capital: "Belgrad",
       currency: "RSD",
-      officialLanguage: "Sârbă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SÃ¢rbÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 44.0165,
       longitude: 21.0059,
       averageSalaryEur: 1000,
       taxLevel: "LOW",
       incomeTaxRate: 15,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Serbia are costuri moderate și oportunități în servicii, IT și producție.",
+        "Serbia are costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii, IT È™i producÈ›ie.",
     },
     {
       name: "Slovacia",
@@ -2548,17 +2697,17 @@ async function main() {
       isoCode: "SK",
       capital: "Bratislava",
       currency: "EUR",
-      officialLanguage: "Slovacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SlovacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.669,
       longitude: 19.699,
       averageSalaryEur: 1800,
       taxLevel: "MEDIUM",
       incomeTaxRate: 25,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Slovacia are economie industrială puternică și cerere bună în servicii.",
+        "Slovacia are economie industrialÄƒ puternicÄƒ È™i cerere bunÄƒ Ã®n servicii.",
     },
     {
       name: "Slovenia",
@@ -2566,17 +2715,17 @@ async function main() {
       isoCode: "SI",
       capital: "Ljubljana",
       currency: "EUR",
-      officialLanguage: "Slovenă",
+      officialLanguage: "SlovenÄƒ",
       predominantReligion: "Catolicism",
       latitude: 46.1512,
       longitude: 14.9955,
       averageSalaryEur: 2100,
       taxLevel: "MEDIUM",
       incomeTaxRate: 50,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "LOW",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Slovenia oferă echilibru între costuri, servicii publice și piață de muncă stabilă.",
+        "Slovenia oferÄƒ echilibru Ã®ntre costuri, servicii publice È™i piaÈ›Äƒ de muncÄƒ stabilÄƒ.",
     },
     {
       name: "Suedia",
@@ -2584,35 +2733,35 @@ async function main() {
       isoCode: "SE",
       capital: "Stockholm",
       currency: "SEK",
-      officialLanguage: "Suedeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SuedezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 60.1282,
       longitude: 18.6435,
       averageSalaryEur: 4200,
       taxLevel: "HIGH",
       incomeTaxRate: 52,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Suedia are economie avansată în tehnologie, industrie și servicii publice.",
+        "Suedia are economie avansatÄƒ Ã®n tehnologie, industrie È™i servicii publice.",
     },
     {
-      name: "Elveția",
+      name: "ElveÈ›ia",
       slug: "elvetia",
       isoCode: "CH",
       capital: "Berna",
       currency: "CHF",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 46.8182,
       longitude: 8.2275,
       averageSalaryEur: 6400,
       taxLevel: "MEDIUM",
       incomeTaxRate: 40,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Elveția oferă salarii foarte ridicate și o piață premium în finanțe, pharma și tehnologie.",
+        "ElveÈ›ia oferÄƒ salarii foarte ridicate È™i o piaÈ›Äƒ premium Ã®n finanÈ›e, pharma È™i tehnologie.",
     },
     {
       name: "Turcia",
@@ -2620,17 +2769,17 @@ async function main() {
       isoCode: "TR",
       capital: "Ankara",
       currency: "TRY",
-      officialLanguage: "Turcă",
+      officialLanguage: "TurcÄƒ",
       predominantReligion: "Islam",
       latitude: 38.9637,
       longitude: 35.2433,
       averageSalaryEur: 1100,
       taxLevel: "MEDIUM",
       incomeTaxRate: 40,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Turcia are centre urbane mari și economie diversificată în industrie și servicii.",
+        "Turcia are centre urbane mari È™i economie diversificatÄƒ Ã®n industrie È™i servicii.",
     },
     {
       name: "Ucraina",
@@ -2638,17 +2787,17 @@ async function main() {
       isoCode: "UA",
       capital: "Kiev",
       currency: "UAH",
-      officialLanguage: "Ucraineană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "UcraineanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.3794,
       longitude: 31.1656,
       averageSalaryEur: 800,
       taxLevel: "LOW",
       incomeTaxRate: 18,
-      citizenshipDifficulty: "MEDIUM",
-      emigrationDifficulty: "MEDIUM",
+      citizenshipDifficulty: "MEDIE",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Ucraina are potențial ridicat în servicii, tehnologie și reconstrucție economică.",
+        "Ucraina are potenÈ›ial ridicat Ã®n servicii, tehnologie È™i reconstrucÈ›ie economicÄƒ.",
     },
     {
       name: "Regatul Unit",
@@ -2656,17 +2805,17 @@ async function main() {
       isoCode: "GB",
       capital: "Londra",
       currency: "GBP",
-      officialLanguage: "Engleză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EnglezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 55.3781,
       longitude: -3.436,
       averageSalaryEur: 3900,
       taxLevel: "HIGH",
       incomeTaxRate: 45,
-      citizenshipDifficulty: "HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Regatul Unit oferă oportunități extinse în finanțe, tehnologie, sănătate și servicii.",
+        "Regatul Unit oferÄƒ oportunitÄƒÈ›i extinse Ã®n finanÈ›e, tehnologie, sÄƒnÄƒtate È™i servicii.",
     },
     {
       name: "Vatican",
@@ -2674,17 +2823,17 @@ async function main() {
       isoCode: "VA",
       capital: "Vatican",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9029,
       longitude: 12.4534,
       averageSalaryEur: 2400,
       taxLevel: "LOW",
       incomeTaxRate: 0,
-      citizenshipDifficulty: "VERY_HIGH",
-      emigrationDifficulty: "HIGH",
+      citizenshipDifficulty: "FOARTE_RIDICATA",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Vatican este un microstat religios cu economie instituțională foarte restrânsă.",
+        "Vatican este un microstat religios cu economie instituÈ›ionalÄƒ foarte restrÃ¢nsÄƒ.",
     },
   ];
 
@@ -2698,9 +2847,9 @@ async function main() {
       longitude: 19.8187,
       population: 557000,
       averageSalaryEur: 1000,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Principalul centru economic și administrativ al Albaniei.",
+        "Principalul centru economic È™i administrativ al Albaniei.",
     },
     {
       countrySlug: "albania",
@@ -2711,8 +2860,9 @@ async function main() {
       longitude: 19.4414,
       population: 122000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port important pentru logistică și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "OraÈ™-port important pentru logisticÄƒ È™i servicii.",
     },
     {
       countrySlug: "albania",
@@ -2723,8 +2873,8 @@ async function main() {
       longitude: 19.4914,
       population: 84000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru turistic și comercial pe litoralul albanez.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru turistic È™i comercial pe litoralul albanez.",
     },
 
     {
@@ -2736,8 +2886,9 @@ async function main() {
       longitude: 1.5218,
       population: 23000,
       averageSalaryEur: 2400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitala administrativă și comercială a Andorrei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "Capitala administrativÄƒ È™i comercialÄƒ a Andorrei.",
     },
     {
       countrySlug: "andorra",
@@ -2748,8 +2899,8 @@ async function main() {
       longitude: 1.54,
       population: 14000,
       averageSalaryEur: 2300,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș orientat spre servicii, wellness și turism.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ orientat spre servicii, wellness È™i turism.",
     },
     {
       countrySlug: "andorra",
@@ -2760,9 +2911,9 @@ async function main() {
       longitude: 1.5801,
       population: 12000,
       averageSalaryEur: 2200,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Localitate montană cu activitate turistică sezonieră.",
+        "Localitate montanÄƒ cu activitate turisticÄƒ sezonierÄƒ.",
     },
 
     {
@@ -2774,9 +2925,9 @@ async function main() {
       longitude: 44.4991,
       population: 1080000,
       averageSalaryEur: 1000,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Principal centru economic și tehnologic al Armeniei.",
+        "Principal centru economic È™i tehnologic al Armeniei.",
     },
     {
       countrySlug: "armenia",
@@ -2787,8 +2938,8 @@ async function main() {
       longitude: 43.8475,
       population: 110000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș regional cu servicii și industrie locală.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ regional cu servicii È™i industrie localÄƒ.",
     },
     {
       countrySlug: "armenia",
@@ -2799,9 +2950,9 @@ async function main() {
       longitude: 44.4883,
       population: 76000,
       averageSalaryEur: 800,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Centru regional în dezvoltare pentru servicii și educație.",
+        "Centru regional Ã®n dezvoltare pentru servicii È™i educaÈ›ie.",
     },
 
     {
@@ -2813,9 +2964,9 @@ async function main() {
       longitude: 16.3738,
       population: 2000000,
       averageSalaryEur: 3600,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Capitală europeană cu piață puternică în servicii și sănătate.",
+        "CapitalÄƒ europeanÄƒ cu piaÈ›Äƒ puternicÄƒ Ã®n servicii È™i sÄƒnÄƒtate.",
     },
     {
       countrySlug: "austria",
@@ -2826,20 +2977,21 @@ async function main() {
       longitude: 15.4395,
       population: 300000,
       averageSalaryEur: 3100,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru universitar și industrial în sudul Austriei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "Centru universitar È™i industrial Ã®n sudul Austriei.",
     },
     {
       countrySlug: "austria",
       name: "Linz",
       slug: "linz",
-      region: "Austria Superioară",
+      region: "Austria SuperioarÄƒ",
       latitude: 48.3069,
       longitude: 14.2858,
       population: 210000,
       averageSalaryEur: 3000,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș industrial și tehnologic în creștere.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ industrial È™i tehnologic Ã®n creÈ™tere.",
     },
 
     {
@@ -2851,8 +3003,9 @@ async function main() {
       longitude: 49.8671,
       population: 2300000,
       averageSalaryEur: 1100,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitală energetică și centru financiar național.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "CapitalÄƒ energeticÄƒ È™i centru financiar naÈ›ional.",
     },
     {
       countrySlug: "azerbaidjan",
@@ -2863,8 +3016,8 @@ async function main() {
       longitude: 46.3606,
       population: 330000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru regional cu industrie și servicii.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru regional cu industrie È™i servicii.",
     },
     {
       countrySlug: "azerbaidjan",
@@ -2875,8 +3028,8 @@ async function main() {
       longitude: 49.6686,
       population: 345000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș industrial aproape de capitală.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ industrial aproape de capitalÄƒ.",
     },
 
     {
@@ -2888,8 +3041,9 @@ async function main() {
       longitude: 27.5667,
       population: 2000000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Capitală administrativă și economică a Belarusului.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription:
+        "CapitalÄƒ administrativÄƒ È™i economicÄƒ a Belarusului.",
     },
     {
       countrySlug: "belarus",
@@ -2900,8 +3054,8 @@ async function main() {
       longitude: 30.9754,
       population: 500000,
       averageSalaryEur: 750,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Centru urban important în estul țării.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Centru urban important Ã®n estul È›Äƒrii.",
     },
     {
       countrySlug: "belarus",
@@ -2912,22 +3066,22 @@ async function main() {
       longitude: 23.6878,
       population: 340000,
       averageSalaryEur: 730,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Oraș regional cu comerț și logistică.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "OraÈ™ regional cu comerÈ› È™i logisticÄƒ.",
     },
 
     {
       countrySlug: "belgia",
       name: "Bruxelles",
       slug: "bruxelles",
-      region: "Bruxelles-Capitală",
+      region: "Bruxelles-CapitalÄƒ",
       latitude: 50.8503,
       longitude: 4.3517,
       population: 1220000,
       averageSalaryEur: 3900,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Centru european major pentru instituții și servicii.",
+        "Centru european major pentru instituÈ›ii È™i servicii.",
     },
     {
       countrySlug: "belgia",
@@ -2938,8 +3092,8 @@ async function main() {
       longitude: 4.4025,
       population: 530000,
       averageSalaryEur: 3600,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș-port cheie pentru logistică și comerț.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™-port cheie pentru logisticÄƒ È™i comerÈ›.",
     },
     {
       countrySlug: "belgia",
@@ -2950,8 +3104,8 @@ async function main() {
       longitude: 3.7174,
       population: 265000,
       averageSalaryEur: 3400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru universitar și tehnologic din Belgia.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru universitar È™i tehnologic din Belgia.",
     },
 
     {
@@ -2963,8 +3117,8 @@ async function main() {
       longitude: 18.4131,
       population: 275000,
       averageSalaryEur: 950,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitala și principalul centru de servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Capitala È™i principalul centru de servicii.",
     },
     {
       countrySlug: "bosnia-si-hertegovina",
@@ -2975,20 +3129,20 @@ async function main() {
       longitude: 17.191,
       population: 185000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș regional cu administrație și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ regional cu administraÈ›ie È™i servicii.",
     },
     {
       countrySlug: "bosnia-si-hertegovina",
       name: "Mostar",
       slug: "mostar",
-      region: "Herțegovina",
+      region: "HerÈ›egovina",
       latitude: 43.3438,
       longitude: 17.8078,
       population: 105000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru turistic și comercial în sudul țării.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru turistic È™i comercial Ã®n sudul È›Äƒrii.",
     },
 
     {
@@ -3000,8 +3154,8 @@ async function main() {
       longitude: 23.3219,
       population: 1280000,
       averageSalaryEur: 1400,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Principalul centru economic și IT al Bulgariei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Principalul centru economic È™i IT al Bulgariei.",
     },
     {
       countrySlug: "bulgaria",
@@ -3012,8 +3166,8 @@ async function main() {
       longitude: 24.7453,
       population: 345000,
       averageSalaryEur: 1200,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș industrial și logistic important.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ industrial È™i logistic important.",
     },
     {
       countrySlug: "bulgaria",
@@ -3024,8 +3178,8 @@ async function main() {
       longitude: 27.9147,
       population: 335000,
       averageSalaryEur: 1200,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru portuar și turistic la Marea Neagră.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru portuar È™i turistic la Marea NeagrÄƒ.",
     },
 
     {
@@ -3037,20 +3191,21 @@ async function main() {
       longitude: 15.9819,
       population: 769000,
       averageSalaryEur: 1600,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitala administrativă și economică a Croației.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "Capitala administrativÄƒ È™i economicÄƒ a CroaÈ›iei.",
     },
     {
       countrySlug: "croatia",
       name: "Split",
       slug: "split",
-      region: "Dalmația",
+      region: "DalmaÈ›ia",
       latitude: 43.5081,
       longitude: 16.4402,
       population: 160000,
       averageSalaryEur: 1450,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru turistic și portuar în sudul Croației.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru turistic È™i portuar Ã®n sudul CroaÈ›iei.",
     },
     {
       countrySlug: "croatia",
@@ -3061,8 +3216,9 @@ async function main() {
       longitude: 14.4422,
       population: 108000,
       averageSalaryEur: 1400,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port cu activitate logistică și industrială.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "OraÈ™-port cu activitate logisticÄƒ È™i industrialÄƒ.",
     },
 
     {
@@ -3074,8 +3230,8 @@ async function main() {
       longitude: 33.3823,
       population: 330000,
       averageSalaryEur: 2300,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitală administrativă și centru de servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "CapitalÄƒ administrativÄƒ È™i centru de servicii.",
     },
     {
       countrySlug: "cipru",
@@ -3086,8 +3242,8 @@ async function main() {
       longitude: 33.0226,
       population: 240000,
       averageSalaryEur: 2200,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru financiar și maritim al Ciprului.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru financiar È™i maritim al Ciprului.",
     },
     {
       countrySlug: "cipru",
@@ -3098,22 +3254,22 @@ async function main() {
       longitude: 33.6232,
       population: 85000,
       averageSalaryEur: 2000,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș portuar cu servicii și turism.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ portuar cu servicii È™i turism.",
     },
 
     {
       countrySlug: "cehia",
       name: "Praga",
       slug: "praga",
-      region: "Boemia Centrală",
+      region: "Boemia CentralÄƒ",
       latitude: 50.0755,
       longitude: 14.4378,
       population: 1380000,
       averageSalaryEur: 2400,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală central-europeană puternică în IT și servicii.",
+        "CapitalÄƒ central-europeanÄƒ puternicÄƒ Ã®n IT È™i servicii.",
     },
     {
       countrySlug: "cehia",
@@ -3124,8 +3280,8 @@ async function main() {
       longitude: 16.6068,
       population: 400000,
       averageSalaryEur: 2000,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru universitar și tehnologic în creștere.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru universitar È™i tehnologic Ã®n creÈ™tere.",
     },
     {
       countrySlug: "cehia",
@@ -3136,8 +3292,8 @@ async function main() {
       longitude: 18.2625,
       population: 285000,
       averageSalaryEur: 1800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș industrial cu sector servicii în dezvoltare.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ industrial cu sector servicii Ã®n dezvoltare.",
     },
 
     {
@@ -3149,9 +3305,9 @@ async function main() {
       longitude: 12.5683,
       population: 653000,
       averageSalaryEur: 5000,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Capitală nordică cu economie inovatoare și salarii mari.",
+        "CapitalÄƒ nordicÄƒ cu economie inovatoare È™i salarii mari.",
     },
     {
       countrySlug: "danemarca",
@@ -3162,8 +3318,8 @@ async function main() {
       longitude: 10.2039,
       population: 285000,
       averageSalaryEur: 4400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru universitar și tehnologic în Danemarca.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru universitar È™i tehnologic Ã®n Danemarca.",
     },
     {
       countrySlug: "danemarca",
@@ -3174,8 +3330,8 @@ async function main() {
       longitude: 10.4024,
       population: 180000,
       averageSalaryEur: 4200,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș cu industrie și servicii avansate.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ cu industrie È™i servicii avansate.",
     },
 
     {
@@ -3187,9 +3343,9 @@ async function main() {
       longitude: 24.7536,
       population: 460000,
       averageSalaryEur: 2400,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală digitală cu ecosistem puternic de startup-uri.",
+        "CapitalÄƒ digitalÄƒ cu ecosistem puternic de startup-uri.",
     },
     {
       countrySlug: "estonia",
@@ -3200,8 +3356,8 @@ async function main() {
       longitude: 26.729,
       population: 98000,
       averageSalaryEur: 2000,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru universitar și de cercetare recunoscut.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru universitar È™i de cercetare recunoscut.",
     },
     {
       countrySlug: "estonia",
@@ -3212,8 +3368,8 @@ async function main() {
       longitude: 24.4971,
       population: 40000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș turistic și de servicii pe litoral.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ turistic È™i de servicii pe litoral.",
     },
 
     {
@@ -3225,9 +3381,9 @@ async function main() {
       longitude: 24.9384,
       population: 672000,
       averageSalaryEur: 4200,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Capitală nordică cu sectoare puternice în tehnologie și servicii.",
+        "CapitalÄƒ nordicÄƒ cu sectoare puternice Ã®n tehnologie È™i servicii.",
     },
     {
       countrySlug: "finlanda",
@@ -3238,20 +3394,20 @@ async function main() {
       longitude: 23.761,
       population: 255000,
       averageSalaryEur: 3600,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru industrial și tech în sudul Finlandei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru industrial È™i tech Ã®n sudul Finlandei.",
     },
     {
       countrySlug: "finlanda",
       name: "Turku",
       slug: "turku",
-      region: "Finlanda Propriu-zisă",
+      region: "Finlanda Propriu-zisÄƒ",
       latitude: 60.4518,
       longitude: 22.2666,
       population: 195000,
       averageSalaryEur: 3400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș-port cu servicii și industrie locală.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™-port cu servicii È™i industrie localÄƒ.",
     },
 
     {
@@ -3263,9 +3419,9 @@ async function main() {
       longitude: 44.8271,
       population: 1200000,
       averageSalaryEur: 1000,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitala și principalul centru economic al Georgiei.",
+        "Capitala È™i principalul centru economic al Georgiei.",
     },
     {
       countrySlug: "georgia",
@@ -3276,8 +3432,8 @@ async function main() {
       longitude: 41.6367,
       population: 180000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port și centru turistic la Marea Neagră.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™-port È™i centru turistic la Marea NeagrÄƒ.",
     },
     {
       countrySlug: "georgia",
@@ -3288,8 +3444,8 @@ async function main() {
       longitude: 42.718,
       population: 135000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional pentru servicii și educație.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional pentru servicii È™i educaÈ›ie.",
     },
 
     {
@@ -3301,21 +3457,21 @@ async function main() {
       longitude: 23.7275,
       population: 3150000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală cu economie bazată pe servicii, turism și comerț.",
+        "CapitalÄƒ cu economie bazatÄƒ pe servicii, turism È™i comerÈ›.",
     },
     {
       countrySlug: "grecia",
       name: "Salonic",
       slug: "salonic",
-      region: "Macedonia Centrală",
+      region: "Macedonia CentralÄƒ",
       latitude: 40.6401,
       longitude: 22.9444,
       population: 1100000,
       averageSalaryEur: 1500,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru economic important în nordul Greciei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru economic important Ã®n nordul Greciei.",
     },
     {
       countrySlug: "grecia",
@@ -3326,8 +3482,9 @@ async function main() {
       longitude: 21.7346,
       population: 215000,
       averageSalaryEur: 1350,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port cu servicii și activitate universitară.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "OraÈ™-port cu servicii È™i activitate universitarÄƒ.",
     },
 
     {
@@ -3339,8 +3496,8 @@ async function main() {
       longitude: 19.0402,
       population: 1750000,
       averageSalaryEur: 1900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitală regională cu servicii, IT și industrie.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "CapitalÄƒ regionalÄƒ cu servicii, IT È™i industrie.",
     },
     {
       countrySlug: "ungaria",
@@ -3351,9 +3508,9 @@ async function main() {
       longitude: 21.6273,
       population: 200000,
       averageSalaryEur: 1600,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Centru universitar și industrial din estul Ungariei.",
+        "Centru universitar È™i industrial din estul Ungariei.",
     },
     {
       countrySlug: "ungaria",
@@ -3364,8 +3521,9 @@ async function main() {
       longitude: 20.1414,
       population: 157000,
       averageSalaryEur: 1500,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș universitar cu servicii și producție locală.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "OraÈ™ universitar cu servicii È™i producÈ›ie localÄƒ.",
     },
 
     {
@@ -3377,8 +3535,9 @@ async function main() {
       longitude: -21.9426,
       population: 140000,
       averageSalaryEur: 4600,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitală nordică cu servicii și industrie creativă.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "CapitalÄƒ nordicÄƒ cu servicii È™i industrie creativÄƒ.",
     },
     {
       countrySlug: "islanda",
@@ -3389,8 +3548,8 @@ async function main() {
       longitude: -21.912,
       population: 39000,
       averageSalaryEur: 4300,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș suburban cu servicii și comerț.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ suburban cu servicii È™i comerÈ›.",
     },
     {
       countrySlug: "islanda",
@@ -3401,8 +3560,8 @@ async function main() {
       longitude: -18.1105,
       population: 20000,
       averageSalaryEur: 4100,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru urban principal în nordul Islandei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru urban principal Ã®n nordul Islandei.",
     },
 
     {
@@ -3414,8 +3573,8 @@ async function main() {
       longitude: -6.2603,
       population: 592000,
       averageSalaryEur: 4600,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Hub european pentru tech și servicii financiare.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Hub european pentru tech È™i servicii financiare.",
     },
     {
       countrySlug: "irlanda",
@@ -3426,8 +3585,8 @@ async function main() {
       longitude: -8.4756,
       population: 224000,
       averageSalaryEur: 3800,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru industrial și farmaceutic important.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru industrial È™i farmaceutic important.",
     },
     {
       countrySlug: "irlanda",
@@ -3438,8 +3597,9 @@ async function main() {
       longitude: -9.0568,
       population: 85000,
       averageSalaryEur: 3400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș universitar și de servicii în vestul Irlandei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "OraÈ™ universitar È™i de servicii Ã®n vestul Irlandei.",
     },
 
     {
@@ -3451,8 +3611,8 @@ async function main() {
       longitude: 21.1655,
       population: 220000,
       averageSalaryEur: 800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitala administrativă și economică a Kosovo.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Capitala administrativÄƒ È™i economicÄƒ a Kosovo.",
     },
     {
       countrySlug: "kosovo",
@@ -3463,8 +3623,8 @@ async function main() {
       longitude: 20.7397,
       population: 86000,
       averageSalaryEur: 700,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș istoric cu servicii și comerț local.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ istoric cu servicii È™i comerÈ› local.",
     },
     {
       countrySlug: "kosovo",
@@ -3475,8 +3635,8 @@ async function main() {
       longitude: 20.2883,
       population: 48000,
       averageSalaryEur: 680,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional pentru turism și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional pentru turism È™i servicii.",
     },
 
     {
@@ -3488,9 +3648,9 @@ async function main() {
       longitude: 24.1052,
       population: 605000,
       averageSalaryEur: 1900,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală baltică importantă pentru servicii și logistică.",
+        "CapitalÄƒ balticÄƒ importantÄƒ pentru servicii È™i logisticÄƒ.",
     },
     {
       countrySlug: "letonia",
@@ -3501,8 +3661,8 @@ async function main() {
       longitude: 26.5362,
       population: 80000,
       averageSalaryEur: 1500,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional cu industrie și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional cu industrie È™i servicii.",
     },
     {
       countrySlug: "letonia",
@@ -3513,8 +3673,8 @@ async function main() {
       longitude: 21.0108,
       population: 67000,
       averageSalaryEur: 1500,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port și centru economic local.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™-port È™i centru economic local.",
     },
 
     {
@@ -3526,9 +3686,9 @@ async function main() {
       longitude: 9.5209,
       population: 5800,
       averageSalaryEur: 5800,
-      emigrationDifficulty: "HIGH",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Capitala administrativă și financiară a Liechtenstein.",
+        "Capitala administrativÄƒ È™i financiarÄƒ a Liechtenstein.",
     },
     {
       countrySlug: "liechtenstein",
@@ -3539,8 +3699,8 @@ async function main() {
       longitude: 9.5096,
       population: 6100,
       averageSalaryEur: 5600,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Centru industrial și de servicii.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Centru industrial È™i de servicii.",
     },
     {
       countrySlug: "liechtenstein",
@@ -3551,8 +3711,8 @@ async function main() {
       longitude: 9.5,
       population: 4600,
       averageSalaryEur: 5400,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Localitate sudică cu industrie locală.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Localitate sudicÄƒ cu industrie localÄƒ.",
     },
 
     {
@@ -3564,8 +3724,8 @@ async function main() {
       longitude: 25.2797,
       population: 590000,
       averageSalaryEur: 2100,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitală baltică cu ecosistem tech și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "CapitalÄƒ balticÄƒ cu ecosistem tech È™i servicii.",
     },
     {
       countrySlug: "lituania",
@@ -3576,8 +3736,8 @@ async function main() {
       longitude: 23.9036,
       population: 300000,
       averageSalaryEur: 1800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru universitar și industrial important.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru universitar È™i industrial important.",
     },
     {
       countrySlug: "lituania",
@@ -3588,8 +3748,9 @@ async function main() {
       longitude: 21.1443,
       population: 150000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș-port cu activitate logistică și comercială.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "OraÈ™-port cu activitate logisticÄƒ È™i comercialÄƒ.",
     },
 
     {
@@ -3601,8 +3762,9 @@ async function main() {
       longitude: 6.1319,
       population: 136000,
       averageSalaryEur: 6200,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitală financiară europeană cu salarii ridicate.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "CapitalÄƒ financiarÄƒ europeanÄƒ cu salarii ridicate.",
     },
     {
       countrySlug: "luxemburg",
@@ -3613,8 +3775,8 @@ async function main() {
       longitude: 5.9806,
       population: 37000,
       averageSalaryEur: 5200,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru urban în sudul Luxemburgului.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru urban Ã®n sudul Luxemburgului.",
     },
     {
       countrySlug: "luxemburg",
@@ -3625,8 +3787,9 @@ async function main() {
       longitude: 5.8892,
       population: 30000,
       averageSalaryEur: 5000,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș industrial și rezidențial în regiunea sudică.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "OraÈ™ industrial È™i rezidenÈ›ial Ã®n regiunea sudicÄƒ.",
     },
 
     {
@@ -3638,8 +3801,8 @@ async function main() {
       longitude: 14.5146,
       population: 6000,
       averageSalaryEur: 2200,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitală administrativă și culturală a Maltei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "CapitalÄƒ administrativÄƒ È™i culturalÄƒ a Maltei.",
     },
     {
       countrySlug: "malta",
@@ -3650,8 +3813,8 @@ async function main() {
       longitude: 14.4665,
       population: 24000,
       averageSalaryEur: 2100,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș urban cu servicii și comerț.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ urban cu servicii È™i comerÈ›.",
     },
     {
       countrySlug: "malta",
@@ -3662,34 +3825,34 @@ async function main() {
       longitude: 14.5041,
       population: 20000,
       averageSalaryEur: 2300,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru rezidențial și turistic modern.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru rezidenÈ›ial È™i turistic modern.",
     },
 
     {
       countrySlug: "moldova",
-      name: "Chișinău",
+      name: "ChiÈ™inÄƒu",
       slug: "chisinau",
-      region: "Chișinău",
+      region: "ChiÈ™inÄƒu",
       latitude: 47.0105,
       longitude: 28.8638,
       population: 639000,
       averageSalaryEur: 750,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Principalul centru administrativ și economic al Moldovei.",
+        "Principalul centru administrativ È™i economic al Moldovei.",
     },
     {
       countrySlug: "moldova",
-      name: "Bălți",
+      name: "BÄƒlÈ›i",
       slug: "balti",
-      region: "Bălți",
+      region: "BÄƒlÈ›i",
       latitude: 47.7539,
       longitude: 27.9184,
       population: 97000,
       averageSalaryEur: 650,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru urban important în nordul țării.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru urban important Ã®n nordul È›Äƒrii.",
     },
     {
       countrySlug: "moldova",
@@ -3700,8 +3863,8 @@ async function main() {
       longitude: 28.1993,
       population: 39000,
       averageSalaryEur: 600,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș regional în sud, cu servicii locale.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ regional Ã®n sud, cu servicii locale.",
     },
 
     {
@@ -3713,8 +3876,9 @@ async function main() {
       longitude: 7.4246,
       population: 38000,
       averageSalaryEur: 4700,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Centru administrativ și financiar al principatului.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription:
+        "Centru administrativ È™i financiar al principatului.",
     },
     {
       countrySlug: "monaco",
@@ -3725,8 +3889,8 @@ async function main() {
       longitude: 7.4277,
       population: 16000,
       averageSalaryEur: 4800,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "District premium orientat spre servicii și turism.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "District premium orientat spre servicii È™i turism.",
     },
     {
       countrySlug: "monaco",
@@ -3737,8 +3901,8 @@ async function main() {
       longitude: 7.4241,
       population: 12000,
       averageSalaryEur: 4500,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Zonă urbană activă în comerț și servicii.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "ZonÄƒ urbanÄƒ activÄƒ Ã®n comerÈ› È™i servicii.",
     },
 
     {
@@ -3750,9 +3914,9 @@ async function main() {
       longitude: 19.2594,
       population: 190000,
       averageSalaryEur: 1100,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitala administrativă și economică a Muntenegrului.",
+        "Capitala administrativÄƒ È™i economicÄƒ a Muntenegrului.",
     },
     {
       countrySlug: "muntenegru",
@@ -3763,8 +3927,8 @@ async function main() {
       longitude: 18.9445,
       population: 57000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional industrial și universitar.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional industrial È™i universitar.",
     },
     {
       countrySlug: "muntenegru",
@@ -3775,8 +3939,8 @@ async function main() {
       longitude: 18.84,
       population: 20000,
       averageSalaryEur: 950,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș turistic major pe litoralul Adriaticii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ turistic major pe litoralul Adriaticii.",
     },
 
     {
@@ -3788,9 +3952,9 @@ async function main() {
       longitude: 21.4254,
       population: 526000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală și principal centru economic al Macedoniei de Nord.",
+        "CapitalÄƒ È™i principal centru economic al Macedoniei de Nord.",
     },
     {
       countrySlug: "macedonia-de-nord",
@@ -3801,8 +3965,8 @@ async function main() {
       longitude: 21.3347,
       population: 74000,
       averageSalaryEur: 800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional cu servicii și comerț.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional cu servicii È™i comerÈ›.",
     },
     {
       countrySlug: "macedonia-de-nord",
@@ -3813,8 +3977,8 @@ async function main() {
       longitude: 20.9716,
       population: 86000,
       averageSalaryEur: 800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș urban activ în nord-vestul țării.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ urban activ Ã®n nord-vestul È›Äƒrii.",
     },
 
     {
@@ -3826,9 +3990,9 @@ async function main() {
       longitude: 10.7522,
       population: 717000,
       averageSalaryEur: 5600,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Capitală nordică cu salarii ridicate și servicii avansate.",
+        "CapitalÄƒ nordicÄƒ cu salarii ridicate È™i servicii avansate.",
     },
     {
       countrySlug: "norvegia",
@@ -3839,9 +4003,9 @@ async function main() {
       longitude: 5.3221,
       population: 289000,
       averageSalaryEur: 5000,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Centru economic vestic în energie și servicii maritime.",
+        "Centru economic vestic Ã®n energie È™i servicii maritime.",
     },
     {
       countrySlug: "norvegia",
@@ -3852,60 +4016,60 @@ async function main() {
       longitude: 10.3951,
       population: 212000,
       averageSalaryEur: 4800,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș universitar și tehnologic important.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ universitar È™i tehnologic important.",
     },
 
     {
       countrySlug: "polonia",
-      name: "Varșovia",
+      name: "VarÈ™ovia",
       slug: "varsovia",
       region: "Mazovia",
       latitude: 52.2297,
       longitude: 21.0122,
       population: 1860000,
       averageSalaryEur: 2100,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitala și cel mai mare hub economic al Poloniei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Capitala È™i cel mai mare hub economic al Poloniei.",
     },
     {
       countrySlug: "polonia",
       name: "Cracovia",
       slug: "cracovia",
-      region: "Polonia Mică",
+      region: "Polonia MicÄƒ",
       latitude: 50.0647,
       longitude: 19.945,
       population: 805000,
       averageSalaryEur: 1900,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Centru universitar, cultural și IT în sudul Poloniei.",
+        "Centru universitar, cultural È™i IT Ã®n sudul Poloniei.",
     },
     {
       countrySlug: "polonia",
       name: "Wroclaw",
       slug: "wroclaw",
-      region: "Silezia Inferioară",
+      region: "Silezia InferioarÄƒ",
       latitude: 51.1079,
       longitude: 17.0385,
       population: 675000,
       averageSalaryEur: 1900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș dinamic cu servicii, tech și industrie.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ dinamic cu servicii, tech È™i industrie.",
     },
 
     {
       countrySlug: "romania",
-      name: "București",
+      name: "BucureÈ™ti",
       slug: "bucuresti",
-      region: "București",
+      region: "BucureÈ™ti",
       latitude: 44.4268,
       longitude: 26.1025,
       population: 1710000,
       averageSalaryEur: 1800,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Principalul centru economic, IT și administrativ al României.",
+        "Principalul centru economic, IT È™i administrativ al RomÃ¢niei.",
     },
     {
       countrySlug: "romania",
@@ -3916,21 +4080,21 @@ async function main() {
       longitude: 23.6236,
       population: 287000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru major de tehnologie și educație.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru major de tehnologie È™i educaÈ›ie.",
     },
     {
       countrySlug: "romania",
-      name: "Timișoara",
+      name: "TimiÈ™oara",
       slug: "timisoara",
-      region: "Timiș",
+      region: "TimiÈ™",
       latitude: 45.7489,
       longitude: 21.2087,
       population: 250000,
       averageSalaryEur: 1600,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Oraș industrial și IT cu legături puternice vest-europene.",
+        "OraÈ™ industrial È™i IT cu legÄƒturi puternice vest-europene.",
     },
 
     {
@@ -3942,8 +4106,9 @@ async function main() {
       longitude: 37.6173,
       population: 13000000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Capitala și principalul centru financiar al Rusiei.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription:
+        "Capitala È™i principalul centru financiar al Rusiei.",
     },
     {
       countrySlug: "rusia",
@@ -3954,8 +4119,9 @@ async function main() {
       longitude: 30.3609,
       population: 5600000,
       averageSalaryEur: 1500,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Centru cultural și economic major în nordul Rusiei.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription:
+        "Centru cultural È™i economic major Ã®n nordul Rusiei.",
     },
     {
       countrySlug: "rusia",
@@ -3966,8 +4132,8 @@ async function main() {
       longitude: 49.1347,
       population: 1310000,
       averageSalaryEur: 1200,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Oraș regional important cu industrie și servicii.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "OraÈ™ regional important cu industrie È™i servicii.",
     },
 
     {
@@ -3979,8 +4145,8 @@ async function main() {
       longitude: 12.4578,
       population: 4500,
       averageSalaryEur: 2400,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitala istorică a republicii San Marino.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Capitala istoricÄƒ a republicii San Marino.",
     },
     {
       countrySlug: "san-marino",
@@ -3991,8 +4157,8 @@ async function main() {
       longitude: 12.4811,
       population: 11000,
       averageSalaryEur: 2300,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Cea mai populată zonă urbană din San Marino.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Cea mai populatÄƒ zonÄƒ urbanÄƒ din San Marino.",
     },
     {
       countrySlug: "san-marino",
@@ -4003,8 +4169,8 @@ async function main() {
       longitude: 12.4474,
       population: 6800,
       averageSalaryEur: 2250,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru comercial și administrativ local.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru comercial È™i administrativ local.",
     },
 
     {
@@ -4016,8 +4182,8 @@ async function main() {
       longitude: 20.4489,
       population: 1400000,
       averageSalaryEur: 1150,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitala și principalul hub economic al Serbiei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Capitala È™i principalul hub economic al Serbiei.",
     },
     {
       countrySlug: "serbia",
@@ -4028,20 +4194,21 @@ async function main() {
       longitude: 19.8335,
       population: 250000,
       averageSalaryEur: 1000,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru universitar și de servicii în nordul țării.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription:
+        "Centru universitar È™i de servicii Ã®n nordul È›Äƒrii.",
     },
     {
       countrySlug: "serbia",
-      name: "Niš",
+      name: "NiÅ¡",
       slug: "nis",
-      region: "Nišava",
+      region: "NiÅ¡ava",
       latitude: 43.3209,
       longitude: 21.8958,
       population: 183000,
       averageSalaryEur: 900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș regional cu industrie și logistică.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ regional cu industrie È™i logisticÄƒ.",
     },
 
     {
@@ -4053,9 +4220,9 @@ async function main() {
       longitude: 17.1077,
       population: 475000,
       averageSalaryEur: 2000,
-      emigrationDifficulty: "LOW",
+      emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Capitală central-europeană cu servicii și industrie.",
+        "CapitalÄƒ central-europeanÄƒ cu servicii È™i industrie.",
     },
     {
       countrySlug: "slovacia",
@@ -4066,8 +4233,8 @@ async function main() {
       longitude: 21.2611,
       population: 230000,
       averageSalaryEur: 1700,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru estic important pentru IT și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru estic important pentru IT È™i servicii.",
     },
     {
       countrySlug: "slovacia",
@@ -4078,8 +4245,8 @@ async function main() {
       longitude: 18.7394,
       population: 81000,
       averageSalaryEur: 1600,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș industrial și logistic în nordul Slovaciei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ industrial È™i logistic Ã®n nordul Slovaciei.",
     },
 
     {
@@ -4091,8 +4258,8 @@ async function main() {
       longitude: 14.5058,
       population: 295000,
       averageSalaryEur: 2200,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Capitală compactă cu servicii și tehnologie.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "CapitalÄƒ compactÄƒ cu servicii È™i tehnologie.",
     },
     {
       countrySlug: "slovenia",
@@ -4103,8 +4270,8 @@ async function main() {
       longitude: 15.6459,
       population: 97000,
       averageSalaryEur: 1900,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Centru regional în nord-estul Sloveniei.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "Centru regional Ã®n nord-estul Sloveniei.",
     },
     {
       countrySlug: "slovenia",
@@ -4115,8 +4282,8 @@ async function main() {
       longitude: 15.2677,
       population: 38000,
       averageSalaryEur: 1800,
-      emigrationDifficulty: "LOW",
-      generalDescription: "Oraș cu industrie locală și servicii.",
+      emigrationDifficulty: "SCAZUTA",
+      generalDescription: "OraÈ™ cu industrie localÄƒ È™i servicii.",
     },
 
     {
@@ -4128,9 +4295,9 @@ async function main() {
       longitude: 18.0686,
       population: 990000,
       averageSalaryEur: 4600,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Capitală nordică cu economie bazată pe tech și servicii.",
+        "CapitalÄƒ nordicÄƒ cu economie bazatÄƒ pe tech È™i servicii.",
     },
     {
       countrySlug: "suedia",
@@ -4141,19 +4308,19 @@ async function main() {
       longitude: 11.9746,
       population: 605000,
       averageSalaryEur: 4200,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș-port major cu industrie și logistică.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™-port major cu industrie È™i logisticÄƒ.",
     },
     {
       countrySlug: "suedia",
-      name: "Malmö",
+      name: "MalmÃ¶",
       slug: "malmo",
       region: "Skane",
       latitude: 55.605,
       longitude: 13.0038,
       population: 360000,
       averageSalaryEur: 4000,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription: "Centru urban conectat la regiunea Oresund.",
     },
 
@@ -4166,7 +4333,7 @@ async function main() {
       longitude: 8.5417,
       population: 443000,
       averageSalaryEur: 7000,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription: "Centru financiar global cu salarii foarte ridicate.",
     },
     {
@@ -4178,9 +4345,9 @@ async function main() {
       longitude: 6.1432,
       population: 203000,
       averageSalaryEur: 6900,
-      emigrationDifficulty: "MEDIUM",
+      emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Oraș internațional cu instituții globale și servicii premium.",
+        "OraÈ™ internaÈ›ional cu instituÈ›ii globale È™i servicii premium.",
     },
     {
       countrySlug: "elvetia",
@@ -4191,8 +4358,9 @@ async function main() {
       longitude: 7.5886,
       population: 178000,
       averageSalaryEur: 6500,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru pharma și logistic în nord-vestul Elveției.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "Centru pharma È™i logistic Ã®n nord-vestul ElveÈ›iei.",
     },
 
     {
@@ -4204,20 +4372,20 @@ async function main() {
       longitude: 28.9784,
       population: 15600000,
       averageSalaryEur: 1300,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Cel mai mare hub economic și logistic al Turciei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Cel mai mare hub economic È™i logistic al Turciei.",
     },
     {
       countrySlug: "turcia",
       name: "Ankara",
       slug: "ankara",
-      region: "Anatolia Centrală",
+      region: "Anatolia CentralÄƒ",
       latitude: 39.9334,
       longitude: 32.8597,
       population: 5700000,
       averageSalaryEur: 1200,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitala administrativă și centru universitar.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Capitala administrativÄƒ È™i centru universitar.",
     },
     {
       countrySlug: "turcia",
@@ -4228,8 +4396,8 @@ async function main() {
       longitude: 27.1428,
       population: 4400000,
       averageSalaryEur: 1150,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș-port major cu servicii, industrie și turism.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™-port major cu servicii, industrie È™i turism.",
     },
 
     {
@@ -4241,8 +4409,9 @@ async function main() {
       longitude: 30.5234,
       population: 2950000,
       averageSalaryEur: 950,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Capitala și centrul economic principal al Ucrainei.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription:
+        "Capitala È™i centrul economic principal al Ucrainei.",
     },
     {
       countrySlug: "ucraina",
@@ -4253,8 +4422,8 @@ async function main() {
       longitude: 24.0297,
       population: 717000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Oraș regional cu servicii, IT și cultură.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "OraÈ™ regional cu servicii, IT È™i culturÄƒ.",
     },
     {
       countrySlug: "ucraina",
@@ -4265,8 +4434,8 @@ async function main() {
       longitude: 30.7233,
       population: 1010000,
       averageSalaryEur: 850,
-      emigrationDifficulty: "MEDIUM",
-      generalDescription: "Centru portuar strategic la Marea Neagră.",
+      emigrationDifficulty: "MEDIE",
+      generalDescription: "Centru portuar strategic la Marea NeagrÄƒ.",
     },
 
     {
@@ -4278,9 +4447,9 @@ async function main() {
       longitude: -0.1276,
       population: 9000000,
       averageSalaryEur: 4500,
-      emigrationDifficulty: "HIGH",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Centru global pentru finanțe, tech și servicii profesionale.",
+        "Centru global pentru finanÈ›e, tech È™i servicii profesionale.",
     },
     {
       countrySlug: "regatul-unit",
@@ -4291,8 +4460,8 @@ async function main() {
       longitude: -2.2426,
       population: 560000,
       averageSalaryEur: 3300,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Hub urban în creștere pentru tech și servicii.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Hub urban Ã®n creÈ™tere pentru tech È™i servicii.",
     },
     {
       countrySlug: "regatul-unit",
@@ -4303,8 +4472,8 @@ async function main() {
       longitude: -1.8904,
       population: 1150000,
       averageSalaryEur: 3200,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Centru industrial și logistic major în UK.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Centru industrial È™i logistic major Ã®n UK.",
     },
 
     {
@@ -4316,8 +4485,8 @@ async function main() {
       longitude: 12.4534,
       population: 800,
       averageSalaryEur: 2400,
-      emigrationDifficulty: "HIGH",
-      generalDescription: "Nucleul administrativ și religios al Vaticanului.",
+      emigrationDifficulty: "RIDICATA",
+      generalDescription: "Nucleul administrativ È™i religios al Vaticanului.",
     },
     {
       countrySlug: "vatican",
@@ -4328,78 +4497,61 @@ async function main() {
       longitude: 12.4539,
       population: 500,
       averageSalaryEur: 2350,
-      emigrationDifficulty: "HIGH",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Perimetru instituțional și turistic în jurul bazilicii.",
+        "Perimetru instituÈ›ional È™i turistic Ã®n jurul bazilicii.",
     },
     {
       countrySlug: "vatican",
-      name: "Grădinile Vaticanului",
+      name: "GrÄƒdinile Vaticanului",
       slug: "gradinile-vaticanului",
       region: "Vatican",
       latitude: 41.9012,
       longitude: 12.4482,
       population: 300,
       averageSalaryEur: 2300,
-      emigrationDifficulty: "HIGH",
+      emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Zonă internă administrativă și rezidențială restrânsă.",
+        "ZonÄƒ internÄƒ administrativÄƒ È™i rezidenÈ›ialÄƒ restrÃ¢nsÄƒ.",
     },
   ];
 
   const additionalCountryIds = new Map<string, string>();
 
   for (const country of additionalEuropeanCountries) {
+    const countryData = {
+      name: country.name,
+      slug: country.slug,
+      isoCode: country.isoCode,
+      capital: country.capital,
+      currency: country.currency,
+      officialLanguage: country.officialLanguage,
+      predominantReligion: country.predominantReligion,
+      latitude: country.latitude,
+      longitude: country.longitude,
+    };
+
     const countryRecord = await prisma.country.upsert({
       where: { slug: country.slug },
       update: {
-        name: country.name,
-        isoCode: country.isoCode,
+        ...countryData,
         continent: "Europa",
-        capital: country.capital,
-        currency: country.currency,
-        officialLanguage: country.officialLanguage,
-        predominantReligion: country.predominantReligion,
-        latitude: country.latitude,
-        longitude: country.longitude,
-        romanianCommunityNotes:
-          "Comunitățile românești sunt prezente în principalele centre urbane și variază în funcție de regiune.",
-        jobMarketNotes:
-          "Piața muncii diferă între regiuni; oportunitățile sunt în principal în servicii, industrie și sectorul tehnologic.",
-        localLawNotes:
-          "Cetățenii UE trebuie să respecte formalitățile administrative locale privind rezidența, fiscalitatea și asigurarea medicală.",
-        generalDescription: country.generalDescription,
+        generalDescription:
+          countryDescriptions[country.slug] ?? country.generalDescription,
+        population: country.population ?? null,
         citizenshipDifficulty: country.citizenshipDifficulty,
         emigrationDifficulty: country.emigrationDifficulty,
         averageSalaryEur: country.averageSalaryEur,
-        taxLevel: country.taxLevel,
-        incomeTaxRate: country.incomeTaxRate,
-        isFeatured: false,
       },
       create: {
-        name: country.name,
-        slug: country.slug,
-        isoCode: country.isoCode,
+        ...countryData,
         continent: "Europa",
-        capital: country.capital,
-        currency: country.currency,
-        officialLanguage: country.officialLanguage,
-        predominantReligion: country.predominantReligion,
-        latitude: country.latitude,
-        longitude: country.longitude,
-        romanianCommunityNotes:
-          "Comunitățile românești sunt prezente în principalele centre urbane și variază în funcție de regiune.",
-        jobMarketNotes:
-          "Piața muncii diferă între regiuni; oportunitățile sunt în principal în servicii, industrie și sectorul tehnologic.",
-        localLawNotes:
-          "Cetățenii UE trebuie să respecte formalitățile administrative locale privind rezidența, fiscalitatea și asigurarea medicală.",
-        generalDescription: country.generalDescription,
+        generalDescription:
+          countryDescriptions[country.slug] ?? country.generalDescription,
+        population: country.population ?? null,
         citizenshipDifficulty: country.citizenshipDifficulty,
         emigrationDifficulty: country.emigrationDifficulty,
         averageSalaryEur: country.averageSalaryEur,
-        taxLevel: country.taxLevel,
-        incomeTaxRate: country.incomeTaxRate,
-        isFeatured: false,
       },
     });
 
@@ -4424,11 +4576,11 @@ async function main() {
         population: city.population,
         generalDescription: city.generalDescription,
         romanianCommunityNotes:
-          "Există puncte de sprijin comunitar românesc, în special în zonele urbane mari.",
+          "ExistÄƒ puncte de sprijin comunitar romÃ¢nesc, Ã®n special Ã®n zonele urbane mari.",
         jobMarketNotes:
-          "Oportunitățile depind de industrie și de sezonalitate, cu cerere crescută în servicii și domenii tehnice.",
+          "OportunitÄƒÈ›ile depind de industrie È™i de sezonalitate, cu cerere crescutÄƒ Ã®n servicii È™i domenii tehnice.",
         localLawNotes:
-          "Sunt necesare proceduri administrative locale pentru contracte, taxe și acces la servicii publice.",
+          "Sunt necesare proceduri administrative locale pentru contracte, taxe È™i acces la servicii publice.",
         predominantReligion: null,
         emigrationDifficulty: city.emigrationDifficulty,
         averageSalaryEur: city.averageSalaryEur,
@@ -4444,11 +4596,11 @@ async function main() {
         population: city.population,
         generalDescription: city.generalDescription,
         romanianCommunityNotes:
-          "Există puncte de sprijin comunitar românesc, în special în zonele urbane mari.",
+          "ExistÄƒ puncte de sprijin comunitar romÃ¢nesc, Ã®n special Ã®n zonele urbane mari.",
         jobMarketNotes:
-          "Oportunitățile depind de industrie și de sezonalitate, cu cerere crescută în servicii și domenii tehnice.",
+          "OportunitÄƒÈ›ile depind de industrie È™i de sezonalitate, cu cerere crescutÄƒ Ã®n servicii È™i domenii tehnice.",
         localLawNotes:
-          "Sunt necesare proceduri administrative locale pentru contracte, taxe și acces la servicii publice.",
+          "Sunt necesare proceduri administrative locale pentru contracte, taxe È™i acces la servicii publice.",
         predominantReligion: null,
         emigrationDifficulty: city.emigrationDifficulty,
         averageSalaryEur: city.averageSalaryEur,
@@ -4498,49 +4650,6 @@ async function main() {
       });
     }
 
-    const existingWorkVisa = await prisma.visaInfo.findFirst({
-      where: {
-        countryId: country.id,
-        category: "WORK",
-      },
-      select: { id: true },
-    });
-
-    const visaPayload = {
-      countryId: country.id,
-      category: "WORK" as const,
-      title: "Drept de ședere și muncă - ghid orientativ",
-      summary: `Pentru ${country.name}, pașii de relocare diferă în funcție de statutul legal, dar includ de regulă formalități de rezidență, fiscalitate și acces la asigurare medicală.`,
-      legalSteps: [
-        "Înregistrarea adresei de domiciliu conform regulilor locale.",
-        "Obținerea codului/numărului fiscal local.",
-        "Înregistrarea pentru asigurare medicală și/sau socială.",
-        "Înregistrarea contractului de muncă sau a activității independente.",
-      ],
-      requiredDocuments: [
-        "Document de identitate valabil",
-        "Dovadă adresă locală",
-        "Contract de muncă sau dovadă venit",
-        "Formulare administrative cerute local",
-      ],
-      estimatedDuration:
-        "2-8 săptămâni, în funcție de regiune și fluxul administrativ",
-      officialUrl:
-        "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
-      isActive: true,
-    };
-
-    if (existingWorkVisa) {
-      await prisma.visaInfo.update({
-        where: { id: existingWorkVisa.id },
-        data: visaPayload,
-      });
-    } else {
-      await prisma.visaInfo.create({
-        data: visaPayload,
-      });
-    }
-
     for (const city of country.cities) {
       const citySalary = city.averageSalaryEur ?? countrySalary;
       const cityCost = buildCityCostFromSalary(citySalary);
@@ -4561,6 +4670,49 @@ async function main() {
           },
         });
       }
+    }
+  }
+
+  for (const [slug, assessment] of Object.entries(
+    countryDifficultyAssessments,
+  )) {
+    await prisma.country.update({
+      where: { slug },
+      data: assessment,
+    });
+  }
+
+  for (const [slug, estimate] of Object.entries(countryNumbeoEstimates)) {
+    const country = await prisma.country.update({
+      where: { slug },
+      data: { averageSalaryEur: estimate.averageSalaryEur },
+      select: { id: true },
+    });
+
+    const existingCountryCost = await prisma.costOfLiving.findFirst({
+      where: { countryId: country.id, cityId: null },
+      select: { id: true },
+    });
+
+    const costData = {
+      totalMonthlyCostEur: estimate.totalMonthlyCostEur,
+      sourceName: "Numbeo - cost lunar fără chirie și salariu net",
+      sourceUrl: estimate.sourceUrl,
+      collectedAt: new Date("2026-05-30"),
+    };
+
+    if (existingCountryCost) {
+      await prisma.costOfLiving.update({
+        where: { id: existingCountryCost.id },
+        data: costData,
+      });
+    } else {
+      await prisma.costOfLiving.create({
+        data: {
+          countryId: country.id,
+          ...costData,
+        },
+      });
     }
   }
 }

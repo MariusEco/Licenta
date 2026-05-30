@@ -65,9 +65,6 @@ export default async function CountryDetailPage({
           <h1 className="mt-4 text-4xl font-semibold text-foreground">
             {country.name}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
-            {country.generalDescription}
-          </p>
         </div>
 
         <div className="grid gap-3 text-sm text-muted-foreground">

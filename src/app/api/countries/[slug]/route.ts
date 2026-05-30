@@ -31,10 +31,6 @@ export async function GET(_request: Request, context: RouteContext) {
           orderBy: { collectedAt: "desc" },
           take: 1,
         },
-        visaInfos: {
-          where: { isActive: true },
-          orderBy: { title: "asc" },
-        },
       },
     });
 

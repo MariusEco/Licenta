@@ -3,10 +3,10 @@ import { z } from "zod";
 import { paginationSchema } from "@/validations/pagination";
 
 export const emigrationDifficultySchema = z.enum([
-  "LOW",
-  "MEDIUM",
-  "HIGH",
-  "VERY_HIGH",
+  "SCAZUTA",
+  "MEDIE",
+  "RIDICATA",
+  "FOARTE_RIDICATA",
 ]);
 
 export const locationKindSchema = z.enum(["COUNTRY", "CITY"]);

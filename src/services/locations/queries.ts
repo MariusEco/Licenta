@@ -35,6 +35,14 @@ function assertDatabaseUrl() {
 
 function difficultyRank(value: string | null) {
   const ranks: Record<string, number> = {
+    SCAZUTA: 1,
+    MEDIE: 2,
+    RIDICATA: 3,
+    FOARTE_RIDICATA: 4,
+    Scăzută: 1,
+    Medie: 2,
+    Ridicată: 3,
+    "Foarte ridicată": 4,
     LOW: 1,
     MEDIUM: 2,
     HIGH: 3,
@@ -203,7 +211,26 @@ export async function getCountries(
 
   const countries = await prisma.country.findMany({
     where,
-    include: {
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      isoCode: true,
+      continent: true,
+      capital: true,
+      currency: true,
+      officialLanguage: true,
+      predominantReligion: true,
+
+      generalDescription: true,
+      citizenshipDifficulty: true,
+      emigrationDifficulty: true,
+      latitude: true,
+      longitude: true,
+      averageSalaryEur: true,
+      population: true,
+      createdAt: true,
+      updatedAt: true,
       costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
     },
     orderBy: getCountryOrderBy(filters.sort),
@@ -241,15 +268,52 @@ export async function getCountryBySlug(
   const prisma = getPrismaClient();
   const country = await prisma.country.findUnique({
     where: { slug },
-    include: {
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      isoCode: true,
+      continent: true,
+      capital: true,
+      currency: true,
+      officialLanguage: true,
+      predominantReligion: true,
+
+      generalDescription: true,
+      citizenshipDifficulty: true,
+      emigrationDifficulty: true,
+      latitude: true,
+      longitude: true,
+      averageSalaryEur: true,
+      population: true,
+      createdAt: true,
+      updatedAt: true,
       cities: {
         orderBy: { name: "asc" },
-        include: {
+        select: {
+          id: true,
+          countryId: true,
+          name: true,
+          slug: true,
+          region: true,
+          latitude: true,
+          longitude: true,
+          createdAt: true,
+          updatedAt: true,
+          population: true,
+          averageSalaryEur: true,
+          emigrationDifficulty: true,
+          predominantReligion: true,
+          romanianCommunityNotes: true,
+          jobMarketNotes: true,
+          localLawNotes: true,
+          // country.isFeatured removed; keep city isFeatured
+          isFeatured: true,
+          generalDescription: true,
           costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
         },
       },
       costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
-      visaInfos: { where: { isActive: true }, orderBy: { title: "asc" } },
     },
   });
 

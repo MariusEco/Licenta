@@ -16,7 +16,6 @@ import {
   formatCurrency,
   formatDifficulty,
   formatNumber,
-  formatTaxLevel,
 } from "@/lib/formatters";
 import type {
   CityDetailView,
@@ -255,21 +254,8 @@ const comparisonRows: ComparisonRow[] = [
         return "Nedisponibil";
       }
 
-      return formatTaxLevel(getCountryDetail(location)?.taxLevel ?? null);
-    },
-  },
-  {
-    label: "Impozit pe venit",
-    render: (location) => {
-      if (!location || location.kind !== "COUNTRY") {
-        return "Nedisponibil";
-      }
-
-      const incomeTaxRate = getCountryDetail(location)?.incomeTaxRate;
-
-      return incomeTaxRate === null || incomeTaxRate === undefined
-        ? "Nedisponibil"
-        : `${incomeTaxRate}%`;
+      // taxLevel removed from country model — show a static CTA similar to country page
+      return "Vezi mai multe detalii";
     },
   },
   {
@@ -280,9 +266,7 @@ const comparisonRows: ComparisonRow[] = [
       }
 
       if (location.kind === "COUNTRY") {
-        return formatMaybeText(
-          getCountryDetail(location)?.romanianCommunityNotes,
-        );
+        return "Nedisponibil";
       }
 
       return formatMaybeText(getCityDetail(location)?.romanianCommunityNotes);
@@ -296,7 +280,7 @@ const comparisonRows: ComparisonRow[] = [
       }
 
       if (location.kind === "COUNTRY") {
-        return formatMaybeText(getCountryDetail(location)?.jobMarketNotes);
+        return "Nedisponibil";
       }
 
       return formatMaybeText(getCityDetail(location)?.jobMarketNotes);

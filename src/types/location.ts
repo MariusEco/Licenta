@@ -1,4 +1,8 @@
-export type EmigrationDifficulty = "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
+export type EmigrationDifficulty =
+  | "SCAZUTA"
+  | "MEDIE"
+  | "RIDICATA"
+  | "FOARTE_RIDICATA";
 
 export type LocationKind = "COUNTRY" | "CITY";
 

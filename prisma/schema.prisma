@@ -17,27 +17,10 @@ enum LocationKind {
 }
 
 enum EmigrationDifficulty {
-  LOW
-  MEDIUM
-  HIGH
-  VERY_HIGH
-}
-
-enum VisaCategory {
-  TOURIST
-  STUDY
-  WORK
-  FAMILY_REUNIFICATION
-  BUSINESS
-  DIGITAL_NOMAD
-  PERMANENT_RESIDENCE
-  OTHER
-}
-
-enum TaxLevel {
-  LOW
-  MEDIUM
-  HIGH
+  SCAZUTA         @map("Scăzută")
+  MEDIE           @map("Medie")
+  RIDICATA        @map("Ridicată")
+  FOARTE_RIDICATA @map("Foarte ridicată")
 }
 
 model User {
@@ -55,32 +38,27 @@ model User {
 }
 
 model Country {
-  id                     String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                   String
-  slug                   String                @unique
-  isoCode                String                @unique @db.VarChar(2)
-  continent              String
-  capital                String?
-  currency               String?
-  officialLanguage       String?
-  predominantReligion    String?
-  romanianCommunityNotes String?
-  jobMarketNotes         String?
-  localLawNotes          String?
-  generalDescription     String
-  citizenshipDifficulty  EmigrationDifficulty
-  emigrationDifficulty   EmigrationDifficulty
-  latitude               Decimal?              @db.Decimal(9, 6)
-  longitude              Decimal?              @db.Decimal(9, 6)
-  averageSalaryEur       Int?
-  taxLevel               TaxLevel?
-  incomeTaxRate          Decimal?              @db.Decimal(5, 2)
-  isFeatured             Boolean               @default(false)
-  createdAt              DateTime              @default(now())
-  updatedAt              DateTime              @updatedAt
+  id                  String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String
+  slug                String  @unique
+  isoCode             String  @unique @db.VarChar(2)
+  continent           String
+  capital             String?
+  currency            String?
+  officialLanguage    String?
+  predominantReligion String?
+
+  generalDescription    String
+  citizenshipDifficulty EmigrationDifficulty
+  emigrationDifficulty  EmigrationDifficulty
+  latitude              Decimal?             @db.Decimal(9, 6)
+  longitude             Decimal?             @db.Decimal(9, 6)
+  averageSalaryEur      Int?
+  population            Int?
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
 
   cities          City[]
-  visaInfos       VisaInfo[]
   costOfLiving    CostOfLiving[]
   favorites       Favorite[]
   comparisonItems ComparisonItem[]
@@ -121,31 +99,10 @@ model City {
   @@map("cities")
 }
 
-model VisaInfo {
-  id                String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  countryId         String       @db.Uuid
-  category          VisaCategory
-  title             String
-  summary           String
-  legalSteps        String[]
-  requiredDocuments String[]
-  estimatedDuration String?
-  officialUrl       String?
-  isActive          Boolean      @default(true)
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
-
-  country Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
-
-  @@index([countryId])
-  @@index([category])
-  @@map("visa_infos")
-}
-
 model CostOfLiving {
-  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  countryId           String?  @db.Uuid
-  cityId              String?  @db.Uuid
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId           String?   @db.Uuid
+  cityId              String?   @db.Uuid
   rentOneBedroomEur   Int?
   utilitiesEur        Int?
   groceriesEur        Int?
@@ -156,8 +113,8 @@ model CostOfLiving {
   sourceName          String?
   sourceUrl           String?
   collectedAt         DateTime?
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   country Country? @relation(fields: [countryId], references: [id], onDelete: Cascade)
   city    City?    @relation(fields: [cityId], references: [id], onDelete: Cascade)

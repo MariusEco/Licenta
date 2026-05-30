@@ -25,9 +25,7 @@ export function CountryCard({ country }: CountryCardProps) {
             <Link href={href}>{country.name}</Link>
           </h2>
         </div>
-        <Badge tone={country.isFeatured ? "success" : "neutral"}>
-          {country.isFeatured ? "Recomandată" : "Analizată"}
-        </Badge>
+        <Badge tone="neutral">Analizată</Badge>
       </div>
 
       <dl className="mt-5 grid gap-3 text-sm">

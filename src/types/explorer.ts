@@ -1,9 +1,4 @@
-import type {
-  EmigrationDifficulty,
-  LocationKind,
-  TaxLevel,
-  VisaCategory,
-} from "@prisma/client";
+import type { EmigrationDifficulty, LocationKind } from "@prisma/client";
 
 export type CostOfLivingView = {
   rentOneBedroomEur: number | null;
@@ -16,15 +11,10 @@ export type CostOfLivingView = {
   sourceName: string | null;
 };
 
-export type VisaInfoView = {
-  id: string;
-  category: VisaCategory;
+export type OfficialMigrationResourceView = {
   title: string;
-  summary: string;
-  legalSteps: string[];
-  requiredDocuments: string[];
-  estimatedDuration: string | null;
-  officialUrl: string | null;
+  description: string;
+  url: string;
 };
 
 export type CountrySummaryView = {
@@ -39,7 +29,6 @@ export type CountrySummaryView = {
   monthlyCostEur: number | null;
   emigrationDifficulty: EmigrationDifficulty;
   citizenshipDifficulty: EmigrationDifficulty;
-  isFeatured: boolean;
 };
 
 export type CitySummaryView = {
@@ -63,15 +52,13 @@ export type CountryDetailView = CountrySummaryView & {
   currency: string | null;
   officialLanguage: string | null;
   predominantReligion: string | null;
-  romanianCommunityNotes: string | null;
-  jobMarketNotes: string | null;
-  localLawNotes: string | null;
+  population: number | null;
   generalDescription: string;
-  taxLevel: TaxLevel | null;
-  incomeTaxRate: number | null;
+  incomeTaxRate?: number | null;
+  taxSummaryUrl: string | null;
+  officialResources: OfficialMigrationResourceView[];
   costOfLiving: CostOfLivingView | null;
   cities: CitySummaryView[];
-  visaInfos: VisaInfoView[];
 };
 
 export type CityDetailView = CitySummaryView & {

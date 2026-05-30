@@ -1,4 +1,10 @@
-import type { City, CostOfLiving, Country, VisaInfo } from "@prisma/client";
+import type { City, CostOfLiving, Country } from "@prisma/client";
+
+import {
+  getCountryPopulation,
+  getCountryTaxSummaryUrl,
+} from "@/lib/locations/country-metadata";
+import { getOfficialMigrationResources } from "@/lib/locations/official-migration-resources";
 
 function toNumber(value: unknown) {
   return value === null || value === undefined ? null : Number(value);
@@ -24,24 +30,10 @@ export function serializeCostOfLiving(cost: CostOfLiving | null) {
   };
 }
 
-export function serializeVisaInfo(visaInfo: VisaInfo) {
-  return {
-    id: visaInfo.id,
-    category: visaInfo.category,
-    title: visaInfo.title,
-    summary: visaInfo.summary,
-    legalSteps: visaInfo.legalSteps,
-    requiredDocuments: visaInfo.requiredDocuments,
-    estimatedDuration: visaInfo.estimatedDuration,
-    officialUrl: visaInfo.officialUrl,
-  };
-}
-
 export function serializeCountry(
   country: Country & {
     costOfLiving?: CostOfLiving[];
     cities?: City[];
-    visaInfos?: VisaInfo[];
   },
 ) {
   return {
@@ -55,19 +47,16 @@ export function serializeCountry(
     currency: country.currency,
     officialLanguage: country.officialLanguage,
     predominantReligion: country.predominantReligion,
+    population: country.population ?? getCountryPopulation(country.slug),
     latitude: toNumber(country.latitude),
     longitude: toNumber(country.longitude),
-    romanianCommunityNotes: country.romanianCommunityNotes,
-    jobMarketNotes: country.jobMarketNotes,
-    localLawNotes: country.localLawNotes,
     generalDescription: country.generalDescription,
     citizenshipDifficulty: country.citizenshipDifficulty,
     emigrationDifficulty: country.emigrationDifficulty,
     averageSalaryEur: country.averageSalaryEur,
     monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
-    taxLevel: country.taxLevel,
-    incomeTaxRate: toNumber(country.incomeTaxRate),
-    isFeatured: country.isFeatured,
+    taxSummaryUrl: getCountryTaxSummaryUrl(country.slug),
+    officialResources: getOfficialMigrationResources(country.slug),
     costOfLiving: serializeCostOfLiving(country.costOfLiving?.[0] ?? null),
     cities:
       country.cities?.map((city) =>
@@ -77,7 +66,6 @@ export function serializeCountry(
           countrySlug: country.slug,
         }),
       ) ?? [],
-    visaInfos: country.visaInfos?.map(serializeVisaInfo) ?? [],
   };
 }
 
@@ -96,7 +84,7 @@ export function serializeCountrySummary(
     monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     emigrationDifficulty: country.emigrationDifficulty,
     citizenshipDifficulty: country.citizenshipDifficulty,
-    isFeatured: country.isFeatured,
+    // isFeatured removed from Country model; omit from summary
   };
 }
 

@@ -47,9 +47,10 @@ export function LocationFilters({
           className="h-11 w-full border border-border bg-white px-3 text-sm outline-none transition focus:border-primary"
         >
           <option value="">Toate</option>
-          <option value="LOW">Scăzută</option>
-          <option value="MEDIUM">Medie</option>
-          <option value="HIGH">Ridicată</option>
+          <option value="SCAZUTA">Scăzută</option>
+          <option value="MEDIE">Medie</option>
+          <option value="RIDICATA">Ridicată</option>
+          <option value="FOARTE_RIDICATA">Foarte ridicată</option>
         </select>
       </label>
 

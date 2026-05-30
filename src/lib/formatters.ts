@@ -20,6 +20,14 @@ export function formatNumber(value: number | null | undefined) {
 
 export function formatDifficulty(value: string | null | undefined) {
   const labels: Record<string, string> = {
+    SCAZUTA: "Scăzută",
+    MEDIE: "Medie",
+    RIDICATA: "Ridicată",
+    FOARTE_RIDICATA: "Foarte ridicată",
+    Scăzută: "Scăzută",
+    Medie: "Medie",
+    Ridicată: "Ridicată",
+    "Foarte ridicată": "Foarte ridicată",
     LOW: "Scăzută",
     MEDIUM: "Medie",
     HIGH: "Ridicată",
@@ -31,9 +39,9 @@ export function formatDifficulty(value: string | null | undefined) {
 
 export function formatTaxLevel(value: string | null | undefined) {
   const labels: Record<string, string> = {
-    LOW: "Scăzut",
-    MEDIUM: "Mediu",
-    HIGH: "Ridicat",
+    LOW: "Scăzută",
+    MEDIUM: "Medie",
+    HIGH: "Ridicată",
   };
 
   return value ? (labels[value] ?? value) : "Nedisponibil";

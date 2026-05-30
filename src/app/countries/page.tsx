@@ -31,10 +31,10 @@ function buildCountriesQuery(
 ) {
   const search = firstParam(params.search);
   const difficulty = firstParam(params.difficulty) as
-    | "LOW"
-    | "MEDIUM"
-    | "HIGH"
-    | "VERY_HIGH"
+    | "SCAZUTA"
+    | "MEDIE"
+    | "RIDICATA"
+    | "FOARTE_RIDICATA"
     | undefined;
   const maxMonthlyCostEur = numberParam(firstParam(params.maxMonthlyCostEur));
   const minAverageSalaryEur = numberParam(

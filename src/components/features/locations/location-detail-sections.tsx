@@ -1,7 +1,7 @@
 import {
   BookOpenText,
   BriefcaseBusiness,
-  FileText,
+  ExternalLink,
   Scale,
   Users,
   type LucideIcon,
@@ -14,7 +14,6 @@ import {
   formatCurrency,
   formatDifficulty,
   formatNumber,
-  formatTaxLevel,
 } from "@/lib/formatters";
 import type { CityDetailView, CountryDetailView } from "@/types/explorer";
 
@@ -40,44 +39,55 @@ export function LocationDetailSections({
             <h2 className="text-xl font-semibold text-foreground">
               Descriere generală
             </h2>
-            <p className="mt-3 leading-7 text-muted-foreground">
-              {location.generalDescription}
-            </p>
+            <div className="mt-3 leading-7 text-muted-foreground">
+              <p>{location.generalDescription}</p>
+            </div>
+
+            <dl className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              <InfoStat label="Capitală" value={location.capital} />
+              <InfoStat label="Monedă" value={location.currency} />
+              <InfoStat
+                label="Limba oficială"
+                value={location.officialLanguage}
+              />
+              <InfoStat
+                label="Religia predominantă"
+                value={location.predominantReligion}
+              />
+              <InfoStat
+                label="Populație"
+                value={formatNumber(location.population)}
+              />
+            </dl>
           </div>
 
-          {location.visaInfos.length > 0 ? (
+          {location.officialResources.length > 0 ? (
             <section className="grid gap-3">
               <h2 className="text-xl font-semibold text-foreground">
-                Vize și pași legali
+                Linkuri oficiale utile
               </h2>
-              {location.visaInfos.map((visa) => (
-                <article
-                  key={visa.id}
-                  className="border border-border bg-white p-5"
-                >
-                  <div className="flex items-start gap-3">
-                    <FileText
-                      className="mt-1 h-5 w-5 text-primary"
-                      aria-hidden="true"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-foreground">
-                        {visa.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                        {visa.summary}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-4 grid gap-4 md:grid-cols-2">
-                    <Checklist title="Pași legali" items={visa.legalSteps} />
-                    <Checklist
-                      title="Documente necesare"
-                      items={visa.requiredDocuments}
-                    />
-                  </div>
-                </article>
-              ))}
+              <div className="grid gap-3">
+                {location.officialResources.map((resource) => (
+                  <a
+                    key={resource.url}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group grid gap-1 border border-border bg-white p-4 transition hover:border-primary/50 hover:bg-slate-50"
+                  >
+                    <span className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                      {resource.title}
+                      <ExternalLink
+                        className="h-3.5 w-3.5 text-muted-foreground transition group-hover:text-primary"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span className="text-sm leading-6 text-muted-foreground">
+                      {resource.description}
+                    </span>
+                  </a>
+                ))}
+              </div>
             </section>
           ) : null}
         </section>
@@ -92,8 +102,19 @@ export function LocationDetailSections({
             value={formatDifficulty(location.citizenshipDifficulty)}
           />
           <LocationStat
+            label="Salariu net mediu"
+            value={formatCurrency(location.averageSalaryEur)}
+          />
+          <LocationStat
+            label="Cost lunar fără chirie"
+            value={formatCurrency(location.monthlyCostEur)}
+          />
+          <LocationStat
             label="Taxare"
-            value={formatTaxLevel(location.taxLevel)}
+            // Always show a static call-to-action and link to the tax summary (PwC when available,
+            // otherwise Wikipedia fallback provided by country-metadata).
+            value={"Vezi mai multe detalii"}
+            href={location.taxSummaryUrl ?? null}
           />
         </aside>
       </div>
@@ -194,17 +215,15 @@ function InfoPanel({
   );
 }
 
-function Checklist({ items, title }: { items: string[]; title: string }) {
+function InfoStat({ label, value }: { label: string; value: string | null }) {
   return (
-    <div>
-      <h4 className="text-sm font-semibold text-foreground">{title}</h4>
-      <ul className="mt-2 grid gap-2 text-sm text-muted-foreground">
-        {items.map((item) => (
-          <li key={item} className="border-l-2 border-primary pl-3">
-            {item}
-          </li>
-        ))}
-      </ul>
+    <div className="border border-border bg-slate-50 px-4 py-3">
+      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </dt>
+      <dd className="mt-1 text-sm font-semibold text-foreground">
+        {value ?? "Nedisponibil"}
+      </dd>
     </div>
   );
 }
