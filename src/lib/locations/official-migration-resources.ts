@@ -1,7 +1,7 @@
 ﻿export type OfficialMigrationResource = {
   title: string;
-  description: string;
   url: string;
+  description?: string;
 };
 
 const euOrEeaCountrySlugs = new Set([
@@ -39,40 +39,36 @@ const euOrEeaCountrySlugs = new Set([
 
 const europeanUnionImmigrationResource: OfficialMigrationResource = {
   title: "Uniunea Europeană - imigrare și mobilitate",
+  url: "https://european-union.europa.eu/live-work-study/immigration-eu_en",
   description:
     "Pagină oficială UE cu orientare generală despre mutare, muncă și drepturi în statele membre.",
-  url: "https://european-union.europa.eu/live-work-study/immigration-eu_en",
 };
 
 const romanianForeignMinistryResource: OfficialMigrationResource = {
   title: "MAE România - condiții de călătorie",
+  url: "https://www.mae.ro/travel-conditions",
   description:
     "Punct oficial românesc pentru verificarea condițiilor de intrare, siguranță și recomandări consulare.",
-  url: "https://www.mae.ro/travel-conditions",
 };
 
 const yourEuropeResidenceResource: OfficialMigrationResource = {
   title: "Your Europe - drepturi de ședere pentru cetățeni UE",
+  url: "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
   description:
     "Portal oficial al Uniunii Europene pentru dreptul de ședere, înregistrare și ședere permanentă în statele UE/SEE.",
-  url: "https://europa.eu/youreurope/citizens/residence/residence-rights/index_en.htm",
 };
 
-const visaDescription =
-  "Sursă oficială pentru verificarea condițiilor de intrare, a vizelor și a serviciilor consulare.";
-const migrationDescription =
-  "Autoritate oficială pentru ședere, migrație, permise, documente și proceduri pentru străini.";
-const citizenshipDescription =
-  "Sursă oficială pentru naturalizare, cetățenie și proceduri administrative conexe.";
-const governmentDescription =
-  "Portal guvernamental oficial pentru servicii publice, documente și informații administrative.";
+const visaDescription = undefined;
+const citizenshipDescription = undefined;
+const migrationDescription = undefined;
+const governmentDescription = undefined;
 
 function resource(
   title: string,
   url: string,
-  description: string,
+  _description?: unknown,
 ): OfficialMigrationResource {
-  return { title, description, url };
+  return { title, url };
 }
 
 const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
@@ -85,11 +81,6 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
     ),
   ],
   andorra: [
-    resource(
-      "Immigration Andorra",
-      "https://www.immigracio.ad/",
-      migrationDescription,
-    ),
     resource(
       "Guvernul Andorrei",
       "https://www.govern.ad/",
@@ -146,11 +137,6 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
       "https://dofi.ibz.be/en",
       migrationDescription,
     ),
-    resource(
-      "Justice Belgium - nationalitate",
-      "https://justice.belgium.be/en/themes_and_files/persons_and_families/nationality",
-      citizenshipDescription,
-    ),
   ],
   "bosnia-si-hertegovina": [
     resource(
@@ -191,10 +177,9 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   cipru: [
     resource(
       "Civil Registry and Migration Department Cyprus",
-      "https://www.migration.gov.cy/",
+      "https://www.gov.cy/mip-md/",
       migrationDescription,
     ),
-    resource("Gov.cy", "https://www.gov.cy/", governmentDescription),
   ],
   croatia: [
     resource(
@@ -291,7 +276,7 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   islanda: [
     resource(
       "Island.is - imigrare în Islanda",
-      "https://island.is/en/immigrate-to-iceland",
+      "https://island.is/en/o/directorate-of-immigration",
       migrationDescription,
     ),
     resource(
@@ -315,7 +300,7 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   italia: [
     resource(
       "Visa for Italy",
-      "https://vistoperitalia.esteri.it/home/en",
+      "https://vistoperitalia.esteri.it/",
       visaDescription,
     ),
     resource(
@@ -326,14 +311,9 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   ],
   kosovo: [
     resource(
-      "Ministry of Foreign Affairs Kosovo",
-      "https://mfa-ks.net/en/",
+      "Kosovo Visas",
+      "https://ambasadat.net/visas/",
       visaDescription,
-    ),
-    resource(
-      "Government of Kosovo",
-      "https://www.rks-gov.net/EN/",
-      governmentDescription,
     ),
   ],
   letonia: [
@@ -394,8 +374,8 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   ],
   moldova: [
     resource(
-      "Biroul Migrație și Azil Moldova",
-      "https://bma.gov.md/",
+      "Inspectoratul General pentru Migrație",
+      "https://igm.gov.md/imigrare/",
       migrationDescription,
     ),
     resource(
@@ -407,7 +387,7 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   monaco: [
     resource(
       "Monaco Service Public - nationalitate și rezidență",
-      "https://service-public-particuliers.gouv.mc/Nationality-and-residency",
+      "https://monservicepublic.gouv.mc/en/themes/nationality-and-residency/residency",
       citizenshipDescription,
     ),
     resource(
@@ -431,13 +411,8 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   "macedonia-de-nord": [
     resource(
       "Ministry of Foreign Affairs North Macedonia - vize",
-      "https://mfa.gov.mk/en/page/31/visa-information",
+      "https://mfa.gov.mk/en-GB/konzularni-uslugi/informacii-za-vlez-vo-rsm",
       visaDescription,
-    ),
-    resource(
-      "Ministry of Interior North Macedonia",
-      "https://mvr.gov.mk/default",
-      migrationDescription,
     ),
   ],
   norvegia: [
@@ -483,12 +458,12 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   rusia: [
     resource(
       "Ministry of Foreign Affairs Russia - vize",
-      "https://mid.ru/en/foreign_policy/visa/",
+      "https://evisa.kdmid.ru/",
       visaDescription,
     ),
     resource(
-      "Ministry of Internal Affairs Russia",
-      "https://en.mvd.ru/",
+      "Moving to Russia",
+      "https://movingtorussia.ru/",
       migrationDescription,
     ),
   ],
@@ -578,8 +553,8 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
   ],
   "tarile-de-jos": [
     resource(
-      "IND Netherlands - cetățeni UE/SEE",
-      "https://ind.nl/en/eu-eea-or-swiss-citizens",
+      "IND Netherlands",
+      "https://ind.nl/en/residency-in-the-netherlands",
       migrationDescription,
     ),
     resource(
@@ -628,11 +603,6 @@ const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {
     resource(
       "Vatican City State",
       "https://www.vaticanstate.va/",
-      governmentDescription,
-    ),
-    resource(
-      "Holy See Press Office",
-      "https://press.vatican.va/",
       governmentDescription,
     ),
   ],

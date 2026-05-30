@@ -82,9 +82,11 @@ export function LocationDetailSections({
                         aria-hidden="true"
                       />
                     </span>
-                    <span className="text-sm leading-6 text-muted-foreground">
-                      {resource.description}
-                    </span>
+                    {resource.description ? (
+                      <span className="text-sm leading-6 text-muted-foreground">
+                        {resource.description}
+                      </span>
+                    ) : null}
                   </a>
                 ))}
               </div>

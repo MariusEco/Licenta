@@ -13,7 +13,7 @@ export type CostOfLivingView = {
 
 export type OfficialMigrationResourceView = {
   title: string;
-  description: string;
+  description?: string;
   url: string;
 };
 

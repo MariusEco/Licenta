@@ -1,6 +1,6 @@
 export function formatCurrency(value: number | null | undefined) {
   if (value === null || value === undefined) {
-    return "Nedisponibil";
+    return "Indisponibil";
   }
 
   return new Intl.NumberFormat("ro-RO", {
@@ -12,7 +12,7 @@ export function formatCurrency(value: number | null | undefined) {
 
 export function formatNumber(value: number | null | undefined) {
   if (value === null || value === undefined) {
-    return "Nedisponibil";
+    return "Indisponibil";
   }
 
   return new Intl.NumberFormat("ro-RO").format(value);
@@ -34,7 +34,7 @@ export function formatDifficulty(value: string | null | undefined) {
     VERY_HIGH: "Foarte ridicată",
   };
 
-  return value ? (labels[value] ?? value) : "Nedisponibilă";
+  return value ? (labels[value] ?? value) : "Indisponibil";
 }
 
 export function formatTaxLevel(value: string | null | undefined) {
@@ -44,5 +44,5 @@ export function formatTaxLevel(value: string | null | undefined) {
     HIGH: "Ridicată",
   };
 
-  return value ? (labels[value] ?? value) : "Nedisponibil";
+  return value ? (labels[value] ?? value) : "Indisponibil";
 }

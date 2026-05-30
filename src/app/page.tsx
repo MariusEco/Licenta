@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import { CountryCard } from "@/components/features/locations/country-card";
 import { Button } from "@/components/ui/button";
-import { getCountries } from "@/services/locations/queries";
+import { getCountryBySlug } from "@/services/locations/queries";
 
 const overviewItems = [
   {
@@ -32,7 +32,11 @@ const overviewItems = [
 ];
 
 export default async function HomePage() {
-  const countries = await getCountries({ pageSize: 3, sort: "salary_desc" });
+  const featuredSlugs = ["italia", "spania", "germania"];
+
+  const resolved = await Promise.all(featuredSlugs.map((s) => getCountryBySlug(s)));
+  const items = resolved.filter(Boolean) as any[];
+  const countries = { items, total: items.length, page: 1, pageSize: items.length };
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-12 px-4 py-8 sm:px-6 lg:px-8">
@@ -98,8 +102,8 @@ export default async function HomePage() {
               Țări recomandate pentru analiză
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Primele opțiuni sunt alese după salarii, costuri și relevanță
-              pentru românii care vor să emigreze.
+              Primele opțiuni sunt alese după numărul mare de români care au emigrat
+              în respectivele țări.
             </p>
           </div>
           <Button asChild variant="secondary">
