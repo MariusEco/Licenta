@@ -24,6 +24,7 @@ export type CountrySummaryView = {
   continent: string;
   latitude: number | null;
   longitude: number | null;
+  population: number | null;
   averageSalaryEur: number | null;
   monthlyCostEur: number | null;
   emigrationDifficulty: EmigrationDifficulty;
@@ -42,6 +43,9 @@ export type CitySummaryView = {
   averageSalaryEur: number | null;
   monthlyCostEur: number | null;
   emigrationDifficulty: EmigrationDifficulty | null;
+  citizenshipDifficulty: EmigrationDifficulty | null;
+  currency: string | null;
+  officialLanguage: string | null;
 };
 
 export type CountryDetailView = CountrySummaryView & {
@@ -55,6 +59,8 @@ export type CountryDetailView = CountrySummaryView & {
   incomeTaxRate?: number | null;
   taxSummaryUrl: string | null;
   officialResources: OfficialMigrationResourceView[];
+  romanianCommunityNotes: string | null;
+  jobMarketNotes: string | null;
   costOfLiving: CostOfLivingView | null;
   cities: CitySummaryView[];
 };

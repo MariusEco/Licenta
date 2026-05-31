@@ -13,15 +13,14 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Berlin este situat în regiunea cu același nume. Este un centru metropolitan important, recunoscut pentru economia sa diversificată, scena culturală vibrantă și ecosistemul tech în creștere.',
   "romanianCommunityNotes" = 'Comunitatea românească este vizibilă în Berlin, cu rețele profesionale, întâlniri culturale și sprijin constant pentru cei nou-veniți.',
-  "jobMarketNotes" = 'Cerere puternică în IT, sănătate, logistică și roluri administrative. În Berlin, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Cerere puternică în IT, sănătate, logistică urbană și roluri administrative, susținută de economia diversificată și de ecosistemul tech al capitalei.'
 WHERE "slug" = 'berlin';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Amsterdam este situat în regiunea Olanda de Nord. Capitala culturală și turistică a Țărilor de Jos, Amsterdam atrage sectoare creative, start‑upuri și un trafic maritim și de turism intens.',
+  "generalDescription" = 'Orașul Amsterdam este situat în regiunea Olanda de Nord. Capitala culturală și turistică a Țărilor de Jos, Amsterdam atrage sectoare creative, startupuri și un trafic maritim și de turism intens.',
   "romanianCommunityNotes" = 'În Amsterdam, românii sunt prezenți mai ales în mediile urbane mobile, cu grupuri mici dar active în zona Randstad.',
-  "jobMarketNotes" = 'Piață competitivă cu roluri bune în tech, data, logistică și servicii internaționale. În Amsterdam, pe fondul statutului administrativ și instituțiilor locale, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
-  "population" = 
+  "jobMarketNotes" = 'Piață competitivă cu roluri bune în tech, data, logistică, servicii internaționale și operațiuni legate de portul regional.'
 WHERE "slug" = 'amsterdam';
 
 UPDATE "cities"
@@ -33,9 +32,10 @@ WHERE "slug" = 'madrid';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Paris este situat în regiunea Ile-de-France. Paris rămâne un centru global de finanțe, artă și turism, cu un sector de servicii foarte dezvoltat și oportunități în industrii creative.',
+  "region" = 'Île-de-France',
+  "generalDescription" = 'Orașul Paris este situat în regiunea Île-de-France. Paris rămâne un centru global de finanțe, artă și turism, cu un sector de servicii foarte dezvoltat și oportunități în industrii creative.',
   "romanianCommunityNotes" = 'La Paris, comunitatea românească funcționează prin rețele profesionale și prieteni vechi, cu participare vizibilă la evenimente culturale.',
-  "jobMarketNotes" = 'Multe roluri în servicii, consulting, retail premium și sănătate. Paris atrage joburi diferite tocmai pe fondul portului și fluxurilor de transport, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Multe roluri în servicii, consulting, retail premium, sănătate și industrii creative, cu o piață competitivă pentru candidații internaționali.'
 WHERE "slug" = 'paris';
 
 UPDATE "cities"
@@ -63,7 +63,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Frankfurt este situat în regiunea Hesse. Frankfurt găzduiește centre financiare internaționale și este un nod major pentru transport aerian și logistică.',
   "romanianCommunityNotes" = 'În zona Frankfurt-Rhein-Main, comunitatea românească este bine organizată și conectată la finanțe, logistică și servicii corporate.',
-  "jobMarketNotes" = 'Finanțe, logistică și aeroportul generează cerere constantă pentru roluri specializate. Frankfurt atrage joburi diferite tocmai pe fondul portului și fluxurilor de transport, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Finanțe, logistică aeroportuară și servicii corporate generează cerere constantă pentru roluri specializate și funcții suport.'
 WHERE "slug" = 'frankfurt';
 
 UPDATE "cities"
@@ -77,7 +77,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Haga este situat în regiunea Olanda de Sud. Haga este cunoscut pentru instituțiile internaționale și juridice, ceea ce atrage profesioniști în domeniul dreptului și diplomației.',
   "romanianCommunityNotes" = 'La Haga, comunitatea românească se intersectează des cu mediile juridice și internaționale, păstrând însă o formă discretă și stabilă.',
-  "jobMarketNotes" = 'Cerere în drept, diplomație, organizații internaționale și servicii publice. Haga atrage joburi diferite tocmai pe fondul statutului administrativ și instituțiilor locale, de aici vin roluri în IT, produse digitale și servicii tech.'
+  "jobMarketNotes" = 'Cerere în drept, diplomație, organizații internaționale, servicii publice și roluri administrative specializate.'
 WHERE "slug" = 'haga';
 
 UPDATE "cities"
@@ -96,14 +96,16 @@ WHERE "slug" = 'valencia';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Lyon este situat în regiunea Auvergne-Rhone-Alpes. Lyon este recunoscut pentru industrie alimentară, universități și un sector de cercetare biomedicală în creștere.',
+  "region" = 'Auvergne-Rhône-Alpes',
+  "generalDescription" = 'Orașul Lyon este situat în regiunea Auvergne-Rhône-Alpes. Lyon este recunoscut pentru industrie alimentară, universități și un sector de cercetare biomedicală în creștere.',
   "romanianCommunityNotes" = 'Lyon păstrează o comunitate românească mică, dar coerentă, conectată la industrie, studii și joburi de început.',
   "jobMarketNotes" = 'Industria, cercetarea și sănătatea aduc oportunități stabile și bine plătite. În Lyon, pe fondul universității și mediului academic, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'lyon';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Marseille este situat în regiunea Provence-Alpes-Cote d''Azur. Marseille este un port major mediteranean, cu industrii maritime, logistică și o activă comunitate culturală portuară.',
+  "region" = 'Provence-Alpes-Côte d''Azur',
+  "generalDescription" = 'Orașul Marseille este situat în regiunea Provence-Alpes-Côte d''Azur. Marseille este un port major mediteranean, cu industrii maritime, logistică și o activă comunitate culturală portuară.',
   "romanianCommunityNotes" = 'La Marseille, comunitatea românească se leagă mult de port, transport și muncă sezonieră, cu sprijin mutual între cunoscuți.',
   "jobMarketNotes" = 'Portul și turismul deschid roluri în logistică, transport și servicii. În Marseille, pe fondul ecosistemului tech și startupurilor, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'marseille';
@@ -133,7 +135,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Coimbra este situat în regiunea cu același nume. Coimbra este cunoscut ca oraș universitar istoric, cu o comunitate academică importantă și servicii pentru studenți.',
   "romanianCommunityNotes" = 'Coimbra are o comunitate românească mai mică, dar vie, influențată de mediul universitar și de fluxurile studențești.',
-  "jobMarketNotes" = 'Universitatea și serviciile locale creează roluri pentru studenți și profesioniști juniori. Pentru Coimbra, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Universitatea și serviciile locale creează roluri pentru studenți, profesioniști juniori, educație, cercetare și administrație academică.'
 WHERE "slug" = 'coimbra';
 
 UPDATE "cities"
@@ -175,7 +177,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Encamp este situat în regiunea cu același nume. Encamp servește ca nod pentru turism montan și activități municipale, cu oportunități în servicii și transport local.',
   "romanianCommunityNotes" = 'În Encamp, românii apar mai ales în activități de sezon și în joburi care țin de infrastructura locală.',
-  "jobMarketNotes" = 'În Encamp, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Turismul montan, serviciile locale și transportul intern susțin roluri sezoniere în ospitalitate, retail și mentenanță.'
 WHERE "slug" = 'encamp';
 
 UPDATE "cities"
@@ -222,7 +224,8 @@ WHERE "slug" = 'linz';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Baku este situat în regiunea Absheron. Baku este un centru energetic regional, cu sectoare petroliere, financiare și o dezvoltare urbană intensă.',
+  "region" = 'Baku',
+  "generalDescription" = 'Orașul Baku este situat în regiunea cu același nume. Baku este un centru energetic regional, cu sectoare petroliere, financiare și o dezvoltare urbană intensă.',
   "romanianCommunityNotes" = 'Baku are o prezență românească restrânsă, dar conectată la proiecte urbane, afaceri și colaborări profesionale.',
   "jobMarketNotes" = 'Pentru Baku, finanțe și servicii corporate sunt cele mai vizibile direcții, mai ales pe fondul serviciilor financiare și corporate.'
 WHERE "slug" = 'baku';
@@ -231,7 +234,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Ganja este situat în regiunea cu același nume. Ganja are rol regional în industrie și agricultură, cu oportunități în servicii și comerț local.',
   "romanianCommunityNotes" = 'La Ganja, românii sunt puțini și apar mai ales prin contacte de muncă și relații de afaceri punctuale.',
-  "jobMarketNotes" = 'Ganja atrage joburi diferite tocmai pe fondul portului și fluxurilor de transport, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Ganja oferă oportunități în servicii locale, comerț, administrație regională și activități tehnice adaptate profilului economic al regiunii Ganja.'
 WHERE "slug" = 'ganja';
 
 UPDATE "cities"
@@ -259,7 +262,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Brest este situat în regiunea cu același nume. Brest servește ca nod de transport și comerț transfrontalier, cu infrastructură pentru logistică și servicii.',
   "romanianCommunityNotes" = 'Brest are o comunitate românească mică, mai prezentă în mobilitatea transfrontalieră și în relații de lucru.',
-  "jobMarketNotes" = 'Pentru Brest, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Brest oferă roluri în transport transfrontalier, depozitare, comerț regional și servicii pentru companii care operează între Belarus și Polonia.'
 WHERE "slug" = 'brest-belarus';
 
 UPDATE "cities"
@@ -299,7 +302,8 @@ WHERE "slug" = 'banja-luka';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Mostar este situat în regiunea Herțegovina. Mostar este cunoscut pentru patrimoniul său și turism, susținând servicii locale și activități comerciale legate de vizitatori.',
+  "region" = 'Cantonul Herțegovina-Neretva',
+  "generalDescription" = 'Orașul Mostar este situat în regiunea Cantonul Herțegovina-Neretva. Mostar este cunoscut pentru patrimoniul său și turism, susținând servicii locale și activități comerciale legate de vizitatori.',
   "romanianCommunityNotes" = 'Mostar are o prezență românească mică, dar stabilă, legată de turism și de mediul local de servicii.',
   "jobMarketNotes" = 'În Mostar, pe fondul sezonului turistic și serviciilor de zi cu zi, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'mostar';
@@ -308,7 +312,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Sofia este situat în regiunea cu același nume. Sofia este centrul economic al Bulgariei, cu sectoare puternice în IT, servicii și transport regional.',
   "romanianCommunityNotes" = 'Sofia are o comunitate românească activă, bine conectată la IT, servicii și mediile de business internațional.',
-  "jobMarketNotes" = 'În Sofia, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Sofia concentrează oportunități în administrație, servicii publice, educație, sănătate și companii care deservesc piața națională.'
 WHERE "slug" = 'sofia';
 
 UPDATE "cities"
@@ -327,14 +331,16 @@ WHERE "slug" = 'varna';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Zagreb este situat în regiunea cu același nume. Zagreb este centrul administrativ și economic al Croației, cu sectoare în servicii, IT și cultură.',
+  "region" = 'Orașul Zagreb',
+  "generalDescription" = 'Orașul Zagreb este situat în regiunea Orașul Zagreb. Zagreb este centrul administrativ și economic al Croației, cu sectoare în servicii, IT și cultură.',
   "romanianCommunityNotes" = 'Zagreb are o comunitate românească vizibilă în servicii și cultură, cu un profil urban destul de stabil.',
   "jobMarketNotes" = 'Zagreb atrage joburi diferite tocmai pe fondul statutului administrativ și instituțiilor locale, de aici vin roluri în IT, produse digitale și servicii tech.'
 WHERE "slug" = 'zagreb';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Split este situat în regiunea Dalmația. Split este un port turistic major, cu economie bazată pe turism sezonier, servicii și transport maritim.',
+  "region" = 'Split-Dalmația',
+  "generalDescription" = 'Orașul Split este situat în regiunea Split-Dalmația. Split este un port turistic major, cu economie bazată pe turism sezonier, servicii și transport maritim.',
   "romanianCommunityNotes" = 'Split atrage români prin turism și munca de sezon, iar comunitatea e mai degrabă practică decât formală.',
   "jobMarketNotes" = 'În Split, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
 WHERE "slug" = 'split';
@@ -369,9 +375,10 @@ WHERE "slug" = 'larnaca';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Praga este situat în regiunea Boemia Centrală. Praga are o economie puternică în turism, IT și servicii profesionale, fiind un centru cultural european important.',
+  "region" = 'Praga',
+  "generalDescription" = 'Orașul Praga este situat în regiunea cu același nume. Praga are o economie puternică în turism, IT și servicii profesionale, fiind un centru cultural european important.',
   "romanianCommunityNotes" = 'Praga are o comunitate românească mare și foarte mobilă, cu oameni prezenți în tech, turism și servicii.',
-  "jobMarketNotes" = 'Pentru Praga, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Praga are oportunități în turism, IT, servicii corporate, administrație și roluri pentru companii internaționale active în Europa Centrală.'
 WHERE "slug" = 'praga';
 
 UPDATE "cities"
@@ -411,7 +418,7 @@ WHERE "slug" = 'odense';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Tallinn este situat în regiunea Harju. Tallinn este un hub regional pentru tehnologie și servicii digitale, cu o economie orientată spre IT și start‑upuri.',
+  "generalDescription" = 'Orașul Tallinn este situat în regiunea Harju. Tallinn este un hub regional pentru tehnologie și servicii digitale, cu o economie orientată spre IT și startupuri.',
   "romanianCommunityNotes" = 'Tallinn are o comunitate românească activă în zona digitală, cu oameni conectați la startupuri și servicii IT.',
   "jobMarketNotes" = 'În Tallinn, pe fondul ecosistemului tech și startupurilor, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'tallinn';
@@ -425,9 +432,10 @@ WHERE "slug" = 'tartu';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Parnu este situat în regiunea cu același nume. Parnu este o destinație estivală populară, cu o economie sezonieră puternică în turism și ospitalitate.',
-  "romanianCommunityNotes" = 'Parnu are români mai ales în sezonul turistic, cu prezență modestă și orientată spre ospitalitate.',
-  "jobMarketNotes" = 'În Parnu, pe fondul sezonului turistic și serviciilor de zi cu zi, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
+  "region" = 'Pärnu',
+  "generalDescription" = 'Orașul Pärnu este situat în regiunea cu același nume. Pärnu este o destinație estivală populară, cu o economie sezonieră puternică în turism și ospitalitate.',
+  "romanianCommunityNotes" = 'Pärnu are români mai ales în sezonul turistic, cu prezență modestă și orientată spre ospitalitate.',
+  "jobMarketNotes" = 'În Pärnu, pe fondul sezonului turistic și serviciilor de zi cu zi, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'parnu';
 
 UPDATE "cities"
@@ -453,7 +461,7 @@ WHERE "slug" = 'turku';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Tbilisi este situat în regiunea cu același nume. Tbilisi este capitala culturală și economică a Georgiei, cu sectoare în turism, administrație și servicii.',
+  "generalDescription" = 'Orașul Tbiliși este situat în regiunea cu același nume. Tbiliși este capitala culturală și economică a Georgiei, cu sectoare în turism, administrație și servicii.',
   "romanianCommunityNotes" = 'Tbilisi are români mai ales în servicii și administrație, cu relații personale care țin comunitatea împreună.',
   "jobMarketNotes" = 'În Tbilisi, pe fondul statutului administrativ și instituțiilor locale, apar oportunități mai clare în IT, produse digitale și servicii tech.'
 WHERE "slug" = 'tbilisi';
@@ -467,7 +475,7 @@ WHERE "slug" = 'batumi';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Kutaisi este situat în regiunea Imereti. Kutaisi este un centru administrativ regional și gazdă pentru activități industriale și servicii locale.',
+  "generalDescription" = 'Orașul Kutaiși este situat în regiunea Imereti. Kutaiși este un centru administrativ regional și gazdă pentru activități industriale și servicii locale.',
   "romanianCommunityNotes" = 'Kutaisi are români puțini, dar prezenți prin colaborări locale și activități economice mici.',
   "jobMarketNotes" = 'În Kutaisi, pe fondul statutului administrativ și instituțiilor locale, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'kutaisi';
@@ -502,14 +510,16 @@ WHERE "slug" = 'budapesta';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Debrecen este situat în regiunea Hajdu-Bihar. Debrecen este un important centru universitar și comercial în estul Ungariei, cu sectoare active în educație și sănătate.',
+  "region" = 'Hajdú-Bihar',
+  "generalDescription" = 'Orașul Debrecen este situat în regiunea Hajdú-Bihar. Debrecen este un important centru universitar și comercial în estul Ungariei, cu sectoare active în educație și sănătate.',
   "romanianCommunityNotes" = 'Debrecen are români în mediul universitar și în sănătate, cu o comunitate mică dar coerentă.',
-  "jobMarketNotes" = 'În Debrecen, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'Debrecen are o piață susținută de mediul universitar, cu oportunități în educație, cercetare, servicii pentru studenți și activități administrative.'
 WHERE "slug" = 'debrecen';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Szeged este situat în regiunea Csongrad-Csanad. Szeged este cunoscut pentru universitățile sale și pentru agricultură, susținând servicii regionale și activități culturale.',
+  "region" = 'Csongrád-Csanád',
+  "generalDescription" = 'Orașul Szeged este situat în regiunea Csongrád-Csanád. Szeged este cunoscut pentru universitățile sale și pentru agricultură, susținând servicii regionale și activități culturale.',
   "romanianCommunityNotes" = 'Szeged are români legați de universitate și agricultură, cu o prezență mică dar stabilă.',
   "jobMarketNotes" = 'În Szeged, pe fondul universității și mediului academic, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'szeged';
@@ -525,7 +535,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Kopavogur este situat în regiunea Capital Region. Kopavogur este un important centru rezidențial și comercial adiacent capitalei, cu servicii locale și facilități pentru familie.',
   "romanianCommunityNotes" = 'Kopavogur are o comunitate românească mică, apropiată de capitală și de viața de familie.',
-  "jobMarketNotes" = 'În Kopavogur, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Kopavogur oferă oportunități în servicii locale, comerț, administrație regională și activități tehnice adaptate profilului economic al regiunii Capital Region.'
 WHERE "slug" = 'kopavogur';
 
 UPDATE "cities"
@@ -588,7 +598,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Daugavpils este situat în regiunea Latgale. Daugavpils este un centru industrial și de transport, cu o diversitate etnică și inițiative culturale locale.',
   "romanianCommunityNotes" = 'Daugavpils are români puțini, cu legături mai ales în transport și servicii.',
-  "jobMarketNotes" = 'În Daugavpils, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'Daugavpils oferă oportunități în servicii locale, comerț, administrație regională și activități tehnice adaptate profilului economic al regiunii Latgale.'
 WHERE "slug" = 'daugavpils';
 
 UPDATE "cities"
@@ -602,7 +612,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Vaduz este situat în regiunea cu același nume. Vaduz este capitala Liechtensteinului, cu un sector financiar important și activități culturale concentrate în centrul istoric.',
   "romanianCommunityNotes" = 'Vaduz are o comunitate românească mică, discretă și foarte bine integrată în servicii.',
-  "jobMarketNotes" = 'În Vaduz, pe fondul statutului administrativ și instituțiilor locale, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Vaduz concentrează oportunități în administrație, servicii publice, educație, sănătate și companii care deservesc piața națională.'
 WHERE "slug" = 'vaduz';
 
 UPDATE "cities"
@@ -616,7 +626,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Balzers este situat în regiunea cu același nume. Balzers găzduiește industrie ușoară și servicii locale, fiind important pentru economia micro-regională.',
   "romanianCommunityNotes" = 'Balzers are o comunitate românească redusă, mai mult familială și orientată spre munca de zi cu zi.',
-  "jobMarketNotes" = 'Pentru Balzers, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Balzers are oportunități în servicii locale, industrie ușoară, producție specializată și roluri tehnice pentru companii mici și medii.'
 WHERE "slug" = 'balzers';
 
 UPDATE "cities"
@@ -642,23 +652,26 @@ WHERE "slug" = 'klaipeda';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Luxemburg este situat în regiunea cu același nume. Luxemburg este un centru financiar european major, cunoscut pentru servicii bancare, administrare și instituții europene.',
+  "region" = 'Cantonul Luxemburg',
+  "generalDescription" = 'Orașul Luxemburg este situat în regiunea Cantonul Luxemburg. Luxemburg este un centru financiar european major, cunoscut pentru servicii bancare, administrare și instituții europene.',
   "romanianCommunityNotes" = 'Luxemburg are o comunitate românească mare, foarte prezentă în finanțe și servicii europene.',
   "jobMarketNotes" = 'Luxemburg atrage joburi diferite tocmai pe fondul statutului administrativ și instituțiilor locale, de aici vin roluri în finanțe, servicii corporate și asigurări.'
 WHERE "slug" = 'luxemburg-oras';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Esch-sur-Alzette este situat în regiunea cu același nume. Esch-sur-Alzette combina mostenirea industriala cu zona universitara Belval, ceea ce sustine servicii, cercetare si locuri de muncă tehnice.',
+  "region" = 'Cantonul Esch-sur-Alzette',
+  "generalDescription" = 'Orașul Esch-sur-Alzette este situat în regiunea Cantonul Esch-sur-Alzette. Esch-sur-Alzette combina mostenirea industriala cu zona universitara Belval, ceea ce susține servicii, cercetare și locuri de muncă tehnice.',
   "romanianCommunityNotes" = 'Esch-sur-Alzette are români conectați la zona universitară și la reconversia industrială.',
   "jobMarketNotes" = 'În Esch-sur-Alzette, pe fondul universității și mediului academic, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'esch-sur-alzette';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Differdange este situat în regiunea cu același nume. Differdange este asociat cu industria siderurgica si cu servicii locale, fiind util pentru comparatii intre costuri si oportunitati tehnice.',
+  "region" = 'Cantonul Esch-sur-Alzette',
+  "generalDescription" = 'Orașul Differdange este situat în regiunea Cantonul Esch-sur-Alzette. Differdange este asociat cu industria siderurgica și cu servicii locale, fiind util pentru comparatii intre costuri și oportunități tehnice.',
   "romanianCommunityNotes" = 'Differdange are o comunitate românească mică, dar constantă, cu legături de muncă stabile.',
-  "jobMarketNotes" = 'Pentru Differdange, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Differdange este potrivit pentru roluri în industrie siderurgică, mentenanță, servicii locale și activități tehnice legate de economia luxemburgheză.'
 WHERE "slug" = 'differdange';
 
 UPDATE "cities"
@@ -670,14 +683,14 @@ WHERE "slug" = 'valletta';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Birkirkara este situat în regiunea Central. Birkirkara are un rol rezidential si comercial important in Malta, cu acces bun la servicii urbane si locuri de muncă din zona centrala.',
+  "generalDescription" = 'Orașul Birkirkara este situat în regiunea Central. Birkirkara are un rol rezidential și comercial important în Malta, cu acces bun la servicii urbane și locuri de muncă din zona centrala.',
   "romanianCommunityNotes" = 'Birkirkara are români în zona de servicii și comerț, cu o comunitate modestă dar activă.',
-  "jobMarketNotes" = 'În Birkirkara, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Birkirkara oferă oportunități în servicii locale, comerț, administrație regională și activități tehnice adaptate profilului economic al regiunii Central.'
 WHERE "slug" = 'birkirkara';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Sliema este situat în regiunea Central. Sliema este legat de turism, retail si servicii de coasta, ceea ce il face relevant pentru joburi in ospitalitate si comert.',
+  "generalDescription" = 'Orașul Sliema este situat în regiunea Central. Sliema este un oraș de coastă orientat spre turism, retail și servicii, relevant pentru joburi în ospitalitate și comerț.',
   "romanianCommunityNotes" = 'Sliema are români în retail și ospitalitate, iar comunitatea se vede în ritmul zilnic al orașului.',
   "jobMarketNotes" = 'Pentru Sliema, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
 WHERE "slug" = 'sliema';
@@ -693,7 +706,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Bălți este situat în regiunea cu același nume. Bălți este un important centru comercial și educațional al nordului Moldovei, susținut de piețe locale și servicii pentru agricultură.',
   "romanianCommunityNotes" = 'Bălți are români în comerț și educație, cu o comunitate mică dar stabilă.',
-  "jobMarketNotes" = 'În Bălți, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Bălți are oportunități în producție, inginerie, mentenanță, logistică internă și servicii tehnice legate de economia regiunii Bălți.'
 WHERE "slug" = 'balti';
 
 UPDATE "cities"
@@ -719,16 +732,17 @@ WHERE "slug" = 'podgorica';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Niksic este situat în regiunea cu același nume. Niksic are un profil industrial și de producție, cu oportunități în manufactură și servicii locale.',
-  "romanianCommunityNotes" = 'Niksic are o comunitate românească redusă, mai ales în muncă locală și relații personale.',
-  "jobMarketNotes" = 'Pentru Niksic, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "region" = 'Nikšić',
+  "generalDescription" = 'Orașul Nikšić este situat în regiunea cu același nume. Nikšić are un profil industrial și de producție, cu oportunități în manufactură și servicii locale.',
+  "romanianCommunityNotes" = 'Nikšić are o comunitate românească redusă, mai ales în muncă locală și relații personale.',
+  "jobMarketNotes" = 'Nikšić oferă oportunități în industrie, producție, servicii locale și roluri tehnice susținute de economia regională a Muntenegrului.'
 WHERE "slug" = 'niksic';
 
 UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Budva este situat în regiunea cu același nume. Budva este o destinație turistică de coastă, cu o economie concentrată pe ospitalitate, divertisment și servicii sezoniere.',
   "romanianCommunityNotes" = 'Budva are români în turism și sezon estival, iar comunitatea e vizibilă mai ales vara.',
-  "jobMarketNotes" = 'În Budva, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'Budva oferă roluri în turism, ospitalitate, retail, servicii locale și activități sezoniere, cu variații importante între perioadele anului.'
 WHERE "slug" = 'budva';
 
 UPDATE "cities"
@@ -742,7 +756,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Bitola este situat în regiunea Pelagonia. Bitola are o tradiție industrială și culturală, cu oportunități în servicii și turism regional.',
   "romanianCommunityNotes" = 'Bitola are o comunitate românească mică, cu accent pe cultură și servicii locale.',
-  "jobMarketNotes" = 'Bitola atrage joburi diferite tocmai pe fondul portului și fluxurilor de transport, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Bitola are o piață susținută de mediul universitar, cu oportunități în educație, cercetare, servicii pentru studenți și activități administrative.'
 WHERE "slug" = 'bitola';
 
 UPDATE "cities"
@@ -768,7 +782,8 @@ WHERE "slug" = 'bergen';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Trondheim este situat în regiunea Trondelag. Trondheim este un centru tehnologic și universitar, cu un ecosistem puternic în cercetare și inovare.',
+  "region" = 'Trøndelag',
+  "generalDescription" = 'Orașul Trondheim este situat în regiunea Trøndelag. Trondheim este un centru tehnologic și universitar, cu un ecosistem puternic în cercetare și inovare.',
   "romanianCommunityNotes" = 'Trondheim are români în tehnologie și cercetare, cu o comunitate clară dar nu foarte mare.',
   "jobMarketNotes" = 'În Trondheim, pe fondul universității și mediului academic, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'trondheim';
@@ -796,9 +811,9 @@ WHERE "slug" = 'wroclaw';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul București este situat în regiunea cu același nume. București este principalul centru economic al României, cu oportunități în servicii, IT și industrie creativă.',
-  "romanianCommunityNotes" = 'București are o comunitate românească vastă, dar aici se vede în special în rețele profesionale și cartierele centrale.',
-  "jobMarketNotes" = 'În București, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "generalDescription" = 'Orașul București este situat în regiunea cu același nume. București este principalul centru economic al României, cu oportunități în servicii, IT, administrație, educație și industrii creative.',
+  "romanianCommunityNotes" = 'București are o comunitate locală românească foarte extinsă, iar pentru românii reveniți sau mutați din alte orașe integrarea se face mai ales prin rețele profesionale, universități și cartierele mari.',
+  "jobMarketNotes" = 'București oferă multe roluri în IT, servicii corporate, administrație, sănătate, educație și industrii creative, fiind principala piață urbană a României.'
 WHERE "slug" = 'bucuresti';
 
 UPDATE "cities"
@@ -824,7 +839,8 @@ WHERE "slug" = 'moscova';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Sankt Petersburg este situat în regiunea Nord-Vest. Sankt Petersburg este un important port și centru cultural, cu industrii maritime, turism și instituții de artă renumite.',
+  "region" = 'Sankt Petersburg',
+  "generalDescription" = 'Orașul Sankt Petersburg este situat în regiunea cu același nume. Sankt Petersburg este un important port și centru cultural, cu industrii maritime, turism și instituții de artă renumite.',
   "romanianCommunityNotes" = 'Sankt Petersburg are români mai ales în cultură, turism și servicii, cu o prezență urbană discretă.',
   "jobMarketNotes" = 'Sankt Petersburg atrage joburi diferite tocmai pe fondul statutului administrativ și instituțiilor locale, de aici vin roluri în logistică, transport și operațiuni portuare.'
 WHERE "slug" = 'sankt-petersburg';
@@ -833,7 +849,7 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Kazan este situat în regiunea Tatarstan. Kazan este un centru industrial și universitar important, cu sectoare în inginerie, industria ușoară și educație superioră.',
   "romanianCommunityNotes" = 'Kazan are români în educație și industrie, cu o comunitate mică dar vizibilă.',
-  "jobMarketNotes" = 'Pentru Kazan, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Kazan are cerere în industrie, inginerie, educație, servicii universitare și roluri tehnice legate de economia regională.'
 WHERE "slug" = 'kazan';
 
 UPDATE "cities"
@@ -847,21 +863,21 @@ UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Belgrad este situat în regiunea cu același nume. Belgrad este capitala Serbiei, un important nod de transport și un centru cultural și economic regional.',
   "romanianCommunityNotes" = 'Belgrad are o comunitate românească conectată la transport, comerț și viață de oraș mare.',
-  "jobMarketNotes" = 'Belgrad atrage joburi diferite tocmai pe fondul statutului administrativ și instituțiilor locale, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Belgrad atrage roluri în administrație, servicii, comerț, transport regional, IT și companii care deservesc piața Serbiei.'
 WHERE "slug" = 'belgrad';
 
 UPDATE "cities"
 SET
   "generalDescription" = 'Orașul Novi Sad este situat în regiunea Vojvodina. Novi Sad este cunoscut pentru fortareata Petrovaradin și festivalul EXIT, având un sector cultural și turistic important care completează economia locală.',
   "romanianCommunityNotes" = 'Novi Sad are români activi în cultură și servicii, cu o comunitate mică dar foarte bine așezată.',
-  "jobMarketNotes" = 'Pentru Novi Sad, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
+  "jobMarketNotes" = 'Novi Sad are oportunități în servicii, IT, cultură, turism, educație și roluri conectate la economia urbană din Vojvodina.'
 WHERE "slug" = 'novi-sad';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul NiÅ¡ este situat în regiunea NiÅ¡ava. Nis este un centru regional important din sudul Serbiei, cu profil universitar, industrial si logistic.',
+  "generalDescription" = 'Orașul Niș este situat în regiunea Nișava. Niș este un centru regional important din sudul Serbiei, cu profil universitar, industrial și logistic.',
   "romanianCommunityNotes" = 'Niš are români în domenii tehnice și educaționale, cu o prezență modestă.',
-  "jobMarketNotes" = 'În NiÅ¡, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'Niș are oportunități în industrie, logistică regională, educație, servicii universitare și roluri tehnice pentru companii locale.'
 WHERE "slug" = 'nis';
 
 UPDATE "cities"
@@ -873,16 +889,18 @@ WHERE "slug" = 'bratislava';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Kosice este situat în regiunea cu același nume. Kosice este un centru important al estului Slovaciei, cu profil industrial, universitar si servicii regionale.',
+  "region" = 'Košice',
+  "generalDescription" = 'Orașul Košice este situat în regiunea cu același nume. Košice este un centru important al estului Slovaciei, cu profil industrial, universitar și servicii regionale.',
   "romanianCommunityNotes" = 'Košice are români în industrie și universitate, iar comunitatea rămâne mică dar consecventă.',
-  "jobMarketNotes" = 'În Kosice, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'Košice are oportunități în industrie, servicii regionale, IT, educație și roluri tehnice legate de economia estului Slovaciei.'
 WHERE "slug" = 'kosice';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Zilina este situat în regiunea cu același nume. Zilina este asociat cu transportul si industria auto, ceea ce sustine joburi in productie, logistica si servicii tehnice.',
+  "region" = 'Žilina',
+  "generalDescription" = 'Orașul Žilina este situat în regiunea cu același nume. Žilina este asociat cu transportul și industria auto, ceea ce susține joburi în producție, logistică și servicii tehnice.',
   "romanianCommunityNotes" = 'Žilina are o comunitate românească legată de transport și industria auto, cu prezență discretă.',
-  "jobMarketNotes" = 'Zilina atrage joburi diferite tocmai pe fondul portului și fluxurilor de transport, de aici vin roluri în logistică, transport și operațiuni portuare.'
+  "jobMarketNotes" = 'Žilina are oportunități în industria auto, transport, producție, logistică internă și servicii tehnice.'
 WHERE "slug" = 'zilina';
 
 UPDATE "cities"
@@ -894,14 +912,14 @@ WHERE "slug" = 'ljubljana';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Maribor este situat în regiunea Podravska. Maribor are rol universitar si regional in nord-estul Sloveniei, cu activitati in servicii, educație si economie locala.',
+  "generalDescription" = 'Orașul Maribor este situat în regiunea Podravska. Maribor are rol universitar și regional în nord-estul Sloveniei, cu activități în servicii, educație și economie locală.',
   "romanianCommunityNotes" = 'Maribor are români puțini, dar prezenți constant în servicii și educație.',
   "jobMarketNotes" = 'În Maribor, pe fondul universității și mediului academic, apar oportunități mai clare în IT, produse digitale și servicii tech.'
 WHERE "slug" = 'maribor';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Celje este situat în regiunea Savinjska. Celje este un centru regional sloven cu servicii locale, industrie usoara si legaturi bune spre alte zone urbane.',
+  "generalDescription" = 'Orașul Celje este situat în regiunea Savinjska. Celje este un centru regional sloven cu servicii locale, industrie ușoară și legături bune spre alte zone urbane.',
   "romanianCommunityNotes" = 'Celje are o comunitate românească mică, dar stabilă, mai ales în servicii locale.',
   "jobMarketNotes" = 'Pentru Celje, IT și produse digitale sunt cele mai vizibile direcții, mai ales pe fondul bazei industriale și profilului tehnic.'
 WHERE "slug" = 'celje';
@@ -915,20 +933,23 @@ WHERE "slug" = 'stockholm';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Gothenburg este situat în regiunea Vastra Gotaland. Gothenburg este un port major și centru industrial, cunoscut pentru industria auto și logistică maritimă.',
+  "region" = 'Västra Götaland',
+  "generalDescription" = 'Orașul Gothenburg este situat în regiunea Västra Götaland. Gothenburg este un port major și centru industrial, cunoscut pentru industria auto și logistică maritimă.',
   "romanianCommunityNotes" = 'Gothenburg are români în industrie și logistică maritimă, iar comunitatea e vizibilă prin muncă și colaborări.',
   "jobMarketNotes" = 'Pentru Gothenburg, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
 WHERE "slug" = 'gothenburg';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Malmö este situat în regiunea Skane. Malmö se remarcă prin legătura cu Copenhaga via Podul Öresund, profil multicultural și creștere în sectoare digitale și logistice.',
+  "region" = 'Skåne',
+  "generalDescription" = 'Orașul Malmö este situat în regiunea Skåne. Malmö se remarcă prin legătura cu Copenhaga via Podul Öresund, profil multicultural și creștere în sectoare digitale și logistice.',
   "romanianCommunityNotes" = 'Malmö are o comunitate românească foarte mobilă, conectată la Copenhaga și la sectoarele digitale.',
   "jobMarketNotes" = 'În Malmö, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
 WHERE "slug" = 'malmo';
 
 UPDATE "cities"
 SET
+  "region" = 'Zürich',
   "generalDescription" = 'Orașul Zurich este situat în regiunea cu același nume. Zurich este un centru financiar și bancar de prim rang, cu o puternică prezență a serviciilor profesionale și asigurărilor.',
   "romanianCommunityNotes" = 'Zurich are români foarte bine integrați în finanțe și servicii profesionale, cu o comunitate puternică.',
   "jobMarketNotes" = 'Zurich atrage joburi diferite tocmai pe fondul serviciilor financiare și corporate, de aici vin roluri în finanțe, servicii corporate și asigurări.'
@@ -950,21 +971,24 @@ WHERE "slug" = 'basel';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Istanbul este situat în regiunea Marmara. Istanbul este un nod transcontinental major, combinând turism, comerț și transport maritim cu industrii diverse și un sector puternic de servicii.',
+  "region" = 'Istanbul',
+  "generalDescription" = 'Orașul Istanbul este situat în regiunea cu același nume. Istanbul este un nod transcontinental major, combinând turism, comerț și transport maritim cu industrii diverse și un sector puternic de servicii.',
   "romanianCommunityNotes" = 'Istanbul are români în servicii, comerț și transport, cu o comunitate urbană foarte amestecată.',
   "jobMarketNotes" = 'În Istanbul, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
 WHERE "slug" = 'istanbul';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Ankara este situat în regiunea Anatolia Centrală. Ankara este capitala Turciei, concentrând administrație, universități și sectoare publice, precum și industrii de apărare și servicii.',
+  "region" = 'Ankara',
+  "generalDescription" = 'Orașul Ankara este situat în regiunea cu același nume. Ankara este capitala Turciei, concentrând administrație, universități și sectoare publice, precum și industrii de apărare și servicii.',
   "romanianCommunityNotes" = 'Ankara are români puțini, dar prezenți în administrație, studii și servicii publice.',
   "jobMarketNotes" = 'În Ankara, pe fondul statutului administrativ și instituțiilor locale, apar oportunități mai clare în IT, produse digitale și servicii tech.'
 WHERE "slug" = 'ankara';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Izmir este situat în regiunea Egeea. Izmir are un port important și o economie bazată pe comerț maritim, agricultură regională și turism estival.',
+  "region" = 'Izmir',
+  "generalDescription" = 'Orașul Izmir este situat în regiunea cu același nume. Izmir are un port important și o economie bazată pe comerț maritim, agricultură regională și turism estival.',
   "romanianCommunityNotes" = 'Izmir are români în comerț și activități maritime, iar comunitatea rămâne mică dar activă.',
   "jobMarketNotes" = 'Pentru Izmir, logistică și transport sunt cele mai vizibile direcții, mai ales pe fondul portului și fluxurilor de transport.'
 WHERE "slug" = 'izmir';
@@ -985,35 +1009,38 @@ WHERE "slug" = 'lviv';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Odesa este situat în regiunea cu același nume. Odesa are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.',
+  "generalDescription" = 'Orașul Odesa este situat în regiunea cu același nume. Odesa are un profil influențat de activități portuare și logistice, cu oportunități în transport, comerț și servicii conexe.',
   "romanianCommunityNotes" = 'Odesa are români în port, logistică și servicii, cu o prezență discretă dar vizibilă.',
   "jobMarketNotes" = 'În Odesa, pe fondul portului și fluxurilor de transport, apar oportunități mai clare în logistică, transport și operațiuni portuare.'
 WHERE "slug" = 'odesa';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Londra este situat în regiunea Anglia. Londra este un centru financiar global, cu un sector de servicii extrem de dezvoltat, industrii creative și oportunități internaționale.',
+  "region" = 'Greater London',
+  "generalDescription" = 'Orașul Londra este situat în regiunea Greater London. Londra este un centru financiar global, cu un sector de servicii extrem de dezvoltat, industrii creative și oportunități internaționale.',
   "romanianCommunityNotes" = 'Londra are o comunitate românească foarte mare, diversă și foarte activă în economie, servicii și cultură.',
   "jobMarketNotes" = 'În Londra, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
 WHERE "slug" = 'londra';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Manchester este situat în regiunea Anglia. Manchester este recunoscut pentru patrimoniul său industrial, scena muzicală vibrantă și centre universitare ce susțin sectoare de tehnologie și servicii.',
+  "region" = 'Greater Manchester',
+  "generalDescription" = 'Orașul Manchester este situat în regiunea Greater Manchester. Manchester este recunoscut pentru patrimoniul său industrial, scena muzicală vibrantă și centre universitare ce susțin sectoare de tehnologie și servicii.',
   "romanianCommunityNotes" = 'Manchester are români prezenți în educație, servicii și industrii creative, cu o comunitate bine amestecată.',
   "jobMarketNotes" = 'În Manchester, pe fondul universității și mediului academic, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'manchester';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Birmingham este situat în regiunea Anglia. Birmingham are o tradiție industrială puternică și un sector manufacturier și logistic dezvoltat, susținut de o comunitate multiculturală dinamică.',
+  "region" = 'West Midlands',
+  "generalDescription" = 'Orașul Birmingham este situat în regiunea West Midlands. Birmingham are o tradiție industrială puternică și un sector manufacturier și logistic dezvoltat, susținut de o comunitate multiculturală dinamică.',
   "romanianCommunityNotes" = 'Birmingham are români în producție, logistică și servicii, cu legături puternice între comunități locale.',
-  "jobMarketNotes" = 'În Birmingham, pe fondul portului și fluxurilor de transport, cererea rămâne activă în logistică și transport, iar operațiuni portuare apar des în rolurile de intrare.'
+  "jobMarketNotes" = 'În Birmingham, producția, logistica internă, serviciile urbane și ingineria susțin cerere constantă pentru roluri tehnice și operaționale.'
 WHERE "slug" = 'birmingham';
 
 UPDATE "cities"
 SET
-  "generalDescription" = 'Orașul Vatican este situat în regiunea cu același nume. Vaticanul are un rol administrativ si religios unic, cu activitati concentrate in institutii, cultura si turism.',
+  "generalDescription" = 'Orașul Vatican este situat în regiunea cu același nume. Vaticanul are un rol administrativ și religios unic, cu activități concentrate în instituții, cultură și turism.',
   "romanianCommunityNotes" = 'Vatican City nu are o comunitate românească de masă, dar există prezențe mici în servicii și în zonele apropiate.',
   "jobMarketNotes" = 'În Vatican, pe fondul statutului administrativ și instituțiilor locale, cererea rămâne activă în IT și produse digitale, iar servicii tech apar des în rolurile de intrare.'
 WHERE "slug" = 'vatican-city';

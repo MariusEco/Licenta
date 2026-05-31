@@ -163,7 +163,7 @@ const comparisonRows: ComparisonRow[] = [
         return formatMaybeText(getCountryDetail(location)?.currency);
       }
 
-      return "Nedisponibil";
+      return formatMaybeText(getCityDetail(location)?.currency);
     },
   },
   {
@@ -177,7 +177,7 @@ const comparisonRows: ComparisonRow[] = [
         return formatNumber(getCityDetail(location)?.population);
       }
 
-      return "Nedisponibil";
+      return formatNumber(location.population);
     },
   },
   {
@@ -189,7 +189,7 @@ const comparisonRows: ComparisonRow[] = [
 
       return location.kind === "COUNTRY"
         ? formatMaybeText(getCountryDetail(location)?.officialLanguage)
-        : "Nedisponibil";
+        : formatMaybeText(getCityDetail(location)?.officialLanguage);
     },
   },
   {
@@ -200,13 +200,11 @@ const comparisonRows: ComparisonRow[] = [
   {
     label: "Dificultate cetățenie",
     render: (location) => {
-      if (!location || location.kind !== "COUNTRY") {
+      if (!location) {
         return "Nedisponibil";
       }
 
-      return formatDifficulty(
-        getCountryDetail(location)?.citizenshipDifficulty ?? null,
-      );
+      return formatDifficulty(location.citizenshipDifficulty ?? null);
     },
   },
   {
@@ -248,17 +246,6 @@ const comparisonRows: ComparisonRow[] = [
       formatCurrency(getCostOfLiving(location)?.internetEur ?? null),
   },
   {
-    label: "Nivel taxe",
-    render: (location) => {
-      if (!location || location.kind !== "COUNTRY") {
-        return "Nedisponibil";
-      }
-
-      // taxLevel removed from country model — show a static CTA similar to country page
-      return "Vezi mai multe detalii";
-    },
-  },
-  {
     label: "Comunitate românească",
     render: (location) => {
       if (!location) {
@@ -266,7 +253,7 @@ const comparisonRows: ComparisonRow[] = [
       }
 
       if (location.kind === "COUNTRY") {
-        return "Nedisponibil";
+        return formatMaybeText(getCountryDetail(location)?.romanianCommunityNotes);
       }
 
       return formatMaybeText(getCityDetail(location)?.romanianCommunityNotes);
@@ -280,7 +267,7 @@ const comparisonRows: ComparisonRow[] = [
       }
 
       if (location.kind === "COUNTRY") {
-        return "Nedisponibil";
+        return formatMaybeText(getCountryDetail(location)?.jobMarketNotes);
       }
 
       return formatMaybeText(getCityDetail(location)?.jobMarketNotes);

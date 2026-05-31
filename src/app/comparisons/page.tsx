@@ -29,6 +29,7 @@ export default async function ComparisonsPage() {
           },
           city: {
             include: {
+              country: true,
               costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
             },
           },

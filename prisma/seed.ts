@@ -949,12 +949,12 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Paris",
-      region: "Ile-de-France",
+      region: "Île-de-France",
       latitude: 48.8566,
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Orasul Paris este situat in regiunea Ile-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Paris este situat in regiunea Île-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
         "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
       jobMarketNotes: "Multe roluri în servicii, consulting, retail premium și sănătate.",
@@ -964,12 +964,12 @@ async function main() {
       countryId: france.id,
       name: "Paris",
       slug: "paris",
-      region: "Ile-de-France",
+      region: "Île-de-France",
       latitude: 48.8566,
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Orasul Paris este situat in regiunea Ile-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Paris este situat in regiunea Île-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
         "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
       jobMarketNotes: "Multe roluri în servicii, consulting, retail premium și sănătate.",
@@ -1246,12 +1246,12 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Lyon",
-      region: "Auvergne-Rhone-Alpes",
+      region: "Auvergne-Rhône-Alpes",
       latitude: 45.764,
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Orasul Lyon este situat in regiunea Auvergne-Rhone-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Lyon este situat in regiunea Auvergne-Rhône-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
         "Comunitate românească activă în Lyon și zonele apropiate.",
       jobMarketNotes: "Industria, cercetarea și sănătatea aduc oportunități stabile și bine plătite.",
@@ -1261,12 +1261,12 @@ async function main() {
       countryId: france.id,
       name: "Lyon",
       slug: "lyon",
-      region: "Auvergne-Rhone-Alpes",
+      region: "Auvergne-Rhône-Alpes",
       latitude: 45.764,
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Orasul Lyon este situat in regiunea Auvergne-Rhone-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Lyon este situat in regiunea Auvergne-Rhône-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
         "Comunitate românească activă în Lyon și zonele apropiate.",
       jobMarketNotes: "Industria, cercetarea și sănătatea aduc oportunități stabile și bine plătite.",
@@ -1279,12 +1279,12 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Marseille",
-      region: "Provence-Alpes-Cote d'Azur",
+      region: "Provence-Alpes-Côte d'Azur",
       latitude: 43.2965,
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Orasul Marseille este situat in regiunea Provence-Alpes-Cote d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Marseille este situat in regiunea Provence-Alpes-Côte d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
         "Comunitate românească prezentă în zona metropolitană Marseille.",
       jobMarketNotes: "Portul și turismul deschid roluri în logistică, transport și servicii.",
@@ -1294,12 +1294,12 @@ async function main() {
       countryId: france.id,
       name: "Marseille",
       slug: "marseille",
-      region: "Provence-Alpes-Cote d'Azur",
+      region: "Provence-Alpes-Côte d'Azur",
       latitude: 43.2965,
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Orasul Marseille este situat in regiunea Provence-Alpes-Cote d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Marseille este situat in regiunea Provence-Alpes-Côte d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
         "Comunitate românească prezentă în zona metropolitană Marseille.",
       jobMarketNotes: "Portul și turismul deschid roluri în logistică, transport și servicii.",
@@ -2600,13 +2600,13 @@ async function main() {
       countrySlug: "azerbaidjan",
       name: "Baku",
       slug: "baku",
-      region: "Absheron",
+      region: "Baku",
       latitude: 40.4093,
       longitude: 49.8671,
       population: 2300000,
       averageSalaryEur: 459,
       generalDescription:
-        "Orasul Baku este situat in regiunea Absheron. Pentru Baku, rolul administrativ asociat regiunii Absheron in Azerbaidjan concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Baku este situat in regiunea cu acelasi nume. Pentru Baku, rolul administrativ asociat regiunii Baku in Azerbaidjan concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "azerbaidjan",
@@ -2735,13 +2735,13 @@ async function main() {
       countrySlug: "bosnia-si-hertegovina",
       name: "Mostar",
       slug: "mostar",
-      region: "Herțegovina",
+      region: "Cantonul Herțegovina-Neretva",
       latitude: 43.3438,
       longitude: 17.8078,
       population: 105000,
       averageSalaryEur: 850,
       generalDescription:
-        "Orasul Mostar este situat in regiunea Herțegovina. Pentru Mostar, rolul administrativ asociat regiunii Herțegovina in Bosnia și Herțegovina concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Mostar este situat in regiunea Cantonul Herțegovina-Neretva. Pentru Mostar, rolul administrativ asociat regiunii Cantonul Herțegovina-Neretva in Bosnia și Herțegovina concentreaza servicii publice, educatie si locuri de munca.",
     },
 
     {
@@ -2785,25 +2785,25 @@ async function main() {
       countrySlug: "croatia",
       name: "Zagreb",
       slug: "zagreb",
-      region: "Zagreb",
+      region: "Orașul Zagreb",
       latitude: 45.815,
       longitude: 15.9819,
       population: 769000,
       averageSalaryEur: 1652,
       generalDescription:
-        "Orasul Zagreb este situat in regiunea cu acelasi nume. Pentru Zagreb, rolul administrativ asociat regiunii Zagreb in Croația concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Zagreb este situat in regiunea Orașul Zagreb. Pentru Zagreb, rolul administrativ asociat regiunii Zagreb in Croația concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "croatia",
       name: "Split",
       slug: "split",
-      region: "Dalmația",
+      region: "Split-Dalmația",
       latitude: 43.5081,
       longitude: 16.4402,
       population: 160000,
       averageSalaryEur: 1450,
       generalDescription:
-        "Orasul Split este situat in regiunea Dalmația. Dimensiunea urbana a orasului Split aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Split este situat in regiunea Split-Dalmația. Dimensiunea urbana a orasului Split aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "croatia",
@@ -2859,13 +2859,13 @@ async function main() {
       countrySlug: "cehia",
       name: "Praga",
       slug: "praga",
-      region: "Boemia Centrală",
+      region: "Praga",
       latitude: 50.0755,
       longitude: 14.4378,
       population: 1380000,
       averageSalaryEur: 2016,
       generalDescription:
-        "Orasul Praga este situat in regiunea Boemia Centrală. Pentru Praga, rolul administrativ asociat regiunii Boemia Centrală in Cehia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Praga este situat in regiunea cu acelasi nume. Pentru Praga, rolul administrativ asociat regiunii Praga in Cehia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "cehia",
@@ -2955,15 +2955,15 @@ async function main() {
     },
     {
       countrySlug: "estonia",
-      name: "Parnu",
+      name: "Pärnu",
       slug: "parnu",
-      region: "Parnu",
+      region: "Pärnu",
       latitude: 58.3859,
       longitude: 24.4971,
       population: 40000,
       averageSalaryEur: 1700,
       generalDescription:
-        "Orasul Parnu este situat in regiunea cu acelasi nume. Parnu este prezentat in surse publice ca un centru urban relevant in Estonia, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Pärnu este situat in regiunea cu acelasi nume. Pärnu este prezentat in surse publice ca un centru urban relevant in Estonia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {
@@ -3093,25 +3093,25 @@ async function main() {
       countrySlug: "ungaria",
       name: "Debrecen",
       slug: "debrecen",
-      region: "Hajdu-Bihar",
+      region: "Hajdú-Bihar",
       latitude: 47.5316,
       longitude: 21.6273,
       population: 200000,
       averageSalaryEur: 1600,
       generalDescription:
-        "Orasul Debrecen este situat in regiunea Hajdu-Bihar. Dimensiunea urbana a orasului Debrecen aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Debrecen este situat in regiunea Hajdú-Bihar. Dimensiunea urbana a orasului Debrecen aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "ungaria",
       name: "Szeged",
       slug: "szeged",
-      region: "Csongrad-Csanad",
+      region: "Csongrád-Csanád",
       latitude: 46.253,
       longitude: 20.1414,
       population: 157000,
       averageSalaryEur: 1500,
       generalDescription:
-        "Orasul Szeged este situat in regiunea Csongrad-Csanad. Dimensiunea urbana a orasului Szeged aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Szeged este situat in regiunea Csongrád-Csanád. Dimensiunea urbana a orasului Szeged aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
 
     {
@@ -3340,37 +3340,37 @@ async function main() {
       countrySlug: "luxemburg",
       name: "Luxemburg",
       slug: "luxemburg-oras",
-      region: "Luxemburg",
+      region: "Cantonul Luxemburg",
       latitude: 49.6116,
       longitude: 6.1319,
       population: 136000,
       averageSalaryEur: 6200,
       generalDescription:
-        "Orasul Luxemburg este situat in regiunea cu acelasi nume. Pentru Luxemburg, rolul administrativ asociat regiunii Luxemburg in Luxemburg concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Luxemburg este situat in regiunea Cantonul Luxemburg. Pentru Luxemburg, rolul administrativ asociat regiunii Luxemburg in Luxemburg concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "luxemburg",
       name: "Esch-sur-Alzette",
       slug: "esch-sur-alzette",
-      region: "Esch-sur-Alzette",
+      region: "Cantonul Esch-sur-Alzette",
       latitude: 49.4958,
       longitude: 5.9806,
       population: 37000,
       averageSalaryEur: 5200,
       generalDescription:
-        "Orasul Esch-sur-Alzette este situat in regiunea cu acelasi nume. Esch-sur-Alzette combina mostenirea industriala cu zona universitara Belval, ceea ce sustine servicii, cercetare si locuri de munca tehnice.",
+        "Orasul Esch-sur-Alzette este situat in regiunea Cantonul Esch-sur-Alzette. Esch-sur-Alzette combina mostenirea industriala cu zona universitara Belval, ceea ce sustine servicii, cercetare si locuri de munca tehnice.",
     },
     {
       countrySlug: "luxemburg",
       name: "Differdange",
       slug: "differdange",
-      region: "Differdange",
+      region: "Cantonul Esch-sur-Alzette",
       latitude: 49.5242,
       longitude: 5.8892,
       population: 30000,
       averageSalaryEur: 5000,
       generalDescription:
-        "Orasul Differdange este situat in regiunea cu acelasi nume. Differdange este asociat cu industria siderurgica si cu servicii locale, fiind util pentru comparatii intre costuri si oportunitati tehnice.",
+        "Orasul Differdange este situat in regiunea Cantonul Esch-sur-Alzette. Differdange este asociat cu industria siderurgica si cu servicii locale, fiind util pentru comparatii intre costuri si oportunitati tehnice.",
     },
 
     {
@@ -3498,15 +3498,15 @@ async function main() {
     },
     {
       countrySlug: "muntenegru",
-      name: "Niksic",
+      name: "Nikšić",
       slug: "niksic",
-      region: "Niksic",
+      region: "Nikšić",
       latitude: 42.7731,
       longitude: 18.9445,
       population: 57000,
       averageSalaryEur: 900,
       generalDescription:
-        "Orasul Niksic este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului Niksic aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Nikšić este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului Nikšić aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "muntenegru",
@@ -3586,13 +3586,13 @@ async function main() {
       countrySlug: "norvegia",
       name: "Trondheim",
       slug: "trondheim",
-      region: "Trondelag",
+      region: "Trøndelag",
       latitude: 63.4305,
       longitude: 10.3951,
       population: 212000,
       averageSalaryEur: 4800,
       generalDescription:
-        "Orasul Trondheim este situat in regiunea Trondelag. Trondheim este prezentat in surse publice ca un centru urban relevant in Norvegia, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Trondheim este situat in regiunea Trøndelag. Trondheim este prezentat in surse publice ca un centru urban relevant in Norvegia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {
@@ -3685,13 +3685,13 @@ async function main() {
       countrySlug: "rusia",
       name: "Sankt Petersburg",
       slug: "sankt-petersburg",
-      region: "Nord-Vest",
+      region: "Sankt Petersburg",
       latitude: 59.9311,
       longitude: 30.3609,
       population: 5600000,
       averageSalaryEur: 1500,
       generalDescription:
-        "Orasul Sankt Petersburg este situat in regiunea Nord-Vest. Pentru Sankt Petersburg, rolul administrativ asociat regiunii Nord-Vest in Rusia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Sankt Petersburg este situat in regiunea cu acelasi nume. Pentru Sankt Petersburg, rolul administrativ asociat regiunii Sankt Petersburg in Rusia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "rusia",
@@ -3794,27 +3794,27 @@ async function main() {
     },
     {
       countrySlug: "slovacia",
-      name: "Kosice",
+      name: "Košice",
       slug: "kosice",
-      region: "Kosice",
+      region: "Košice",
       latitude: 48.7164,
       longitude: 21.2611,
       population: 230000,
       averageSalaryEur: 1700,
       generalDescription:
-        "Orasul Kosice este situat in regiunea cu acelasi nume. Kosice este un centru important al estului Slovaciei, cu profil industrial, universitar si servicii regionale.",
+        "Orasul Košice este situat in regiunea cu acelasi nume. Košice este un centru important al estului Slovaciei, cu profil industrial, universitar si servicii regionale.",
     },
     {
       countrySlug: "slovacia",
-      name: "Zilina",
+      name: "Žilina",
       slug: "zilina",
-      region: "Zilina",
+      region: "Žilina",
       latitude: 49.223,
       longitude: 18.7394,
       population: 81000,
       averageSalaryEur: 1600,
       generalDescription:
-        "Orasul Zilina este situat in regiunea cu acelasi nume. Zilina este asociat cu transportul si industria auto, ceea ce sustine joburi in productie, logistica si servicii tehnice.",
+        "Orasul Žilina este situat in regiunea cu acelasi nume. Žilina este asociat cu transportul si industria auto, ceea ce sustine joburi in productie, logistica si servicii tehnice.",
     },
 
     {
@@ -3870,32 +3870,32 @@ async function main() {
       countrySlug: "suedia",
       name: "Gothenburg",
       slug: "gothenburg",
-      region: "Vastra Gotaland",
+      region: "Västra Götaland",
       latitude: 57.7089,
       longitude: 11.9746,
       population: 605000,
       averageSalaryEur: 4200,
       generalDescription:
-        "Orasul Gothenburg este situat in regiunea Vastra Gotaland. Pentru Gothenburg, rolul administrativ asociat regiunii Vastra Gotaland in Suedia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Gothenburg este situat in regiunea Västra Götaland. Pentru Gothenburg, rolul administrativ asociat regiunii Västra Götaland in Suedia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "suedia",
       name: "Malmö",
       slug: "malmo",
-      region: "Skane",
+      region: "Skåne",
       latitude: 55.605,
       longitude: 13.0038,
       population: 360000,
       averageSalaryEur: 4000,
       generalDescription:
-        "Orasul Malmö este situat in regiunea Skane. Dimensiunea urbana a orasului Malmö aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Malmö este situat in regiunea Skåne. Dimensiunea urbana a orasului Malmö aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
 
     {
       countrySlug: "elvetia",
       name: "Zurich",
       slug: "zurich",
-      region: "Zurich",
+      region: "Zürich",
       latitude: 47.3769,
       longitude: 8.5417,
       population: 443000,
@@ -3932,37 +3932,37 @@ async function main() {
       countrySlug: "turcia",
       name: "Istanbul",
       slug: "istanbul",
-      region: "Marmara",
+      region: "Istanbul",
       latitude: 41.0082,
       longitude: 28.9784,
       population: 15600000,
       averageSalaryEur: 1300,
       generalDescription:
-        "Orasul Istanbul este situat in regiunea Marmara. Dimensiunea urbana a orasului Istanbul aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Istanbul este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului Istanbul aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "turcia",
       name: "Ankara",
       slug: "ankara",
-      region: "Anatolia Centrală",
+      region: "Ankara",
       latitude: 39.9334,
       longitude: 32.8597,
       population: 5700000,
       averageSalaryEur: 1200,
       generalDescription:
-        "Orasul Ankara este situat in regiunea Anatolia Centrală. Pentru Ankara, rolul administrativ asociat regiunii Anatolia Centrală in Turcia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Ankara este situat in regiunea cu acelasi nume. Pentru Ankara, rolul administrativ asociat regiunii Ankara in Turcia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "turcia",
       name: "Izmir",
       slug: "izmir",
-      region: "Egeea",
+      region: "Izmir",
       latitude: 38.4237,
       longitude: 27.1428,
       population: 4400000,
       averageSalaryEur: 1150,
       generalDescription:
-        "Orasul Izmir este situat in regiunea Egeea. Dimensiunea urbana a orasului Izmir aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Izmir este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului Izmir aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
 
     {
@@ -4006,37 +4006,37 @@ async function main() {
       countrySlug: "regatul-unit",
       name: "Londra",
       slug: "londra",
-      region: "Anglia",
+      region: "Greater London",
       latitude: 51.5072,
       longitude: -0.1276,
       population: 9000000,
       averageSalaryEur: 4500,
       generalDescription:
-        "Orasul Londra este situat in regiunea Anglia. Pentru Londra, rolul administrativ asociat regiunii Anglia in Regatul Unit concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Londra este situat in regiunea Greater London. Pentru Londra, rolul administrativ asociat regiunii Greater London in Regatul Unit concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "regatul-unit",
       name: "Manchester",
       slug: "manchester",
-      region: "Anglia",
+      region: "Greater Manchester",
       latitude: 53.4808,
       longitude: -2.2426,
       population: 560000,
       averageSalaryEur: 3300,
       generalDescription:
-        "Orasul Manchester este situat in regiunea Anglia. Manchester este prezentat in surse publice ca un centru urban relevant in Regatul Unit, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Manchester este situat in regiunea Greater Manchester. Manchester este prezentat in surse publice ca un centru urban relevant in Regatul Unit, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
     {
       countrySlug: "regatul-unit",
       name: "Birmingham",
       slug: "birmingham",
-      region: "Anglia",
+      region: "West Midlands",
       latitude: 52.4862,
       longitude: -1.8904,
       population: 1150000,
       averageSalaryEur: 3200,
       generalDescription:
-        "Orasul Birmingham este situat in regiunea Anglia. Birmingham este prezentat in surse publice ca un centru urban relevant in Regatul Unit, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Birmingham este situat in regiunea West Midlands. Birmingham este prezentat in surse publice ca un centru urban relevant in Regatul Unit, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {

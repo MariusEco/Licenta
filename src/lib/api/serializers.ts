@@ -33,6 +33,14 @@ export function serializeCountry(
     cities?: City[];
   },
 ) {
+  const capitalCity = country.cities?.find(
+    (city) =>
+      country.capital &&
+      city.name.localeCompare(country.capital, "ro", {
+        sensitivity: "base",
+      }) === 0,
+  );
+
   return {
     id: country.id,
     kind: "COUNTRY" as const,
@@ -54,6 +62,8 @@ export function serializeCountry(
     monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     taxSummaryUrl: getCountryTaxSummaryUrl(country.slug),
     officialResources: getOfficialMigrationResources(country.slug),
+    romanianCommunityNotes: capitalCity?.romanianCommunityNotes ?? null,
+    jobMarketNotes: capitalCity?.jobMarketNotes ?? null,
     costOfLiving: serializeCostOfLiving(country.costOfLiving?.[0] ?? null),
     cities:
       country.cities?.map((city) =>
@@ -62,6 +72,9 @@ export function serializeCountry(
           countryName: country.name,
           countrySlug: country.slug,
           countryEmigrationDifficulty: country.emigrationDifficulty,
+          countryCitizenshipDifficulty: country.citizenshipDifficulty,
+          countryCurrency: country.currency,
+          countryOfficialLanguage: country.officialLanguage,
         }),
       ) ?? [],
   };
@@ -78,6 +91,7 @@ export function serializeCountrySummary(
     continent: country.continent,
     latitude: toNumber(country.latitude),
     longitude: toNumber(country.longitude),
+    population: country.population ?? getCountryPopulation(country.slug),
     averageSalaryEur: country.averageSalaryEur,
     monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     emigrationDifficulty: country.emigrationDifficulty,
@@ -113,6 +127,9 @@ export function serializeCity(
     romanianCommunityNotes: city.romanianCommunityNotes,
     jobMarketNotes: city.jobMarketNotes,
     emigrationDifficulty: city.country.emigrationDifficulty,
+    citizenshipDifficulty: city.country.citizenshipDifficulty,
+    currency: city.country.currency,
+    officialLanguage: city.country.officialLanguage,
     averageSalaryEur: city.averageSalaryEur,
     monthlyCostEur: city.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     costOfLiving: serializeCostOfLiving(city.costOfLiving?.[0] ?? null),
@@ -126,6 +143,9 @@ export function serializeCitySummary(
     countryName?: string;
     countrySlug?: string;
     countryEmigrationDifficulty?: Country["emigrationDifficulty"];
+    countryCitizenshipDifficulty?: Country["citizenshipDifficulty"];
+    countryCurrency?: string | null;
+    countryOfficialLanguage?: string | null;
   },
 ) {
   return {
@@ -143,5 +163,12 @@ export function serializeCitySummary(
       city.countryEmigrationDifficulty ??
       city.country?.emigrationDifficulty ??
       null,
+    citizenshipDifficulty:
+      city.countryCitizenshipDifficulty ??
+      city.country?.citizenshipDifficulty ??
+      null,
+    currency: city.countryCurrency ?? city.country?.currency ?? null,
+    officialLanguage:
+      city.countryOfficialLanguage ?? city.country?.officialLanguage ?? null,
   };
 }

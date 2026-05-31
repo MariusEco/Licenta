@@ -29,6 +29,7 @@ export async function GET() {
             },
             city: {
               include: {
+                country: true,
                 costOfLiving: {
                   orderBy: { updatedAt: "desc" },
                   take: 1,
