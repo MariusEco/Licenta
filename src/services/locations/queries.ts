@@ -143,14 +143,6 @@ function sortLocations<
 function getCountryOrderBy(
   sort: LocationListFilters["sort"],
 ): Prisma.CountryOrderByWithRelationInput[] {
-  if (sort === "salary_desc") {
-    return [{ averageSalaryEur: "desc" }, { name: "asc" }];
-  }
-
-  if (sort === "salary_asc") {
-    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
-  }
-
   if (sort === "difficulty_asc") {
     return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
   }
@@ -165,14 +157,6 @@ function getCountryOrderBy(
 function getCityOrderBy(
   sort: LocationListFilters["sort"],
 ): Prisma.CityOrderByWithRelationInput[] {
-  if (sort === "salary_desc") {
-    return [{ averageSalaryEur: "desc" }, { name: "asc" }];
-  }
-
-  if (sort === "salary_asc") {
-    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
-  }
-
   if (sort === "difficulty_asc") {
     return [{ country: { emigrationDifficulty: "asc" } }, { name: "asc" }];
   }
@@ -193,7 +177,11 @@ export async function getCountries(
   const where: Prisma.CountryWhereInput = {
     ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
     ...(filters.minAverageSalaryEur
-      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
+      ? {
+          costOfLiving: {
+            some: { averageSalaryEur: { gte: filters.minAverageSalaryEur } },
+          },
+        }
       : {}),
     ...(filters.maxMonthlyCostEur
       ? {
@@ -207,7 +195,10 @@ export async function getCountries(
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? defaultPageSize;
   const sortInMemory =
-    filters.sort === "cost_asc" || filters.sort === "cost_desc";
+    filters.sort === "cost_asc" ||
+    filters.sort === "cost_desc" ||
+    filters.sort === "salary_asc" ||
+    filters.sort === "salary_desc";
 
   const countries = await prisma.country.findMany({
     where,
@@ -227,7 +218,6 @@ export async function getCountries(
       emigrationDifficulty: true,
       latitude: true,
       longitude: true,
-      averageSalaryEur: true,
       population: true,
       createdAt: true,
       updatedAt: true,
@@ -284,7 +274,6 @@ export async function getCountryBySlug(
       emigrationDifficulty: true,
       latitude: true,
       longitude: true,
-      averageSalaryEur: true,
       population: true,
       createdAt: true,
       updatedAt: true,
@@ -301,7 +290,6 @@ export async function getCountryBySlug(
           createdAt: true,
           updatedAt: true,
           population: true,
-          averageSalaryEur: true,
           romanianCommunityNotes: true,
           jobMarketNotes: true,
           generalDescription: true,
@@ -339,7 +327,11 @@ export async function getCities(
       ? { country: { emigrationDifficulty: filters.difficulty } }
       : {}),
     ...(filters.minAverageSalaryEur
-      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
+      ? {
+          costOfLiving: {
+            some: { averageSalaryEur: { gte: filters.minAverageSalaryEur } },
+          },
+        }
       : {}),
     ...(filters.maxMonthlyCostEur
       ? {
@@ -353,7 +345,10 @@ export async function getCities(
   const page = filters.page ?? 1;
   const pageSize = filters.pageSize ?? defaultPageSize;
   const sortInMemory =
-    filters.sort === "cost_asc" || filters.sort === "cost_desc";
+    filters.sort === "cost_asc" ||
+    filters.sort === "cost_desc" ||
+    filters.sort === "salary_asc" ||
+    filters.sort === "salary_desc";
 
   const [total, cities] = await Promise.all([
     prisma.city.count({ where }),

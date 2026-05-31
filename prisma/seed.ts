@@ -1,4 +1,4 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+﻿import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import { Pool } from "pg";
 
@@ -392,87 +392,87 @@ const countryNumbeoEstimates: Record<
 
 const countryDescriptions: Record<string, string> = {
   albania:
-    "Albania este situată în sud-estul Europei, în vestul Balcanilor, și are granițe cu Macedonia la est, Grecia la sud și Kosovo și Muntenegru la nord. Are acces la Marea Adriatică și Marea Ionică la vest și sud-vest, fiind la mai puțin de 72 de kilometri distanță de Italia. Oferă costuri de viață mai reduse și oportunități în servicii, turism și construcții.",
+    "Albania este situatÄƒ Ã®n sud-estul Europei, Ã®n vestul Balcanilor, È™i are graniÈ›e cu Macedonia la est, Grecia la sud È™i Kosovo È™i Muntenegru la nord. Are acces la Marea AdriaticÄƒ È™i Marea IonicÄƒ la vest È™i sud-vest, fiind la mai puÈ›in de 72 de kilometri distanÈ›Äƒ de Italia. OferÄƒ costuri de viaÈ›Äƒ mai reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism È™i construcÈ›ii.",
   andorra:
-    "Andorra este situată în Munții Pirinei, între Franța și Spania. Economia se bazează pe turism, retail și servicii financiare; oferă oportunități în ospitalitate și comerț, iar costurile pot fi ridicate în zonele turistice.",
+    "Andorra este situatÄƒ Ã®n MunÈ›ii Pirinei, Ã®ntre FranÈ›a È™i Spania. Economia se bazeazÄƒ pe turism, retail È™i servicii financiare; oferÄƒ oportunitÄƒÈ›i Ã®n ospitalitate È™i comerÈ›, iar costurile pot fi ridicate Ã®n zonele turistice.",
   armenia:
-    "Armenia se află la intersecția dintre Europa și Asia, în regiunea Caucazului de Sud, și are granițe cu Georgia, Azerbaidjan, Turcia și Iran. Dezvoltă un sector IT în creștere și servicii locale; costurile de viață sunt în general reduse.",
+    "Armenia se aflÄƒ la intersecÈ›ia dintre Europa È™i Asia, Ã®n regiunea Caucazului de Sud, È™i are graniÈ›e cu Georgia, Azerbaidjan, Turcia È™i Iran. DezvoltÄƒ un sector IT Ã®n creÈ™tere È™i servicii locale; costurile de viaÈ›Äƒ sunt Ã®n general reduse.",
   austria:
-    "Austria este situată în Europa Centrală, învecinată cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, Elveția și Liechtenstein. Oferă stabilitate economică, infrastructură performantă și oportunități în industrie, sănătate și servicii; costurile sunt moderate spre ridicate.",
+    "Austria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®nvecinatÄƒ cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, ElveÈ›ia È™i Liechtenstein. OferÄƒ stabilitate economicÄƒ, infrastructurÄƒ performantÄƒ È™i oportunitÄƒÈ›i Ã®n industrie, sÄƒnÄƒtate È™i servicii; costurile sunt moderate spre ridicate.",
   azerbaidjan:
-    "Azerbaidjan se întinde în regiunea Caucazului, la Marea Caspică, și are o economie puternic legată de energie; există oportunități în infrastructură, servicii și dezvoltare urbană.",
+    "Azerbaidjan se Ã®ntinde Ã®n regiunea Caucazului, la Marea CaspicÄƒ, È™i are o economie puternic legatÄƒ de energie; existÄƒ oportunitÄƒÈ›i Ã®n infrastructurÄƒ, servicii È™i dezvoltare urbanÄƒ.",
   bulgaria:
-    "Bulgaria este situată în sud-estul Europei, la Marea Neagră, și are granițe cu România, Serbia, Macedonia de Nord, Grecia și Turcia. Oferă costuri reduse și oportunități în IT, outsourcing, agricultură și turism.",
+    "Bulgaria este situatÄƒ Ã®n sud-estul Europei, la Marea NeagrÄƒ, È™i are graniÈ›e cu RomÃ¢nia, Serbia, Macedonia de Nord, Grecia È™i Turcia. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n IT, outsourcing, agriculturÄƒ È™i turism.",
   croatia:
-    "Croația se întinde de-a lungul coastei Mării Adriatice în sud-estul Europei, având granițe cu Slovenia, Ungaria, Serbia și Bosnia. Turismul, porturile și serviciile maritime sunt sectoare cheie; costurile variază între litoral și interior.",
+    "CroaÈ›ia se Ã®ntinde de-a lungul coastei MÄƒrii Adriatice Ã®n sud-estul Europei, avÃ¢nd graniÈ›e cu Slovenia, Ungaria, Serbia È™i Bosnia. Turismul, porturile È™i serviciile maritime sunt sectoare cheie; costurile variazÄƒ Ã®ntre litoral È™i interior.",
   cipru:
-    "Cipru este o insulă din estul Mării Mediterane, cu poziție strategică între Europa și Orientul Mijlociu. Economia este axată pe turism, servicii financiare și shipping; costurile pot fi moderate spre ridicate în zonele turistice.",
+    "Cipru este o insulÄƒ din estul MÄƒrii Mediterane, cu poziÈ›ie strategicÄƒ Ã®ntre Europa È™i Orientul Mijlociu. Economia este axatÄƒ pe turism, servicii financiare È™i shipping; costurile pot fi moderate spre ridicate Ã®n zonele turistice.",
   cehia:
-    "Cehia este situată în Europa Centrală, între Germania, Polonia, Slovacia și Austria. Are o industrie puternică în producție, automotive și IT, cu costuri de viață moderate și un sector de servicii dinamic.",
+    "Cehia este situatÄƒ Ã®n Europa CentralÄƒ, Ã®ntre Germania, Polonia, Slovacia È™i Austria. Are o industrie puternicÄƒ Ã®n producÈ›ie, automotive È™i IT, cu costuri de viaÈ›Äƒ moderate È™i un sector de servicii dinamic.",
   danemarca:
-    "Danemarca se află în Europa de Nord, compusă din peninsula Jutlanda și multe insule, având graniță terestră cu Germania. Oferă salarii ridicate, servicii publice solide și oportunități în tehnologie și energie verde; costurile sunt ridicate.",
+    "Danemarca se aflÄƒ Ã®n Europa de Nord, compusÄƒ din peninsula Jutlanda È™i multe insule, avÃ¢nd graniÈ›Äƒ terestrÄƒ cu Germania. OferÄƒ salarii ridicate, servicii publice solide È™i oportunitÄƒÈ›i Ã®n tehnologie È™i energie verde; costurile sunt ridicate.",
   estonia:
-    "Estonia este o țară baltică la Marea Baltică, recunoscută pentru digitalizare și un mediu prietenos pentru startup-uri; oferă oportunități în tehnologie și servicii cu costuri moderate.",
+    "Estonia este o È›arÄƒ balticÄƒ la Marea BalticÄƒ, recunoscutÄƒ pentru digitalizare È™i un mediu prietenos pentru startup-uri; oferÄƒ oportunitÄƒÈ›i Ã®n tehnologie È™i servicii cu costuri moderate.",
   finlanda:
-    "Finlanda este situată în nordul Europei, între Suedia și Rusia, cu ieșire la Marea Baltică. Oferă calitate ridicată a vieții și oportunități în tehnologie, industrie și servicii; costurile sunt ridicate.",
+    "Finlanda este situatÄƒ Ã®n nordul Europei, Ã®ntre Suedia È™i Rusia, cu ieÈ™ire la Marea BalticÄƒ. OferÄƒ calitate ridicatÄƒ a vieÈ›ii È™i oportunitÄƒÈ›i Ã®n tehnologie, industrie È™i servicii; costurile sunt ridicate.",
   georgia:
-    "Georgia se află în regiunea Caucazului, la Marea Neagră, și are granițe cu Turcia, Armenia, Azerbaidjan și Rusia. Oferă costuri de viață reduse și oportunități în turism, servicii și agricultură.",
+    "Georgia se aflÄƒ Ã®n regiunea Caucazului, la Marea NeagrÄƒ, È™i are graniÈ›e cu Turcia, Armenia, Azerbaidjan È™i Rusia. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n turism, servicii È™i agriculturÄƒ.",
   grecia:
-    "Grecia este situată în sud-estul Europei, cu numeroase insule în Marea Mediterană, și are granițe cu Albania, Macedonia de Nord, Bulgaria și Turcia. Economia este puternic orientată spre turism și servicii; costurile variază mult între regiuni.",
+    "Grecia este situatÄƒ Ã®n sud-estul Europei, cu numeroase insule Ã®n Marea MediteranÄƒ, È™i are graniÈ›e cu Albania, Macedonia de Nord, Bulgaria È™i Turcia. Economia este puternic orientatÄƒ spre turism È™i servicii; costurile variazÄƒ mult Ã®ntre regiuni.",
   ungaria:
-    "Ungaria este situată în Europa Centrală, în bazinul Carpatin, având granițe cu Austria, Slovacia, Ucraina, România, Serbia, Croația și Slovenia. Economia este diversificată, cu oportunități în IT, producție și servicii; costurile sunt moderate.",
+    "Ungaria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®n bazinul Carpatin, avÃ¢nd graniÈ›e cu Austria, Slovacia, Ucraina, RomÃ¢nia, Serbia, CroaÈ›ia È™i Slovenia. Economia este diversificatÄƒ, cu oportunitÄƒÈ›i Ã®n IT, producÈ›ie È™i servicii; costurile sunt moderate.",
   islanda:
-    "Islanda este o insulă în Nordul Atlanticului, cunoscută pentru resursele de energie geotermală și pescuit. Oferă salarii ridicate și oportunități în energie, pescuit și turism; costurile sunt ridicate.",
+    "Islanda este o insulÄƒ Ã®n Nordul Atlanticului, cunoscutÄƒ pentru resursele de energie geotermalÄƒ È™i pescuit. OferÄƒ salarii ridicate È™i oportunitÄƒÈ›i Ã®n energie, pescuit È™i turism; costurile sunt ridicate.",
   irlanda:
-    "Irlanda este o insulă în vestul Europei, la Oceanul Atlantic, și găzduiește centre importante pentru tehnologie, pharma și servicii financiare; costurile în capitală sunt ridicate.",
+    "Irlanda este o insulÄƒ Ã®n vestul Europei, la Oceanul Atlantic, È™i gÄƒzduieÈ™te centre importante pentru tehnologie, pharma È™i servicii financiare; costurile Ã®n capitalÄƒ sunt ridicate.",
   kosovo:
-    "Kosovo este situat în Peninsula Balcanică și are granițe cu Serbia, Albania, Macedonia de Nord și Muntenegru. Oferă costuri de viață reduse și oportunități în servicii, comerț și sectoare publice.",
+    "Kosovo este situat Ã®n Peninsula BalcanicÄƒ È™i are graniÈ›e cu Serbia, Albania, Macedonia de Nord È™i Muntenegru. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n servicii, comerÈ› È™i sectoare publice.",
   letonia:
-    "Letonia este o țară baltică la Marea Baltică, între Estonia și Lituania. Are un sector deschis orientat spre servicii, transport și tehnologie; costurile sunt moderate.",
+    "Letonia este o È›arÄƒ balticÄƒ la Marea BalticÄƒ, Ã®ntre Estonia È™i Lituania. Are un sector deschis orientat spre servicii, transport È™i tehnologie; costurile sunt moderate.",
   liechtenstein:
-    "Liechtenstein este un microstat alpin între Elveția și Austria, cu economie axată pe industrie și servicii financiare; oferă costuri și salarii ridicate.",
+    "Liechtenstein este un microstat alpin Ã®ntre ElveÈ›ia È™i Austria, cu economie axatÄƒ pe industrie È™i servicii financiare; oferÄƒ costuri È™i salarii ridicate.",
   lituania:
-    "Lituania este situată în regiunea baltică, cu acces la Marea Baltică; are un ecosistem tech în creștere și oportunități în servicii și logistică.",
+    "Lituania este situatÄƒ Ã®n regiunea balticÄƒ, cu acces la Marea BalticÄƒ; are un ecosistem tech Ã®n creÈ™tere È™i oportunitÄƒÈ›i Ã®n servicii È™i logisticÄƒ.",
   luxemburg:
-    "Luxemburg este un mic stat în Europa de Vest, între Belgia, Franța și Germania, cunoscut pentru sectorul financiar și salariile ridicate; costurile sunt ridicate.",
+    "Luxemburg este un mic stat Ã®n Europa de Vest, Ã®ntre Belgia, FranÈ›a È™i Germania, cunoscut pentru sectorul financiar È™i salariile ridicate; costurile sunt ridicate.",
   malta:
-    "Malta este o insulă din Marea Mediterană, la sud de Sicilia, cu economie axată pe turism, gaming, fintech și servicii; costurile sunt moderate spre ridicate în zonele urbane.",
+    "Malta este o insulÄƒ din Marea MediteranÄƒ, la sud de Sicilia, cu economie axatÄƒ pe turism, gaming, fintech È™i servicii; costurile sunt moderate spre ridicate Ã®n zonele urbane.",
   moldova:
-    "Moldova se află între România și Ucraina în Europa de Est; oferă costuri de viață reduse și oportunități în agricultură, servicii și IT local.",
+    "Moldova se aflÄƒ Ã®ntre RomÃ¢nia È™i Ucraina Ã®n Europa de Est; oferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n agriculturÄƒ, servicii È™i IT local.",
   monaco:
-    "Monaco este un microstat pe Coasta de Azur, orientat spre servicii financiare și turism de lux; costurile sunt foarte ridicate.",
+    "Monaco este un microstat pe Coasta de Azur, orientat spre servicii financiare È™i turism de lux; costurile sunt foarte ridicate.",
   muntenegru:
-    "Muntenegru este situat pe coasta Mării Adriatice în Peninsula Balcanică, oferind oportunități în turism, servicii și imobiliare; costurile sunt moderate.",
+    "Muntenegru este situat pe coasta MÄƒrii Adriatice Ã®n Peninsula BalcanicÄƒ, oferind oportunitÄƒÈ›i Ã®n turism, servicii È™i imobiliare; costurile sunt moderate.",
   "macedonia-de-nord":
-    "Macedonia de Nord este situată în Peninsula Balcanică, având granițe cu Kosovo, Serbia, Bulgaria, Grecia și Albania. Oferă costuri reduse și oportunități în servicii, industrie ușoară și agricultură.",
+    "Macedonia de Nord este situatÄƒ Ã®n Peninsula BalcanicÄƒ, avÃ¢nd graniÈ›e cu Kosovo, Serbia, Bulgaria, Grecia È™i Albania. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, industrie uÈ™oarÄƒ È™i agriculturÄƒ.",
   norvegia:
-    "Norvegia este situată în Peninsula Scandinavă, având granițe cu Suedia, Finlanda și Rusia; este cunoscută pentru resurse energetice, salarii ridicate și costuri de viață ridicate.",
+    "Norvegia este situatÄƒ Ã®n Peninsula ScandinavÄƒ, avÃ¢nd graniÈ›e cu Suedia, Finlanda È™i Rusia; este cunoscutÄƒ pentru resurse energetice, salarii ridicate È™i costuri de viaÈ›Äƒ ridicate.",
   polonia:
-    "Polonia este situată în Europa Centrală și de Est, având granițe cu Germania, Cehia, Slovacia, Ucraina, Belorusia și Lituania; este o economie dinamică în industrie și servicii, cu costuri moderate.",
+    "Polonia este situatÄƒ Ã®n Europa CentralÄƒ È™i de Est, avÃ¢nd graniÈ›e cu Germania, Cehia, Slovacia, Ucraina, Belorusia È™i Lituania; este o economie dinamicÄƒ Ã®n industrie È™i servicii, cu costuri moderate.",
   romania:
-    "România este situată în sud-estul Europei, cuprinzând regiuni istorice precum Transilvania și Muntenia și având granițe cu Bulgaria, Serbia, Ungaria, Ucraina și Moldova. Oferă centre IT puternice și oportunități în servicii, industrie și agricultură; costurile sunt moderate.",
+    "RomÃ¢nia este situatÄƒ Ã®n sud-estul Europei, cuprinzÃ¢nd regiuni istorice precum Transilvania È™i Muntenia È™i avÃ¢nd graniÈ›e cu Bulgaria, Serbia, Ungaria, Ucraina È™i Moldova. OferÄƒ centre IT puternice È™i oportunitÄƒÈ›i Ã®n servicii, industrie È™i agriculturÄƒ; costurile sunt moderate.",
   rusia:
-    "Rusia se întinde între Europa și Asia, fiind cel mai mare stat terestru din lume, cu piețe urbane mari în Moscova și Sankt Petersburg; oferă oportunități în energie, industrie și servicii, cu costuri foarte variabile.",
+    "Rusia se Ã®ntinde Ã®ntre Europa È™i Asia, fiind cel mai mare stat terestru din lume, cu pieÈ›e urbane mari Ã®n Moscova È™i Sankt Petersburg; oferÄƒ oportunitÄƒÈ›i Ã®n energie, industrie È™i servicii, cu costuri foarte variabile.",
   "san-marino":
-    "San Marino este un microstat înconjurat de Italia, cu economie orientată spre servicii și turism; are costuri moderate spre ridicate în zonele turistice.",
+    "San Marino este un microstat Ã®nconjurat de Italia, cu economie orientatÄƒ spre servicii È™i turism; are costuri moderate spre ridicate Ã®n zonele turistice.",
   serbia:
-    "Serbia este situată în sud-estul Europei, în Peninsula Balcanică, cu granițe la Ungaria, România, Bulgaria, Macedonia de Nord, Kosovo, Bosnia și Croația. Oferă costuri moderate și oportunități în servicii, IT și producție.",
+    "Serbia este situatÄƒ Ã®n sud-estul Europei, Ã®n Peninsula BalcanicÄƒ, cu graniÈ›e la Ungaria, RomÃ¢nia, Bulgaria, Macedonia de Nord, Kosovo, Bosnia È™i CroaÈ›ia. OferÄƒ costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii, IT È™i producÈ›ie.",
   slovacia:
-    "Slovacia este situată în Europa Centrală, între Polonia, Cehia, Austria, Ungaria și Ucraina; are o economie industrială puternică și cerere în automotive și servicii.",
+    "Slovacia este situatÄƒ Ã®n Europa CentralÄƒ, Ã®ntre Polonia, Cehia, Austria, Ungaria È™i Ucraina; are o economie industrialÄƒ puternicÄƒ È™i cerere Ã®n automotive È™i servicii.",
   slovenia:
-    "Slovenia se află la interferența Alpilor și Mării Adriatice, între Italia, Austria, Ungaria și Croația; oferă un echilibru bun între costuri, servicii publice și oportunități în industrie și turism.",
+    "Slovenia se aflÄƒ la interferenÈ›a Alpilor È™i MÄƒrii Adriatice, Ã®ntre Italia, Austria, Ungaria È™i CroaÈ›ia; oferÄƒ un echilibru bun Ã®ntre costuri, servicii publice È™i oportunitÄƒÈ›i Ã®n industrie È™i turism.",
   suedia:
-    "Suedia este situată în Peninsula Scandinavă, între Norvegia și Finlanda, cu coastă la Marea Baltică; are economie avansată în tehnologie, industrie și servicii publice, dar costurile sunt ridicate.",
+    "Suedia este situatÄƒ Ã®n Peninsula ScandinavÄƒ, Ã®ntre Norvegia È™i Finlanda, cu coastÄƒ la Marea BalticÄƒ; are economie avansatÄƒ Ã®n tehnologie, industrie È™i servicii publice, dar costurile sunt ridicate.",
   elvetia:
-    "Elveția este situată în Europa Centrală, la poalele Alpilor, și are granițe cu Germania, Franța, Italia și Austria. Oferă salarii foarte ridicate și oportunități în finanțe, pharma și tehnologie; costurile sunt foarte ridicate.",
+    "ElveÈ›ia este situatÄƒ Ã®n Europa CentralÄƒ, la poalele Alpilor, È™i are graniÈ›e cu Germania, FranÈ›a, Italia È™i Austria. OferÄƒ salarii foarte ridicate È™i oportunitÄƒÈ›i Ã®n finanÈ›e, pharma È™i tehnologie; costurile sunt foarte ridicate.",
   turcia:
-    "Turcia este o țară transcontinentală cu partea europeană în Tracia și o mare parte în Anatolia; are ieșire la Marea Egee, Marea Mediterană și Marea Neagră. Oferă piețe mari, industrie diversificată și oportunități în servicii și comerț.",
+    "Turcia este o È›arÄƒ transcontinentalÄƒ cu partea europeanÄƒ Ã®n Tracia È™i o mare parte Ã®n Anatolia; are ieÈ™ire la Marea Egee, Marea MediteranÄƒ È™i Marea NeagrÄƒ. OferÄƒ pieÈ›e mari, industrie diversificatÄƒ È™i oportunitÄƒÈ›i Ã®n servicii È™i comerÈ›.",
   ucraina:
-    "Ucraina este situată în Europa de Est, mărginită de Rusia, Belarus, Polonia, Slovacia, Ungaria, România și Moldova; are un potențial agricol și industrial mare, cu oportunități în reconstrucție și servicii.",
+    "Ucraina este situatÄƒ Ã®n Europa de Est, mÄƒrginitÄƒ de Rusia, Belarus, Polonia, Slovacia, Ungaria, RomÃ¢nia È™i Moldova; are un potenÈ›ial agricol È™i industrial mare, cu oportunitÄƒÈ›i Ã®n reconstrucÈ›ie È™i servicii.",
   "regatul-unit":
-    "Regatul Unit este o insulă în vestul Europei, compus din Anglia, Scoția, Țara Galilor și Irlanda de Nord; are centre globale în finanțe, tehnologie și servicii, în special în Londra.",
+    "Regatul Unit este o insulÄƒ Ã®n vestul Europei, compus din Anglia, ScoÈ›ia, Èšara Galilor È™i Irlanda de Nord; are centre globale Ã®n finanÈ›e, tehnologie È™i servicii, Ã®n special Ã®n Londra.",
   vatican:
-    "Vaticanul este un microstat în inima Romei, nucleul administrativ și spiritual al Bisericii Catolice; activitatea economică este foarte restrânsă și axată pe servicii religioase și turism.",
+    "Vaticanul este un microstat Ã®n inima Romei, nucleul administrativ È™i spiritual al Bisericii Catolice; activitatea economicÄƒ este foarte restrÃ¢nsÄƒ È™i axatÄƒ pe servicii religioase È™i turism.",
 };
 
 function clamp(value: number, min: number, max: number): number {
@@ -483,25 +483,17 @@ function buildCountryCostFromSalary(salaryEur: number) {
   const salary = Math.max(salaryEur, 900);
   const rentOneBedroomEur = Math.round(clamp(salary * 0.4, 450, 2600));
   const utilitiesEur = Math.round(clamp(salary * 0.08, 90, 360));
-  const groceriesEur = Math.round(clamp(salary * 0.11, 180, 520));
+  const foodEur = Math.round(clamp(salary * 0.11, 180, 520));
   const transportEur = Math.round(clamp(salary * 0.03, 25, 130));
-  const healthcareEur = Math.round(clamp(salary * 0.05, 60, 260));
-  const internetEur = Math.round(clamp(salary * 0.01, 20, 65));
+  const rentUtilitiesEur = rentOneBedroomEur + utilitiesEur;
   const totalMonthlyCostEur =
-    rentOneBedroomEur +
-    utilitiesEur +
-    groceriesEur +
-    transportEur +
-    healthcareEur +
-    internetEur;
+    rentUtilitiesEur + foodEur + transportEur;
 
   return {
-    rentOneBedroomEur,
-    utilitiesEur,
-    groceriesEur,
+    averageSalaryEur: salaryEur,
+    rentUtilitiesEur,
+    foodEur,
     transportEur,
-    healthcareEur,
-    internetEur,
     totalMonthlyCostEur,
   };
 }
@@ -510,25 +502,17 @@ function buildCityCostFromSalary(salaryEur: number) {
   const salary = Math.max(salaryEur, 850);
   const rentOneBedroomEur = Math.round(clamp(salary * 0.45, 420, 2900));
   const utilitiesEur = Math.round(clamp(salary * 0.08, 85, 380));
-  const groceriesEur = Math.round(clamp(salary * 0.12, 170, 600));
+  const foodEur = Math.round(clamp(salary * 0.12, 170, 600));
   const transportEur = Math.round(clamp(salary * 0.03, 20, 140));
-  const healthcareEur = Math.round(clamp(salary * 0.05, 50, 280));
-  const internetEur = Math.round(clamp(salary * 0.01, 18, 70));
+  const rentUtilitiesEur = rentOneBedroomEur + utilitiesEur;
   const totalMonthlyCostEur =
-    rentOneBedroomEur +
-    utilitiesEur +
-    groceriesEur +
-    transportEur +
-    healthcareEur +
-    internetEur;
+    rentUtilitiesEur + foodEur + transportEur;
 
   return {
-    rentOneBedroomEur,
-    utilitiesEur,
-    groceriesEur,
+    averageSalaryEur: salaryEur,
+    rentUtilitiesEur,
+    foodEur,
     transportEur,
-    healthcareEur,
-    internetEur,
     totalMonthlyCostEur,
   };
 }
@@ -542,15 +526,14 @@ async function main() {
       continent: "Europa",
       capital: "Berlin",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 51.165691,
       longitude: 10.451526,
       generalDescription:
-        "Germania este situată în Europa Centrală, mărginită de Danemarca la nord, Polonia și Cehia la est, Austria și Elveția la sud, și Franța, Luxemburg, Belgia și Țările de Jos la vest. Este o putere industrială și tehnologică cu oportunități în inginerie, IT, producție și servicii; costurile de viață sunt moderate spre ridicate.",
+        "Germania este situatÄƒ Ã®n Europa CentralÄƒ, mÄƒrginitÄƒ de Danemarca la nord, Polonia È™i Cehia la est, Austria È™i ElveÈ›ia la sud, È™i FranÈ›a, Luxemburg, Belgia È™i ÈšÄƒrile de Jos la vest. Este o putere industrialÄƒ È™i tehnologicÄƒ cu oportunitÄƒÈ›i Ã®n inginerie, IT, producÈ›ie È™i servicii; costurile de viaÈ›Äƒ sunt moderate spre ridicate.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 3123,
       population: 83200000,
     },
     create: {
@@ -560,53 +543,50 @@ async function main() {
       continent: "Europa",
       capital: "Berlin",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 51.165691,
       longitude: 10.451526,
       generalDescription:
-        "Germania rămâne una dintre cele mai stabile destinații europene pentru muncă și relocare pe termen lung.",
+        "Germania rÄƒmÃ¢ne una dintre cele mai stabile destinaÈ›ii europene pentru muncÄƒ È™i relocare pe termen lung.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 3123,
     },
   });
 
   const netherlands = await prisma.country.upsert({
     where: { slug: "tarile-de-jos" },
     update: {
-      name: "Țările de Jos",
+      name: "ÈšÄƒrile de Jos",
       isoCode: "NL",
       continent: "Europa",
       capital: "Amsterdam",
       currency: "EUR",
-      officialLanguage: "Neerlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 52.132633,
       longitude: 5.291266,
       generalDescription:
-        "Țările de Jos sunt situate în Europa de Vest, pe coasta Mării Nordului, având granițe cu Germania și Belgia. Oferă infrastructură excelentă, porturi și un sector logistic dezvoltat, cu oportunități în tehnologie, logistică și servicii; costurile de viață sunt ridicate în orașele mari.",
+        "ÈšÄƒrile de Jos sunt situate Ã®n Europa de Vest, pe coasta MÄƒrii Nordului, avÃ¢nd graniÈ›e cu Germania È™i Belgia. OferÄƒ infrastructurÄƒ excelentÄƒ, porturi È™i un sector logistic dezvoltat, cu oportunitÄƒÈ›i Ã®n tehnologie, logisticÄƒ È™i servicii; costurile de viaÈ›Äƒ sunt ridicate Ã®n oraÈ™ele mari.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 4335,
       population: 17950000,
     },
     create: {
-      name: "Țările de Jos",
+      name: "ÈšÄƒrile de Jos",
       slug: "tarile-de-jos",
       isoCode: "NL",
       continent: "Europa",
       capital: "Amsterdam",
       currency: "EUR",
-      officialLanguage: "Neerlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 52.132633,
       longitude: 5.291266,
       generalDescription:
-        "Țările de Jos oferă o piață a muncii competitivă, infrastructură foarte bună și servicii publice eficiente.",
+        "ÈšÄƒrile de Jos oferÄƒ o piaÈ›Äƒ a muncii competitivÄƒ, infrastructurÄƒ foarte bunÄƒ È™i servicii publice eficiente.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 4335,
     },
   });
 
@@ -618,15 +598,14 @@ async function main() {
       continent: "Europa",
       capital: "Madrid",
       currency: "EUR",
-      officialLanguage: "Spaniolă",
+      officialLanguage: "SpaniolÄƒ",
       predominantReligion: "Catolicism",
       latitude: 40.463667,
       longitude: -3.74922,
       generalDescription:
-        "Spania este situată în sud-vestul Europei, ocupând mare parte din Peninsula Iberică, având graniță cu Portugalia și Franța și ieșire la Marea Mediterană și Oceanul Atlantic. Oferă oportunități în turism, servicii, logistică și agrobusiness; costurile variază mult între regiuni.",
+        "Spania este situatÄƒ Ã®n sud-vestul Europei, ocupÃ¢nd mare parte din Peninsula IbericÄƒ, avÃ¢nd graniÈ›Äƒ cu Portugalia È™i FranÈ›a È™i ieÈ™ire la Marea MediteranÄƒ È™i Oceanul Atlantic. OferÄƒ oportunitÄƒÈ›i Ã®n turism, servicii, logisticÄƒ È™i agrobusiness; costurile variazÄƒ mult Ã®ntre regiuni.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1763,
       population: 48680000,
     },
     create: {
@@ -636,55 +615,52 @@ async function main() {
       continent: "Europa",
       capital: "Madrid",
       currency: "EUR",
-      officialLanguage: "Spaniolă",
+      officialLanguage: "SpaniolÄƒ",
       predominantReligion: "Catolicism",
       latitude: 40.463667,
       longitude: -3.74922,
       generalDescription:
-        "Spania oferă un echilibru bun între costul vieții, climă și integrarea în comunități internaționale.",
+        "Spania oferÄƒ un echilibru bun Ã®ntre costul vieÈ›ii, climÄƒ È™i integrarea Ã®n comunitÄƒÈ›i internaÈ›ionale.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1763,
     },
   });
 
   const france = await prisma.country.upsert({
     where: { slug: "franta" },
     update: {
-      name: "Franța",
+      name: "FranÈ›a",
       isoCode: "FR",
       continent: "Europa",
       capital: "Paris",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.8566,
       longitude: 2.3522,
 
       generalDescription:
-        "Franța se află în Europa de Vest, între Oceanul Atlantic și Marea Mediterană, având granițe cu mai multe state europene. Economia este diversificată, cu oportunități în servicii, industrie, agricultură și tehnologie; costurile depind de regiune.",
+        "FranÈ›a se aflÄƒ Ã®n Europa de Vest, Ã®ntre Oceanul Atlantic È™i Marea MediteranÄƒ, avÃ¢nd graniÈ›e cu mai multe state europene. Economia este diversificatÄƒ, cu oportunitÄƒÈ›i Ã®n servicii, industrie, agriculturÄƒ È™i tehnologie; costurile depind de regiune.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 2740,
       population: 68400000,
     },
     create: {
-      name: "Franța",
+      name: "FranÈ›a",
       slug: "franta",
       isoCode: "FR",
       continent: "Europa",
       capital: "Paris",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.8566,
       longitude: 2.3522,
 
       generalDescription:
-        "Franța oferă o economie mare și diversificată, cu oportunități solide în marile centre urbane.",
+        "FranÈ›a oferÄƒ o economie mare È™i diversificatÄƒ, cu oportunitÄƒÈ›i solide Ã®n marile centre urbane.",
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
-      averageSalaryEur: 2740,
     },
   });
 
@@ -696,16 +672,15 @@ async function main() {
       continent: "Europa",
       capital: "Roma",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9028,
       longitude: 12.4964,
 
       generalDescription:
-        "Italia este situată în sudul Europei, pe Peninsula Italică, cu numeroase ieșiri la Marea Mediterană și granițe cu Franța, Elveția, Austria și Slovenia. Oferă oportunități în turism, industrie, producție și servicii; costul vieții variază semnificativ nord-sud.",
+        "Italia este situatÄƒ Ã®n sudul Europei, pe Peninsula ItalicÄƒ, cu numeroase ieÈ™iri la Marea MediteranÄƒ È™i graniÈ›e cu FranÈ›a, ElveÈ›ia, Austria È™i Slovenia. OferÄƒ oportunitÄƒÈ›i Ã®n turism, industrie, producÈ›ie È™i servicii; costul vieÈ›ii variazÄƒ semnificativ nord-sud.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1900,
       population: 58990000,
     },
     create: {
@@ -715,15 +690,14 @@ async function main() {
       continent: "Europa",
       capital: "Roma",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9028,
       longitude: 12.4964,
       generalDescription:
-        "Italia combină centre economice dezvoltate cu un cost al vieții variabil între nord și sud.",
+        "Italia combinÄƒ centre economice dezvoltate cu un cost al vieÈ›ii variabil Ã®ntre nord È™i sud.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1900,
     },
   });
 
@@ -735,15 +709,14 @@ async function main() {
       continent: "Europa",
       capital: "Lisabona",
       currency: "EUR",
-      officialLanguage: "Portugheză",
+      officialLanguage: "PortughezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 38.7223,
       longitude: -9.1393,
       generalDescription:
-        "Portugalia se află în vestul Peninsulei Iberice, la Oceanul Atlantic, având graniță doar cu Spania. Este atractivă pentru climă și turism, cu oportunități în servicii, tehnologie și ospitalitate; costurile sunt în general moderate.",
+        "Portugalia se aflÄƒ Ã®n vestul Peninsulei Iberice, la Oceanul Atlantic, avÃ¢nd graniÈ›Äƒ doar cu Spania. Este atractivÄƒ pentru climÄƒ È™i turism, cu oportunitÄƒÈ›i Ã®n servicii, tehnologie È™i ospitalitate; costurile sunt Ã®n general moderate.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1330,
     },
     create: {
       name: "Portugalia",
@@ -752,15 +725,14 @@ async function main() {
       continent: "Europa",
       capital: "Lisabona",
       currency: "EUR",
-      officialLanguage: "Portugheză",
+      officialLanguage: "PortughezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 38.7223,
       longitude: -9.1393,
       generalDescription:
-        "Portugalia este atractivă pentru climă, siguranță și costuri relativ echilibrate față de alte vest-europene.",
+        "Portugalia este atractivÄƒ pentru climÄƒ, siguranÈ›Äƒ È™i costuri relativ echilibrate faÈ›Äƒ de alte vest-europene.",
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
-      averageSalaryEur: 1330,
     },
   });
 
@@ -784,62 +756,44 @@ async function main() {
     data: [
       {
         countryId: germany.id,
-        rentOneBedroomEur: 1270,
-        utilitiesEur: 350,
-        groceriesEur: 360,
+        rentUtilitiesEur: 1620,
+        foodEur: 360,
         transportEur: 63,
-        healthcareEur: 220,
-        internetEur: 44,
         totalMonthlyCostEur: 2307,
       },
       {
         countryId: netherlands.id,
-        rentOneBedroomEur: 2225,
-        utilitiesEur: 261,
-        groceriesEur: 420,
+        rentUtilitiesEur: 2486,
+        foodEur: 420,
         transportEur: 100,
-        healthcareEur: 210,
-        internetEur: 47,
         totalMonthlyCostEur: 3263,
       },
       {
         countryId: spain.id,
-        rentOneBedroomEur: 907,
-        utilitiesEur: 133,
-        groceriesEur: 250,
+        rentUtilitiesEur: 1040,
+        foodEur: 250,
         transportEur: 30,
-        healthcareEur: 120,
-        internetEur: 29,
         totalMonthlyCostEur: 1469,
       },
       {
         countryId: france.id,
-        rentOneBedroomEur: 1200,
-        utilitiesEur: 190,
-        groceriesEur: 320,
+        rentUtilitiesEur: 1390,
+        foodEur: 320,
         transportEur: 85,
-        healthcareEur: 160,
-        internetEur: 32,
         totalMonthlyCostEur: 1987,
       },
       {
         countryId: italy.id,
-        rentOneBedroomEur: 1050,
-        utilitiesEur: 190,
-        groceriesEur: 280,
+        rentUtilitiesEur: 1240,
+        foodEur: 280,
         transportEur: 39,
-        healthcareEur: 140,
-        internetEur: 29,
         totalMonthlyCostEur: 1728,
       },
       {
         countryId: portugal.id,
-        rentOneBedroomEur: 1280,
-        utilitiesEur: 120,
-        groceriesEur: 250,
+        rentUtilitiesEur: 1400,
+        foodEur: 250,
         transportEur: 40,
-        healthcareEur: 120,
-        internetEur: 37,
         totalMonthlyCostEur: 1847,
       },
     ],
@@ -857,9 +811,8 @@ async function main() {
       generalDescription:
         "Orasul Berlin este situat in regiunea cu acelasi nume. Pentru Berlin, rolul administrativ asociat regiunii Berlin in Germania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu grupuri profesionale și evenimente culturale.",
-      jobMarketNotes: "Cerere puternică în IT, sănătate, logistică și roluri administrative.",
-      averageSalaryEur: 3102,
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu grupuri profesionale È™i evenimente culturale.",
+      jobMarketNotes: "Cerere puternicÄƒ Ã®n IT, sÄƒnÄƒtate, logisticÄƒ È™i roluri administrative.",
     },
     create: {
       countryId: germany.id,
@@ -872,9 +825,8 @@ async function main() {
       generalDescription:
         "Orasul Berlin este situat in regiunea cu acelasi nume. Pentru Berlin, rolul administrativ asociat regiunii Berlin in Germania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu grupuri profesionale și evenimente culturale.",
-      jobMarketNotes: "Cerere puternică în IT, sănătate, logistică și roluri administrative.",
-      averageSalaryEur: 3102,
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu grupuri profesionale È™i evenimente culturale.",
+      jobMarketNotes: "Cerere puternicÄƒ Ã®n IT, sÄƒnÄƒtate, logisticÄƒ È™i roluri administrative.",
     },
   });
 
@@ -890,9 +842,8 @@ async function main() {
       generalDescription:
         "Orasul Amsterdam este situat in regiunea Olanda de Nord. Pentru Amsterdam, rolul administrativ asociat regiunii Olanda de Nord in Tarile de Jos concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Amsterdam și zona Randstad.",
-      jobMarketNotes: "Piață competitivă cu roluri bune în tech, data, logistică și servicii internaționale.",
-      averageSalaryEur: 4398,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Amsterdam È™i zona Randstad.",
+      jobMarketNotes: "PiaÈ›Äƒ competitivÄƒ cu roluri bune Ã®n tech, data, logisticÄƒ È™i servicii internaÈ›ionale.",
     },
     create: {
       countryId: netherlands.id,
@@ -905,9 +856,8 @@ async function main() {
       generalDescription:
         "Orasul Amsterdam este situat in regiunea Olanda de Nord. Pentru Amsterdam, rolul administrativ asociat regiunii Olanda de Nord in Tarile de Jos concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Amsterdam și zona Randstad.",
-      jobMarketNotes: "Piață competitivă cu roluri bune în tech, data, logistică și servicii internaționale.",
-      averageSalaryEur: 4398,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Amsterdam È™i zona Randstad.",
+      jobMarketNotes: "PiaÈ›Äƒ competitivÄƒ cu roluri bune Ã®n tech, data, logisticÄƒ È™i servicii internaÈ›ionale.",
     },
   });
 
@@ -923,9 +873,8 @@ async function main() {
       generalDescription:
         "Orasul Madrid este situat in regiunea Comunitatea Madrid. Pentru Madrid, rolul administrativ asociat regiunii Comunitatea Madrid in Spania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și bine integrată.",
-      jobMarketNotes: "Cerere în servicii, sănătate, logistică și funcții suport în companii mari.",
-      averageSalaryEur: 2200,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i bine integratÄƒ.",
+      jobMarketNotes: "Cerere Ã®n servicii, sÄƒnÄƒtate, logisticÄƒ È™i funcÈ›ii suport Ã®n companii mari.",
     },
     create: {
       countryId: spain.id,
@@ -938,9 +887,8 @@ async function main() {
       generalDescription:
         "Orasul Madrid este situat in regiunea Comunitatea Madrid. Pentru Madrid, rolul administrativ asociat regiunii Comunitatea Madrid in Spania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și bine integrată.",
-      jobMarketNotes: "Cerere în servicii, sănătate, logistică și funcții suport în companii mari.",
-      averageSalaryEur: 2200,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i bine integratÄƒ.",
+      jobMarketNotes: "Cerere Ã®n servicii, sÄƒnÄƒtate, logisticÄƒ È™i funcÈ›ii suport Ã®n companii mari.",
     },
   });
 
@@ -949,31 +897,29 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Paris",
-      region: "Île-de-France",
+      region: "ÃŽle-de-France",
       latitude: 48.8566,
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Orasul Paris este situat in regiunea Île-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Paris este situat in regiunea ÃŽle-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
-      jobMarketNotes: "Multe roluri în servicii, consulting, retail premium și sănătate.",
-      averageSalaryEur: 3211,
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu reÈ›ele profesionale È™i organizaÈ›ii culturale.",
+      jobMarketNotes: "Multe roluri Ã®n servicii, consulting, retail premium È™i sÄƒnÄƒtate.",
     },
     create: {
       countryId: france.id,
       name: "Paris",
       slug: "paris",
-      region: "Île-de-France",
+      region: "ÃŽle-de-France",
       latitude: 48.8566,
       longitude: 2.3522,
       population: 2161000,
       generalDescription:
-        "Orasul Paris este situat in regiunea Île-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Paris este situat in regiunea ÃŽle-de-France. Pentru Paris, rolul administrativ asociat regiunii Ile-de-France in Franta concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă, cu rețele profesionale și organizații culturale.",
-      jobMarketNotes: "Multe roluri în servicii, consulting, retail premium și sănătate.",
-      averageSalaryEur: 3211,
+        "Comunitate romÃ¢neascÄƒ activÄƒ, cu reÈ›ele profesionale È™i organizaÈ›ii culturale.",
+      jobMarketNotes: "Multe roluri Ã®n servicii, consulting, retail premium È™i sÄƒnÄƒtate.",
     },
   });
 
@@ -989,9 +935,8 @@ async function main() {
       generalDescription:
         "Orasul Milano este situat in regiunea Lombardia. Pentru Milano, rolul administrativ asociat regiunii Lombardia in Italia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă în Milano și zona metropolitană.",
-      jobMarketNotes: "Piață solidă în modă, design, finanțe și servicii corporate.",
-      averageSalaryEur: 1944,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ Ã®n Milano È™i zona metropolitanÄƒ.",
+      jobMarketNotes: "PiaÈ›Äƒ solidÄƒ Ã®n modÄƒ, design, finanÈ›e È™i servicii corporate.",
     },
     create: {
       countryId: italy.id,
@@ -1004,9 +949,8 @@ async function main() {
       generalDescription:
         "Orasul Milano este situat in regiunea Lombardia. Pentru Milano, rolul administrativ asociat regiunii Lombardia in Italia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă în Milano și zona metropolitană.",
-      jobMarketNotes: "Piață solidă în modă, design, finanțe și servicii corporate.",
-      averageSalaryEur: 1944,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ Ã®n Milano È™i zona metropolitanÄƒ.",
+      jobMarketNotes: "PiaÈ›Äƒ solidÄƒ Ã®n modÄƒ, design, finanÈ›e È™i servicii corporate.",
     },
   });
 
@@ -1022,9 +966,8 @@ async function main() {
       generalDescription:
         "Orasul Lisabona este situat in regiunea cu acelasi nume. Pentru Lisabona, rolul administrativ asociat regiunii Lisabona in Portugalia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească în creștere, activă în servicii și domenii tehnice.",
-      jobMarketNotes: "Cerere bună în tech, suport clienți, turism și echipe internaționale.",
-      averageSalaryEur: 1374,
+        "Comunitate romÃ¢neascÄƒ Ã®n creÈ™tere, activÄƒ Ã®n servicii È™i domenii tehnice.",
+      jobMarketNotes: "Cerere bunÄƒ Ã®n tech, suport clienÈ›i, turism È™i echipe internaÈ›ionale.",
     },
     create: {
       countryId: portugal.id,
@@ -1037,9 +980,8 @@ async function main() {
       generalDescription:
         "Orasul Lisabona este situat in regiunea cu acelasi nume. Pentru Lisabona, rolul administrativ asociat regiunii Lisabona in Portugalia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească în creștere, activă în servicii și domenii tehnice.",
-      jobMarketNotes: "Cerere bună în tech, suport clienți, turism și echipe internaționale.",
-      averageSalaryEur: 1374,
+        "Comunitate romÃ¢neascÄƒ Ã®n creÈ™tere, activÄƒ Ã®n servicii È™i domenii tehnice.",
+      jobMarketNotes: "Cerere bunÄƒ Ã®n tech, suport clienÈ›i, turism È™i echipe internaÈ›ionale.",
     },
   });
 
@@ -1047,32 +989,30 @@ async function main() {
     where: { slug: "munchen" },
     update: {
       countryId: germany.id,
-      name: "München",
+      name: "MÃ¼nchen",
       region: "Bavaria",
       latitude: 48.1351,
       longitude: 11.582,
       population: 1512000,
       generalDescription:
-        "Orasul München este situat in regiunea Bavaria. Pentru München, rolul administrativ asociat regiunii Bavaria in Germania concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul MÃ¼nchen este situat in regiunea Bavaria. Pentru MÃ¼nchen, rolul administrativ asociat regiunii Bavaria in Germania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească bine reprezentată în zona metropolitană München.",
-      jobMarketNotes: "Se caută mult ingineri, specialiști tech și personal pentru industrie auto.",
-      averageSalaryEur: 3845,
+        "Comunitate romÃ¢neascÄƒ bine reprezentatÄƒ Ã®n zona metropolitanÄƒ MÃ¼nchen.",
+      jobMarketNotes: "Se cautÄƒ mult ingineri, specialiÈ™ti tech È™i personal pentru industrie auto.",
     },
     create: {
       countryId: germany.id,
-      name: "München",
+      name: "MÃ¼nchen",
       slug: "munchen",
       region: "Bavaria",
       latitude: 48.1351,
       longitude: 11.582,
       population: 1512000,
       generalDescription:
-        "Orasul München este situat in regiunea Bavaria. Pentru München, rolul administrativ asociat regiunii Bavaria in Germania concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul MÃ¼nchen este situat in regiunea Bavaria. Pentru MÃ¼nchen, rolul administrativ asociat regiunii Bavaria in Germania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească bine reprezentată în zona metropolitană München.",
-      jobMarketNotes: "Se caută mult ingineri, specialiști tech și personal pentru industrie auto.",
-      averageSalaryEur: 3845,
+        "Comunitate romÃ¢neascÄƒ bine reprezentatÄƒ Ã®n zona metropolitanÄƒ MÃ¼nchen.",
+      jobMarketNotes: "Se cautÄƒ mult ingineri, specialiÈ™ti tech È™i personal pentru industrie auto.",
     },
   });
 
@@ -1088,9 +1028,8 @@ async function main() {
       generalDescription:
         "Orasul Frankfurt este situat in regiunea Hesse. Frankfurt este prezentat in surse publice ca un centru urban relevant in Germania, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Rhein-Main.",
-      jobMarketNotes: "Finanțe, logistică și aeroportul generează cerere constantă pentru roluri specializate.",
-      averageSalaryEur: 3767,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Rhein-Main.",
+      jobMarketNotes: "FinanÈ›e, logisticÄƒ È™i aeroportul genereazÄƒ cerere constantÄƒ pentru roluri specializate.",
     },
     create: {
       countryId: germany.id,
@@ -1103,9 +1042,8 @@ async function main() {
       generalDescription:
         "Orasul Frankfurt este situat in regiunea Hesse. Frankfurt este prezentat in surse publice ca un centru urban relevant in Germania, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Rhein-Main.",
-      jobMarketNotes: "Finanțe, logistică și aeroportul generează cerere constantă pentru roluri specializate.",
-      averageSalaryEur: 3767,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Rhein-Main.",
+      jobMarketNotes: "FinanÈ›e, logisticÄƒ È™i aeroportul genereazÄƒ cerere constantÄƒ pentru roluri specializate.",
     },
   });
 
@@ -1121,9 +1059,8 @@ async function main() {
       generalDescription:
         "Orasul Rotterdam este situat in regiunea Olanda de Sud. Dimensiunea urbana a orasului Rotterdam aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în Rotterdam și împrejurimi.",
-      jobMarketNotes: "Portul susține joburi în transport, logistică, operațiuni și industrie maritimă.",
-      averageSalaryEur: 3703,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n Rotterdam È™i Ã®mprejurimi.",
+      jobMarketNotes: "Portul susÈ›ine joburi Ã®n transport, logisticÄƒ, operaÈ›iuni È™i industrie maritimÄƒ.",
     },
     create: {
       countryId: netherlands.id,
@@ -1136,9 +1073,8 @@ async function main() {
       generalDescription:
         "Orasul Rotterdam este situat in regiunea Olanda de Sud. Dimensiunea urbana a orasului Rotterdam aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în Rotterdam și împrejurimi.",
-      jobMarketNotes: "Portul susține joburi în transport, logistică, operațiuni și industrie maritimă.",
-      averageSalaryEur: 3703,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n Rotterdam È™i Ã®mprejurimi.",
+      jobMarketNotes: "Portul susÈ›ine joburi Ã®n transport, logisticÄƒ, operaÈ›iuni È™i industrie maritimÄƒ.",
     },
   });
 
@@ -1154,9 +1090,8 @@ async function main() {
       generalDescription:
         "Orasul Haga este situat in regiunea Olanda de Sud. Pentru Haga, rolul administrativ asociat regiunii Olanda de Sud in Tarile de Jos concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Haga-Rotterdam.",
-      jobMarketNotes: "Cerere în drept, diplomație, organizații internaționale și servicii publice.",
-      averageSalaryEur: 3900,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Haga-Rotterdam.",
+      jobMarketNotes: "Cerere Ã®n drept, diplomaÈ›ie, organizaÈ›ii internaÈ›ionale È™i servicii publice.",
     },
     create: {
       countryId: netherlands.id,
@@ -1169,9 +1104,8 @@ async function main() {
       generalDescription:
         "Orasul Haga este situat in regiunea Olanda de Sud. Pentru Haga, rolul administrativ asociat regiunii Olanda de Sud in Tarile de Jos concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească activă în zona Haga-Rotterdam.",
-      jobMarketNotes: "Cerere în drept, diplomație, organizații internaționale și servicii publice.",
-      averageSalaryEur: 3900,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n zona Haga-Rotterdam.",
+      jobMarketNotes: "Cerere Ã®n drept, diplomaÈ›ie, organizaÈ›ii internaÈ›ionale È™i servicii publice.",
     },
   });
 
@@ -1187,9 +1121,8 @@ async function main() {
       generalDescription:
         "Orasul Barcelona este situat in regiunea Catalonia. Barcelona este prezentat in surse publice ca un centru urban relevant in Spania, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și activă în Barcelona.",
-      jobMarketNotes: "Roluri numeroase în turism, servicii, creativ și startupuri digitale.",
-      averageSalaryEur: 2040,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i activÄƒ Ã®n Barcelona.",
+      jobMarketNotes: "Roluri numeroase Ã®n turism, servicii, creativ È™i startupuri digitale.",
     },
     create: {
       countryId: spain.id,
@@ -1202,9 +1135,8 @@ async function main() {
       generalDescription:
         "Orasul Barcelona este situat in regiunea Catalonia. Barcelona este prezentat in surse publice ca un centru urban relevant in Spania, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească numeroasă și activă în Barcelona.",
-      jobMarketNotes: "Roluri numeroase în turism, servicii, creativ și startupuri digitale.",
-      averageSalaryEur: 2040,
+        "Comunitate romÃ¢neascÄƒ numeroasÄƒ È™i activÄƒ Ã®n Barcelona.",
+      jobMarketNotes: "Roluri numeroase Ã®n turism, servicii, creativ È™i startupuri digitale.",
     },
   });
 
@@ -1220,9 +1152,8 @@ async function main() {
       generalDescription:
         "Orasul Valencia este situat in regiunea cu acelasi nume. Pentru Valencia, rolul administrativ asociat regiunii Valencia in Spania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească stabilă și activă în regiune.",
-      jobMarketNotes: "Turismul, logistica și producția ușoară mențin o piață de muncă variată.",
-      averageSalaryEur: 1725,
+        "Comunitate romÃ¢neascÄƒ stabilÄƒ È™i activÄƒ Ã®n regiune.",
+      jobMarketNotes: "Turismul, logistica È™i producÈ›ia uÈ™oarÄƒ menÈ›in o piaÈ›Äƒ de muncÄƒ variatÄƒ.",
     },
     create: {
       countryId: spain.id,
@@ -1235,9 +1166,8 @@ async function main() {
       generalDescription:
         "Orasul Valencia este situat in regiunea cu acelasi nume. Pentru Valencia, rolul administrativ asociat regiunii Valencia in Spania concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească stabilă și activă în regiune.",
-      jobMarketNotes: "Turismul, logistica și producția ușoară mențin o piață de muncă variată.",
-      averageSalaryEur: 1725,
+        "Comunitate romÃ¢neascÄƒ stabilÄƒ È™i activÄƒ Ã®n regiune.",
+      jobMarketNotes: "Turismul, logistica È™i producÈ›ia uÈ™oarÄƒ menÈ›in o piaÈ›Äƒ de muncÄƒ variatÄƒ.",
     },
   });
 
@@ -1246,31 +1176,29 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Lyon",
-      region: "Auvergne-Rhône-Alpes",
+      region: "Auvergne-RhÃ´ne-Alpes",
       latitude: 45.764,
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Orasul Lyon este situat in regiunea Auvergne-Rhône-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Lyon este situat in regiunea Auvergne-RhÃ´ne-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Lyon și zonele apropiate.",
-      jobMarketNotes: "Industria, cercetarea și sănătatea aduc oportunități stabile și bine plătite.",
-      averageSalaryEur: 2802,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Lyon È™i zonele apropiate.",
+      jobMarketNotes: "Industria, cercetarea È™i sÄƒnÄƒtatea aduc oportunitÄƒÈ›i stabile È™i bine plÄƒtite.",
     },
     create: {
       countryId: france.id,
       name: "Lyon",
       slug: "lyon",
-      region: "Auvergne-Rhône-Alpes",
+      region: "Auvergne-RhÃ´ne-Alpes",
       latitude: 45.764,
       longitude: 4.8357,
       population: 522000,
       generalDescription:
-        "Orasul Lyon este situat in regiunea Auvergne-Rhône-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Lyon este situat in regiunea Auvergne-RhÃ´ne-Alpes. Lyon este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Lyon și zonele apropiate.",
-      jobMarketNotes: "Industria, cercetarea și sănătatea aduc oportunități stabile și bine plătite.",
-      averageSalaryEur: 2802,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Lyon È™i zonele apropiate.",
+      jobMarketNotes: "Industria, cercetarea È™i sÄƒnÄƒtatea aduc oportunitÄƒÈ›i stabile È™i bine plÄƒtite.",
     },
   });
 
@@ -1279,31 +1207,29 @@ async function main() {
     update: {
       countryId: france.id,
       name: "Marseille",
-      region: "Provence-Alpes-Côte d'Azur",
+      region: "Provence-Alpes-CÃ´te d'Azur",
       latitude: 43.2965,
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Orasul Marseille este situat in regiunea Provence-Alpes-Côte d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Marseille este situat in regiunea Provence-Alpes-CÃ´te d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în zona metropolitană Marseille.",
-      jobMarketNotes: "Portul și turismul deschid roluri în logistică, transport și servicii.",
-      averageSalaryEur: 2134,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n zona metropolitanÄƒ Marseille.",
+      jobMarketNotes: "Portul È™i turismul deschid roluri Ã®n logisticÄƒ, transport È™i servicii.",
     },
     create: {
       countryId: france.id,
       name: "Marseille",
       slug: "marseille",
-      region: "Provence-Alpes-Côte d'Azur",
+      region: "Provence-Alpes-CÃ´te d'Azur",
       latitude: 43.2965,
       longitude: 5.3698,
       population: 877000,
       generalDescription:
-        "Orasul Marseille este situat in regiunea Provence-Alpes-Côte d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Marseille este situat in regiunea Provence-Alpes-CÃ´te d'Azur. Marseille este prezentat in surse publice ca un centru urban relevant in Franta, cu rol local distinct in administratie, servicii sau economie regionala.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă în zona metropolitană Marseille.",
-      jobMarketNotes: "Portul și turismul deschid roluri în logistică, transport și servicii.",
-      averageSalaryEur: 2134,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ Ã®n zona metropolitanÄƒ Marseille.",
+      jobMarketNotes: "Portul È™i turismul deschid roluri Ã®n logisticÄƒ, transport È™i servicii.",
     },
   });
 
@@ -1319,9 +1245,8 @@ async function main() {
       generalDescription:
         "Orasul Roma este situat in regiunea Lazio. Pentru Roma, rolul administrativ asociat regiunii Lazio in Italia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească foarte numeroasă și bine organizată.",
-      jobMarketNotes: "Administrația, turismul și serviciile publice susțin cererea de angajare.",
-      averageSalaryEur: 1817,
+        "Comunitate romÃ¢neascÄƒ foarte numeroasÄƒ È™i bine organizatÄƒ.",
+      jobMarketNotes: "AdministraÈ›ia, turismul È™i serviciile publice susÈ›in cererea de angajare.",
     },
     create: {
       countryId: italy.id,
@@ -1334,9 +1259,8 @@ async function main() {
       generalDescription:
         "Orasul Roma este situat in regiunea Lazio. Pentru Roma, rolul administrativ asociat regiunii Lazio in Italia concentreaza servicii publice, educatie si locuri de munca.",
       romanianCommunityNotes:
-        "Comunitate românească foarte numeroasă și bine organizată.",
-      jobMarketNotes: "Administrația, turismul și serviciile publice susțin cererea de angajare.",
-      averageSalaryEur: 1817,
+        "Comunitate romÃ¢neascÄƒ foarte numeroasÄƒ È™i bine organizatÄƒ.",
+      jobMarketNotes: "AdministraÈ›ia, turismul È™i serviciile publice susÈ›in cererea de angajare.",
     },
   });
 
@@ -1352,9 +1276,8 @@ async function main() {
       generalDescription:
         "Orasul Torino este situat in regiunea Piemonte. Torino are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Torino și suburbii.",
-      jobMarketNotes: "Industria auto, ingineria și servicii tehnice rămân principalele direcții.",
-      averageSalaryEur: 1789,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Torino È™i suburbii.",
+      jobMarketNotes: "Industria auto, ingineria È™i servicii tehnice rÄƒmÃ¢n principalele direcÈ›ii.",
     },
     create: {
       countryId: italy.id,
@@ -1367,9 +1290,8 @@ async function main() {
       generalDescription:
         "Orasul Torino este situat in regiunea Piemonte. Torino are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească activă în Torino și suburbii.",
-      jobMarketNotes: "Industria auto, ingineria și servicii tehnice rămân principalele direcții.",
-      averageSalaryEur: 1789,
+        "Comunitate romÃ¢neascÄƒ activÄƒ Ã®n Torino È™i suburbii.",
+      jobMarketNotes: "Industria auto, ingineria È™i servicii tehnice rÄƒmÃ¢n principalele direcÈ›ii.",
     },
   });
 
@@ -1385,9 +1307,8 @@ async function main() {
       generalDescription:
         "Orasul Porto este situat in regiunea cu acelasi nume. Porto are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă și în creștere în zona Porto.",
-      jobMarketNotes: "Turismul, serviciile digitale și activitatea portuară țin piața vie.",
-      averageSalaryEur: 1407,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ È™i Ã®n creÈ™tere Ã®n zona Porto.",
+      jobMarketNotes: "Turismul, serviciile digitale È™i activitatea portuarÄƒ È›in piaÈ›a vie.",
     },
     create: {
       countryId: portugal.id,
@@ -1400,9 +1321,8 @@ async function main() {
       generalDescription:
         "Orasul Porto este situat in regiunea cu acelasi nume. Porto are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească prezentă și în creștere în zona Porto.",
-      jobMarketNotes: "Turismul, serviciile digitale și activitatea portuară țin piața vie.",
-      averageSalaryEur: 1407,
+        "Comunitate romÃ¢neascÄƒ prezentÄƒ È™i Ã®n creÈ™tere Ã®n zona Porto.",
+      jobMarketNotes: "Turismul, serviciile digitale È™i activitatea portuarÄƒ È›in piaÈ›a vie.",
     },
   });
 
@@ -1418,9 +1338,8 @@ async function main() {
       generalDescription:
         "Orasul Coimbra este situat in regiunea cu acelasi nume. Coimbra are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească mai mică, dar activă în zona universitară.",
-      jobMarketNotes: "Universitatea și serviciile locale creează roluri pentru studenți și profesioniști juniori.",
-      averageSalaryEur: 1212,
+        "Comunitate romÃ¢neascÄƒ mai micÄƒ, dar activÄƒ Ã®n zona universitarÄƒ.",
+      jobMarketNotes: "Universitatea È™i serviciile locale creeazÄƒ roluri pentru studenÈ›i È™i profesioniÈ™ti juniori.",
     },
     create: {
       countryId: portugal.id,
@@ -1433,9 +1352,8 @@ async function main() {
       generalDescription:
         "Orasul Coimbra este situat in regiunea cu acelasi nume. Coimbra are un profil influentat de activitati portuare si logistice, cu oportunitati in transport, comert si servicii conexe.",
       romanianCommunityNotes:
-        "Comunitate românească mai mică, dar activă în zona universitară.",
-      jobMarketNotes: "Universitatea și serviciile locale creează roluri pentru studenți și profesioniști juniori.",
-      averageSalaryEur: 1212,
+        "Comunitate romÃ¢neascÄƒ mai micÄƒ, dar activÄƒ Ã®n zona universitarÄƒ.",
+      jobMarketNotes: "Universitatea È™i serviciile locale creeazÄƒ roluri pentru studenÈ›i È™i profesioniÈ™ti juniori.",
     },
   });
 
@@ -1470,182 +1388,128 @@ async function main() {
     data: [
       {
         cityId: berlin.id,
-        rentOneBedroomEur: 1270,
-        utilitiesEur: 350,
-        groceriesEur: 360,
+        rentUtilitiesEur: 1620,
+        foodEur: 360,
         transportEur: 63,
-        healthcareEur: 220,
-        internetEur: 44,
         totalMonthlyCostEur: 2307,
       },
       {
         cityId: amsterdam.id,
-        rentOneBedroomEur: 2225,
-        utilitiesEur: 261,
-        groceriesEur: 420,
+        rentUtilitiesEur: 2486,
+        foodEur: 420,
         transportEur: 100,
-        healthcareEur: 210,
-        internetEur: 47,
         totalMonthlyCostEur: 3263,
       },
       {
         cityId: madrid.id,
-        rentOneBedroomEur: 1298,
-        utilitiesEur: 168,
-        groceriesEur: 300,
+        rentUtilitiesEur: 1466,
+        foodEur: 300,
         transportEur: 35,
-        healthcareEur: 120,
-        internetEur: 31,
         totalMonthlyCostEur: 1952,
       },
       {
         cityId: paris.id,
-        rentOneBedroomEur: 1463,
-        utilitiesEur: 196,
-        groceriesEur: 350,
+        rentUtilitiesEur: 1659,
+        foodEur: 350,
         transportEur: 86,
-        healthcareEur: 160,
-        internetEur: 33,
         totalMonthlyCostEur: 2288,
       },
       {
         cityId: milan.id,
-        rentOneBedroomEur: 1322,
-        utilitiesEur: 191,
-        groceriesEur: 300,
+        rentUtilitiesEur: 1513,
+        foodEur: 300,
         transportEur: 39,
-        healthcareEur: 140,
-        internetEur: 29,
         totalMonthlyCostEur: 2021,
       },
       {
         cityId: lisbon.id,
-        rentOneBedroomEur: 1410,
-        utilitiesEur: 119,
-        groceriesEur: 270,
+        rentUtilitiesEur: 1529,
+        foodEur: 270,
         transportEur: 40,
-        healthcareEur: 120,
-        internetEur: 37,
         totalMonthlyCostEur: 1996,
       },
       {
         cityId: munich.id,
-        rentOneBedroomEur: 1550,
-        utilitiesEur: 320,
-        groceriesEur: 380,
+        rentUtilitiesEur: 1870,
+        foodEur: 380,
         transportEur: 65,
-        healthcareEur: 220,
-        internetEur: 45,
         totalMonthlyCostEur: 2580,
       },
       {
         cityId: frankfurt.id,
-        rentOneBedroomEur: 1300,
-        utilitiesEur: 300,
-        groceriesEur: 350,
+        rentUtilitiesEur: 1600,
+        foodEur: 350,
         transportEur: 60,
-        healthcareEur: 220,
-        internetEur: 42,
         totalMonthlyCostEur: 2272,
       },
       {
         cityId: rotterdam.id,
-        rentOneBedroomEur: 1600,
-        utilitiesEur: 220,
-        groceriesEur: 360,
+        rentUtilitiesEur: 1820,
+        foodEur: 360,
         transportEur: 95,
-        healthcareEur: 210,
-        internetEur: 45,
         totalMonthlyCostEur: 2530,
       },
       {
         cityId: haga.id,
-        rentOneBedroomEur: 1500,
-        utilitiesEur: 210,
-        groceriesEur: 340,
+        rentUtilitiesEur: 1710,
+        foodEur: 340,
         transportEur: 85,
-        healthcareEur: 210,
-        internetEur: 44,
         totalMonthlyCostEur: 2389,
       },
       {
         cityId: barcelona.id,
-        rentOneBedroomEur: 1350,
-        utilitiesEur: 165,
-        groceriesEur: 320,
+        rentUtilitiesEur: 1515,
+        foodEur: 320,
         transportEur: 45,
-        healthcareEur: 120,
-        internetEur: 33,
         totalMonthlyCostEur: 2033,
       },
       {
         cityId: valencia.id,
-        rentOneBedroomEur: 900,
-        utilitiesEur: 130,
-        groceriesEur: 250,
+        rentUtilitiesEur: 1030,
+        foodEur: 250,
         transportEur: 35,
-        healthcareEur: 120,
-        internetEur: 30,
         totalMonthlyCostEur: 1465,
       },
       {
         cityId: lyon.id,
-        rentOneBedroomEur: 1000,
-        utilitiesEur: 170,
-        groceriesEur: 300,
+        rentUtilitiesEur: 1170,
+        foodEur: 300,
         transportEur: 70,
-        healthcareEur: 160,
-        internetEur: 32,
         totalMonthlyCostEur: 1732,
       },
       {
         cityId: marseille.id,
-        rentOneBedroomEur: 900,
-        utilitiesEur: 170,
-        groceriesEur: 290,
+        rentUtilitiesEur: 1070,
+        foodEur: 290,
         transportEur: 55,
-        healthcareEur: 150,
-        internetEur: 31,
         totalMonthlyCostEur: 1596,
       },
       {
         cityId: rome.id,
-        rentOneBedroomEur: 1150,
-        utilitiesEur: 190,
-        groceriesEur: 290,
+        rentUtilitiesEur: 1340,
+        foodEur: 290,
         transportEur: 40,
-        healthcareEur: 140,
-        internetEur: 30,
         totalMonthlyCostEur: 1840,
       },
       {
         cityId: turin.id,
-        rentOneBedroomEur: 850,
-        utilitiesEur: 180,
-        groceriesEur: 260,
+        rentUtilitiesEur: 1030,
+        foodEur: 260,
         transportEur: 38,
-        healthcareEur: 140,
-        internetEur: 28,
         totalMonthlyCostEur: 1496,
       },
       {
         cityId: porto.id,
-        rentOneBedroomEur: 1100,
-        utilitiesEur: 110,
-        groceriesEur: 240,
+        rentUtilitiesEur: 1210,
+        foodEur: 240,
         transportEur: 40,
-        healthcareEur: 120,
-        internetEur: 35,
         totalMonthlyCostEur: 1645,
       },
       {
         cityId: coimbra.id,
-        rentOneBedroomEur: 700,
-        utilitiesEur: 95,
-        groceriesEur: 220,
+        rentUtilitiesEur: 795,
+        foodEur: 220,
         transportEur: 30,
-        healthcareEur: 110,
-        internetEur: 30,
         totalMonthlyCostEur: 1185,
       },
     ],
@@ -1658,7 +1522,7 @@ async function main() {
       isoCode: "AL",
       capital: "Tirana",
       currency: "ALL",
-      officialLanguage: "Albaneză",
+      officialLanguage: "AlbanezÄƒ",
       predominantReligion: "Islam",
       latitude: 41.1533,
       longitude: 20.1683,
@@ -1669,7 +1533,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Albania este situată în sud-estul Europei, în vestul Balcanilor, și are granițe cu Macedonia la est, Grecia la sud și Kosovo și Muntenegru la nord. Are acces la Marea Adriatică și Marea Ionică la vest și sud-vest, fiind la mai puțin de 72 de kilometri de Italia. Oferă costuri de viață mai reduse și oportunități în servicii, turism și construcții.",
+        "Albania este situatÄƒ Ã®n sud-estul Europei, Ã®n vestul Balcanilor, È™i are graniÈ›e cu Macedonia la est, Grecia la sud È™i Kosovo È™i Muntenegru la nord. Are acces la Marea AdriaticÄƒ È™i Marea IonicÄƒ la vest È™i sud-vest, fiind la mai puÈ›in de 72 de kilometri de Italia. OferÄƒ costuri de viaÈ›Äƒ mai reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism È™i construcÈ›ii.",
     },
     {
       name: "Andorra",
@@ -1677,7 +1541,7 @@ async function main() {
       isoCode: "AD",
       capital: "Andorra la Vella",
       currency: "EUR",
-      officialLanguage: "Catalană",
+      officialLanguage: "CatalanÄƒ",
       predominantReligion: "Catolicism",
       latitude: 42.5063,
       longitude: 1.5218,
@@ -1687,7 +1551,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Andorra este situată în Munții Pirinei, între Franța și Spania. Economia se bazează pe turism, retail și servicii financiare; oferă oportunități în ospitalitate și comerț, iar costurile pot fi ridicate în zonele turistice.",
+        "Andorra este situatÄƒ Ã®n MunÈ›ii Pirinei, Ã®ntre FranÈ›a È™i Spania. Economia se bazeazÄƒ pe turism, retail È™i servicii financiare; oferÄƒ oportunitÄƒÈ›i Ã®n ospitalitate È™i comerÈ›, iar costurile pot fi ridicate Ã®n zonele turistice.",
     },
     {
       name: "Armenia",
@@ -1695,8 +1559,8 @@ async function main() {
       isoCode: "AM",
       capital: "Yerevan",
       currency: "AMD",
-      officialLanguage: "Armeană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "ArmeanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 40.0691,
       longitude: 45.0382,
       averageSalaryEur: 900,
@@ -1705,7 +1569,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Armenia se află la intersecția dintre Europa și Asia, în regiunea Caucazului de Sud, având granițe cu Georgia, Azerbaidjan, Turcia și Iran. Dezvoltă un sector IT în creștere și servicii locale, oferind costuri de viață reduse și oportunități pentru antreprenori și specialiști IT.",
+        "Armenia se aflÄƒ la intersecÈ›ia dintre Europa È™i Asia, Ã®n regiunea Caucazului de Sud, avÃ¢nd graniÈ›e cu Georgia, Azerbaidjan, Turcia È™i Iran. DezvoltÄƒ un sector IT Ã®n creÈ™tere È™i servicii locale, oferind costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i pentru antreprenori È™i specialiÈ™ti IT.",
     },
     {
       name: "Austria",
@@ -1713,8 +1577,8 @@ async function main() {
       isoCode: "AT",
       capital: "Viena",
       currency: "EUR",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.5162,
       longitude: 14.5501,
       averageSalaryEur: 3400,
@@ -1723,7 +1587,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Austria este situată în Europa Centrală, învecinată cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, Elveția și Liechtenstein. Oferă stabilitate economică, infrastructură performantă și oportunități în industrie, sănătate și servicii; costurile sunt moderate spre ridicate.",
+        "Austria este situatÄƒ Ã®n Europa CentralÄƒ, Ã®nvecinatÄƒ cu Germania, Cehia, Slovacia, Ungaria, Slovenia, Italia, ElveÈ›ia È™i Liechtenstein. OferÄƒ stabilitate economicÄƒ, infrastructurÄƒ performantÄƒ È™i oportunitÄƒÈ›i Ã®n industrie, sÄƒnÄƒtate È™i servicii; costurile sunt moderate spre ridicate.",
     },
     {
       name: "Azerbaidjan",
@@ -1731,7 +1595,7 @@ async function main() {
       isoCode: "AZ",
       capital: "Baku",
       currency: "AZN",
-      officialLanguage: "Azeră",
+      officialLanguage: "AzerÄƒ",
       predominantReligion: "Islam",
       latitude: 40.1431,
       longitude: 47.5769,
@@ -1741,7 +1605,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Azerbaidjan se întinde în regiunea Caucazului, cu coastă la Marea Caspică. Economia este puternic legată de sectorul energetic, dar există oportunități în infrastructură, servicii și dezvoltare urbană; costurile sunt în general moderate.",
+        "Azerbaidjan se Ã®ntinde Ã®n regiunea Caucazului, cu coastÄƒ la Marea CaspicÄƒ. Economia este puternic legatÄƒ de sectorul energetic, dar existÄƒ oportunitÄƒÈ›i Ã®n infrastructurÄƒ, servicii È™i dezvoltare urbanÄƒ; costurile sunt Ã®n general moderate.",
     },
     {
       name: "Belarus",
@@ -1749,8 +1613,8 @@ async function main() {
       isoCode: "BY",
       capital: "Minsk",
       currency: "BYN",
-      officialLanguage: "Belarusă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "BelarusÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 53.7098,
       longitude: 27.9534,
       averageSalaryEur: 800,
@@ -1759,7 +1623,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Belarus este situată în Europa de Est, între Polonia, Lituania, Letonia, Rusia și Ucraina. Economia este concentrată în industrie și servicii publice; costurile de viață sunt relativ scăzute și există cerere în sectoare industriale și logistice.",
+        "Belarus este situatÄƒ Ã®n Europa de Est, Ã®ntre Polonia, Lituania, Letonia, Rusia È™i Ucraina. Economia este concentratÄƒ Ã®n industrie È™i servicii publice; costurile de viaÈ›Äƒ sunt relativ scÄƒzute È™i existÄƒ cerere Ã®n sectoare industriale È™i logistice.",
     },
     {
       name: "Belgia",
@@ -1767,8 +1631,8 @@ async function main() {
       isoCode: "BE",
       capital: "Bruxelles",
       currency: "EUR",
-      officialLanguage: "Neerlandeză/Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NeerlandezÄƒ/FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 50.5039,
       longitude: 4.4699,
       averageSalaryEur: 3600,
@@ -1777,15 +1641,15 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Belgia se află în Europa de Vest, între Franța, Germania, Luxemburg și Țările de Jos, cu acces la Marea Nordului. Este un centru pentru instituții europene, logistică și servicii, oferind oportunități în finanțe, funcții internaționale și logistică; costurile sunt ridicate în Bruxelles.",
+        "Belgia se aflÄƒ Ã®n Europa de Vest, Ã®ntre FranÈ›a, Germania, Luxemburg È™i ÈšÄƒrile de Jos, cu acces la Marea Nordului. Este un centru pentru instituÈ›ii europene, logisticÄƒ È™i servicii, oferind oportunitÄƒÈ›i Ã®n finanÈ›e, funcÈ›ii internaÈ›ionale È™i logisticÄƒ; costurile sunt ridicate Ã®n Bruxelles.",
     },
     {
-      name: "Bosnia și Herțegovina",
+      name: "Bosnia È™i HerÈ›egovina",
       slug: "bosnia-si-hertegovina",
       isoCode: "BA",
       capital: "Sarajevo",
       currency: "BAM",
-      officialLanguage: "Bosniacă",
+      officialLanguage: "BosniacÄƒ",
       predominantReligion: "Islam",
       latitude: 43.9159,
       longitude: 17.6791,
@@ -1795,7 +1659,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Bosnia și Herțegovina este situată în Peninsula Balcanică, cu granițe la Croația, Serbia și Muntenegru. Oferă costuri reduse și oportunități în servicii, turism local și industrie; piețele regionale sunt în dezvoltare.",
+        "Bosnia È™i HerÈ›egovina este situatÄƒ Ã®n Peninsula BalcanicÄƒ, cu graniÈ›e la CroaÈ›ia, Serbia È™i Muntenegru. OferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, turism local È™i industrie; pieÈ›ele regionale sunt Ã®n dezvoltare.",
     },
     {
       name: "Bulgaria",
@@ -1803,8 +1667,8 @@ async function main() {
       isoCode: "BG",
       capital: "Sofia",
       currency: "BGN",
-      officialLanguage: "Bulgară",
-      predominantReligion: "Creștinism",
+      officialLanguage: "BulgarÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.7339,
       longitude: 25.4858,
       averageSalaryEur: 1200,
@@ -1813,15 +1677,15 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Bulgaria este situată în sud-estul Europei, la Marea Neagră, având granițe cu România, Serbia, Macedonia de Nord, Grecia și Turcia. Oferă costuri de viață reduse și oportunități în IT, outsourcing, agricultură și turism.",
+        "Bulgaria este situatÄƒ Ã®n sud-estul Europei, la Marea NeagrÄƒ, avÃ¢nd graniÈ›e cu RomÃ¢nia, Serbia, Macedonia de Nord, Grecia È™i Turcia. OferÄƒ costuri de viaÈ›Äƒ reduse È™i oportunitÄƒÈ›i Ã®n IT, outsourcing, agriculturÄƒ È™i turism.",
     },
     {
-      name: "Croația",
+      name: "CroaÈ›ia",
       slug: "croatia",
       isoCode: "HR",
       capital: "Zagreb",
       currency: "EUR",
-      officialLanguage: "Croată",
+      officialLanguage: "CroatÄƒ",
       predominantReligion: "Catolicism",
       latitude: 45.1,
       longitude: 15.2,
@@ -1831,7 +1695,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Croația este situată în sud-estul Europei, pe coasta Mării Adriatice, cu granițe la Slovenia, Ungaria, Serbia și Bosnia și Herțegovina. Turismul, porturile și serviciile maritime oferă oportunități; costurile variază între litoral și interior.",
+        "CroaÈ›ia este situatÄƒ Ã®n sud-estul Europei, pe coasta MÄƒrii Adriatice, cu graniÈ›e la Slovenia, Ungaria, Serbia È™i Bosnia È™i HerÈ›egovina. Turismul, porturile È™i serviciile maritime oferÄƒ oportunitÄƒÈ›i; costurile variazÄƒ Ã®ntre litoral È™i interior.",
     },
     {
       name: "Cipru",
@@ -1839,8 +1703,8 @@ async function main() {
       isoCode: "CY",
       capital: "Nicosia",
       currency: "EUR",
-      officialLanguage: "Greacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GreacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 35.1264,
       longitude: 33.4299,
       averageSalaryEur: 2200,
@@ -1849,7 +1713,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Cipru are economie orientată spre servicii, turism, finanțe și shipping.",
+        "Cipru are economie orientatÄƒ spre servicii, turism, finanÈ›e È™i shipping.",
     },
     {
       name: "Cehia",
@@ -1857,8 +1721,8 @@ async function main() {
       isoCode: "CZ",
       capital: "Praga",
       currency: "CZK",
-      officialLanguage: "Cehă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "CehÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 49.8175,
       longitude: 15.473,
       averageSalaryEur: 2100,
@@ -1867,7 +1731,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Cehia are piață solidă în producție, IT, automotive și servicii.",
+        "Cehia are piaÈ›Äƒ solidÄƒ Ã®n producÈ›ie, IT, automotive È™i servicii.",
     },
     {
       name: "Danemarca",
@@ -1875,8 +1739,8 @@ async function main() {
       isoCode: "DK",
       capital: "Copenhaga",
       currency: "DKK",
-      officialLanguage: "Daneză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "DanezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 56.2639,
       longitude: 9.5018,
       averageSalaryEur: 4700,
@@ -1885,7 +1749,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Danemarca oferă salarii mari, servicii publice puternice și piață competitivă.",
+        "Danemarca oferÄƒ salarii mari, servicii publice puternice È™i piaÈ›Äƒ competitivÄƒ.",
     },
     {
       name: "Estonia",
@@ -1893,8 +1757,8 @@ async function main() {
       isoCode: "EE",
       capital: "Tallinn",
       currency: "EUR",
-      officialLanguage: "Estonă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EstonÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 58.5953,
       longitude: 25.0136,
       averageSalaryEur: 2200,
@@ -1903,7 +1767,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Estonia este recunoscută pentru digitalizare, tehnologie și administrație eficientă.",
+        "Estonia este recunoscutÄƒ pentru digitalizare, tehnologie È™i administraÈ›ie eficientÄƒ.",
     },
     {
       name: "Finlanda",
@@ -1911,8 +1775,8 @@ async function main() {
       isoCode: "FI",
       capital: "Helsinki",
       currency: "EUR",
-      officialLanguage: "Finlandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FinlandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 61.9241,
       longitude: 25.7482,
       averageSalaryEur: 3900,
@@ -1921,7 +1785,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Finlanda oferă calitate ridicată a vieții și oportunități în tech, industrie și servicii.",
+        "Finlanda oferÄƒ calitate ridicatÄƒ a vieÈ›ii È™i oportunitÄƒÈ›i Ã®n tech, industrie È™i servicii.",
     },
     {
       name: "Georgia",
@@ -1929,8 +1793,8 @@ async function main() {
       isoCode: "GE",
       capital: "Tbilisi",
       currency: "GEL",
-      officialLanguage: "Georgiană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GeorgianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.3154,
       longitude: 43.3569,
       averageSalaryEur: 900,
@@ -1939,7 +1803,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Georgia are costuri accesibile și un sector de servicii în creștere.",
+        "Georgia are costuri accesibile È™i un sector de servicii Ã®n creÈ™tere.",
     },
     {
       name: "Grecia",
@@ -1947,8 +1811,8 @@ async function main() {
       isoCode: "GR",
       capital: "Atena",
       currency: "EUR",
-      officialLanguage: "Greacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GreacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 39.0742,
       longitude: 21.8243,
       averageSalaryEur: 1500,
@@ -1957,7 +1821,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Grecia oferă oportunități în turism, servicii, shipping și comerț.",
+        "Grecia oferÄƒ oportunitÄƒÈ›i Ã®n turism, servicii, shipping È™i comerÈ›.",
     },
     {
       name: "Ungaria",
@@ -1965,8 +1829,8 @@ async function main() {
       isoCode: "HU",
       capital: "Budapesta",
       currency: "HUF",
-      officialLanguage: "Maghiară",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MaghiarÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.1625,
       longitude: 19.5033,
       averageSalaryEur: 1700,
@@ -1975,7 +1839,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Ungaria are o piață industrială și de servicii stabilă, concentrată urban.",
+        "Ungaria are o piaÈ›Äƒ industrialÄƒ È™i de servicii stabilÄƒ, concentratÄƒ urban.",
     },
     {
       name: "Islanda",
@@ -1983,8 +1847,8 @@ async function main() {
       isoCode: "IS",
       capital: "Reykjavik",
       currency: "ISK",
-      officialLanguage: "Islandeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "IslandezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 64.9631,
       longitude: -19.0208,
       averageSalaryEur: 4300,
@@ -1993,7 +1857,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Islanda oferă salarii ridicate și piață locală orientată spre servicii și energie.",
+        "Islanda oferÄƒ salarii ridicate È™i piaÈ›Äƒ localÄƒ orientatÄƒ spre servicii È™i energie.",
     },
     {
       name: "Irlanda",
@@ -2001,8 +1865,8 @@ async function main() {
       isoCode: "IE",
       capital: "Dublin",
       currency: "EUR",
-      officialLanguage: "Engleză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EnglezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 53.1424,
       longitude: -7.6921,
       averageSalaryEur: 4200,
@@ -2011,7 +1875,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Irlanda este un hub european pentru tech, pharma și servicii financiare.",
+        "Irlanda este un hub european pentru tech, pharma È™i servicii financiare.",
     },
     {
       name: "Kosovo",
@@ -2019,7 +1883,7 @@ async function main() {
       isoCode: "XK",
       capital: "Pristina",
       currency: "EUR",
-      officialLanguage: "Albaneză",
+      officialLanguage: "AlbanezÄƒ",
       predominantReligion: "Islam",
       latitude: 42.6026,
       longitude: 20.903,
@@ -2029,7 +1893,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Kosovo are costuri reduse și oportunități în servicii, comerț și sector public.",
+        "Kosovo are costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, comerÈ› È™i sector public.",
     },
     {
       name: "Letonia",
@@ -2037,8 +1901,8 @@ async function main() {
       isoCode: "LV",
       capital: "Riga",
       currency: "EUR",
-      officialLanguage: "Letonă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "LetonÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 56.8796,
       longitude: 24.6032,
       averageSalaryEur: 1700,
@@ -2047,7 +1911,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Letonia are o economie deschisă, cu accent pe servicii, transport și tehnologie.",
+        "Letonia are o economie deschisÄƒ, cu accent pe servicii, transport È™i tehnologie.",
     },
     {
       name: "Liechtenstein",
@@ -2055,8 +1919,8 @@ async function main() {
       isoCode: "LI",
       capital: "Vaduz",
       currency: "CHF",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.166,
       longitude: 9.5554,
       averageSalaryEur: 5600,
@@ -2065,7 +1929,7 @@ async function main() {
       citizenshipDifficulty: "FOARTE_RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Liechtenstein este o economie mică și foarte competitivă, axată pe industrie și finanțe.",
+        "Liechtenstein este o economie micÄƒ È™i foarte competitivÄƒ, axatÄƒ pe industrie È™i finanÈ›e.",
     },
     {
       name: "Lituania",
@@ -2073,8 +1937,8 @@ async function main() {
       isoCode: "LT",
       capital: "Vilnius",
       currency: "EUR",
-      officialLanguage: "Lituaniană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "LituanianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 55.1694,
       longitude: 23.8813,
       averageSalaryEur: 1900,
@@ -2083,7 +1947,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Lituania are piață de muncă în creștere în servicii, fintech și logistică.",
+        "Lituania are piaÈ›Äƒ de muncÄƒ Ã®n creÈ™tere Ã®n servicii, fintech È™i logisticÄƒ.",
     },
     {
       name: "Luxemburg",
@@ -2091,8 +1955,8 @@ async function main() {
       isoCode: "LU",
       capital: "Luxemburg",
       currency: "EUR",
-      officialLanguage: "Franceză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "FrancezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 49.8153,
       longitude: 6.1296,
       averageSalaryEur: 5900,
@@ -2101,7 +1965,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Luxemburg oferă salarii foarte ridicate și oportunități în finanțe și servicii premium.",
+        "Luxemburg oferÄƒ salarii foarte ridicate È™i oportunitÄƒÈ›i Ã®n finanÈ›e È™i servicii premium.",
     },
     {
       name: "Malta",
@@ -2109,7 +1973,7 @@ async function main() {
       isoCode: "MT",
       capital: "Valletta",
       currency: "EUR",
-      officialLanguage: "Engleză",
+      officialLanguage: "EnglezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 35.9375,
       longitude: 14.3754,
@@ -2119,16 +1983,16 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Malta este atractivă pentru servicii, gaming, fintech și turism.",
+        "Malta este atractivÄƒ pentru servicii, gaming, fintech È™i turism.",
     },
     {
       name: "Moldova",
       slug: "moldova",
       isoCode: "MD",
-      capital: "Chișinău",
+      capital: "ChiÈ™inÄƒu",
       currency: "MDL",
-      officialLanguage: "Română",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RomÃ¢nÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 47.4116,
       longitude: 28.3699,
       averageSalaryEur: 700,
@@ -2137,7 +2001,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Moldova oferă costuri reduse și oportunități în servicii, agricultură și IT local.",
+        "Moldova oferÄƒ costuri reduse È™i oportunitÄƒÈ›i Ã®n servicii, agriculturÄƒ È™i IT local.",
     },
     {
       name: "Monaco",
@@ -2145,7 +2009,7 @@ async function main() {
       isoCode: "MC",
       capital: "Monaco",
       currency: "EUR",
-      officialLanguage: "Franceză",
+      officialLanguage: "FrancezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 43.7384,
       longitude: 7.4246,
@@ -2155,7 +2019,7 @@ async function main() {
       citizenshipDifficulty: "FOARTE_RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Monaco este un microstat premium orientat spre servicii financiare și ospitalitate.",
+        "Monaco este un microstat premium orientat spre servicii financiare È™i ospitalitate.",
     },
     {
       name: "Muntenegru",
@@ -2163,8 +2027,8 @@ async function main() {
       isoCode: "ME",
       capital: "Podgorica",
       currency: "EUR",
-      officialLanguage: "Muntenegreană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MuntenegreanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 42.7087,
       longitude: 19.3744,
       averageSalaryEur: 1000,
@@ -2173,7 +2037,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Muntenegru are economie bazată pe turism, servicii și investiții imobiliare.",
+        "Muntenegru are economie bazatÄƒ pe turism, servicii È™i investiÈ›ii imobiliare.",
     },
     {
       name: "Macedonia de Nord",
@@ -2181,8 +2045,8 @@ async function main() {
       isoCode: "MK",
       capital: "Skopje",
       currency: "MKD",
-      officialLanguage: "Macedoneană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "MacedoneanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 41.6086,
       longitude: 21.7453,
       averageSalaryEur: 850,
@@ -2191,7 +2055,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Macedonia de Nord oferă costuri moderate și oportunități în servicii și industrie ușoară.",
+        "Macedonia de Nord oferÄƒ costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii È™i industrie uÈ™oarÄƒ.",
     },
     {
       name: "Norvegia",
@@ -2199,8 +2063,8 @@ async function main() {
       isoCode: "NO",
       capital: "Oslo",
       currency: "NOK",
-      officialLanguage: "Norvegiană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "NorvegianÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 60.472,
       longitude: 8.4689,
       averageSalaryEur: 5200,
@@ -2209,15 +2073,15 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Norvegia are salarii ridicate și oportunități în energie, tehnologie și servicii.",
+        "Norvegia are salarii ridicate È™i oportunitÄƒÈ›i Ã®n energie, tehnologie È™i servicii.",
     },
     {
       name: "Polonia",
       slug: "polonia",
       isoCode: "PL",
-      capital: "Varșovia",
+      capital: "VarÈ™ovia",
       currency: "PLN",
-      officialLanguage: "Poloneză",
+      officialLanguage: "PolonezÄƒ",
       predominantReligion: "Catolicism",
       latitude: 51.9194,
       longitude: 19.1451,
@@ -2227,16 +2091,16 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Polonia este una dintre cele mai dinamice economii europene în industrie și servicii.",
+        "Polonia este una dintre cele mai dinamice economii europene Ã®n industrie È™i servicii.",
     },
     {
-      name: "România",
+      name: "RomÃ¢nia",
       slug: "romania",
       isoCode: "RO",
-      capital: "București",
+      capital: "BucureÈ™ti",
       currency: "RON",
-      officialLanguage: "Română",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RomÃ¢nÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 45.9432,
       longitude: 24.9668,
       averageSalaryEur: 1500,
@@ -2245,7 +2109,7 @@ async function main() {
       citizenshipDifficulty: "SCAZUTA",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "România are centre urbane puternice în IT, servicii, industrie și logistică.",
+        "RomÃ¢nia are centre urbane puternice Ã®n IT, servicii, industrie È™i logisticÄƒ.",
     },
     {
       name: "Rusia",
@@ -2253,8 +2117,8 @@ async function main() {
       isoCode: "RU",
       capital: "Moscova",
       currency: "RUB",
-      officialLanguage: "Rusă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "RusÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 61.524,
       longitude: 105.3188,
       averageSalaryEur: 1300,
@@ -2263,7 +2127,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Rusia are piețe urbane mari, cu oportunități în industrie, energie și servicii.",
+        "Rusia are pieÈ›e urbane mari, cu oportunitÄƒÈ›i Ã®n industrie, energie È™i servicii.",
     },
     {
       name: "San Marino",
@@ -2271,7 +2135,7 @@ async function main() {
       isoCode: "SM",
       capital: "San Marino",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 43.9424,
       longitude: 12.4578,
@@ -2281,7 +2145,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "San Marino este microstat european cu economie de servicii și turism.",
+        "San Marino este microstat european cu economie de servicii È™i turism.",
     },
     {
       name: "Serbia",
@@ -2289,8 +2153,8 @@ async function main() {
       isoCode: "RS",
       capital: "Belgrad",
       currency: "RSD",
-      officialLanguage: "Sârbă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SÃ¢rbÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 44.0165,
       longitude: 21.0059,
       averageSalaryEur: 1000,
@@ -2299,7 +2163,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Serbia are costuri moderate și oportunități în servicii, IT și producție.",
+        "Serbia are costuri moderate È™i oportunitÄƒÈ›i Ã®n servicii, IT È™i producÈ›ie.",
     },
     {
       name: "Slovacia",
@@ -2307,8 +2171,8 @@ async function main() {
       isoCode: "SK",
       capital: "Bratislava",
       currency: "EUR",
-      officialLanguage: "Slovacă",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SlovacÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.669,
       longitude: 19.699,
       averageSalaryEur: 1800,
@@ -2317,7 +2181,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Slovacia are economie industrială puternică și cerere bună în servicii.",
+        "Slovacia are economie industrialÄƒ puternicÄƒ È™i cerere bunÄƒ Ã®n servicii.",
     },
     {
       name: "Slovenia",
@@ -2325,7 +2189,7 @@ async function main() {
       isoCode: "SI",
       capital: "Ljubljana",
       currency: "EUR",
-      officialLanguage: "Slovenă",
+      officialLanguage: "SlovenÄƒ",
       predominantReligion: "Catolicism",
       latitude: 46.1512,
       longitude: 14.9955,
@@ -2335,7 +2199,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "SCAZUTA",
       generalDescription:
-        "Slovenia oferă echilibru între costuri, servicii publice și piață de muncă stabilă.",
+        "Slovenia oferÄƒ echilibru Ã®ntre costuri, servicii publice È™i piaÈ›Äƒ de muncÄƒ stabilÄƒ.",
     },
     {
       name: "Suedia",
@@ -2343,8 +2207,8 @@ async function main() {
       isoCode: "SE",
       capital: "Stockholm",
       currency: "SEK",
-      officialLanguage: "Suedeză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "SuedezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 60.1282,
       longitude: 18.6435,
       averageSalaryEur: 4200,
@@ -2353,16 +2217,16 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Suedia are economie avansată în tehnologie, industrie și servicii publice.",
+        "Suedia are economie avansatÄƒ Ã®n tehnologie, industrie È™i servicii publice.",
     },
     {
-      name: "Elveția",
+      name: "ElveÈ›ia",
       slug: "elvetia",
       isoCode: "CH",
       capital: "Berna",
       currency: "CHF",
-      officialLanguage: "Germană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "GermanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 46.8182,
       longitude: 8.2275,
       averageSalaryEur: 6400,
@@ -2371,7 +2235,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Elveția oferă salarii foarte ridicate și o piață premium în finanțe, pharma și tehnologie.",
+        "ElveÈ›ia oferÄƒ salarii foarte ridicate È™i o piaÈ›Äƒ premium Ã®n finanÈ›e, pharma È™i tehnologie.",
     },
     {
       name: "Turcia",
@@ -2379,7 +2243,7 @@ async function main() {
       isoCode: "TR",
       capital: "Ankara",
       currency: "TRY",
-      officialLanguage: "Turcă",
+      officialLanguage: "TurcÄƒ",
       predominantReligion: "Islam",
       latitude: 38.9637,
       longitude: 35.2433,
@@ -2389,7 +2253,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Turcia are centre urbane mari și economie diversificată în industrie și servicii.",
+        "Turcia are centre urbane mari È™i economie diversificatÄƒ Ã®n industrie È™i servicii.",
     },
     {
       name: "Ucraina",
@@ -2397,8 +2261,8 @@ async function main() {
       isoCode: "UA",
       capital: "Kiev",
       currency: "UAH",
-      officialLanguage: "Ucraineană",
-      predominantReligion: "Creștinism",
+      officialLanguage: "UcraineanÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 48.3794,
       longitude: 31.1656,
       averageSalaryEur: 800,
@@ -2407,7 +2271,7 @@ async function main() {
       citizenshipDifficulty: "MEDIE",
       emigrationDifficulty: "MEDIE",
       generalDescription:
-        "Ucraina are potențial ridicat în servicii, tehnologie și reconstrucție economică.",
+        "Ucraina are potenÈ›ial ridicat Ã®n servicii, tehnologie È™i reconstrucÈ›ie economicÄƒ.",
     },
     {
       name: "Regatul Unit",
@@ -2415,8 +2279,8 @@ async function main() {
       isoCode: "GB",
       capital: "Londra",
       currency: "GBP",
-      officialLanguage: "Engleză",
-      predominantReligion: "Creștinism",
+      officialLanguage: "EnglezÄƒ",
+      predominantReligion: "CreÈ™tinism",
       latitude: 55.3781,
       longitude: -3.436,
       averageSalaryEur: 3900,
@@ -2425,7 +2289,7 @@ async function main() {
       citizenshipDifficulty: "RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Regatul Unit oferă oportunități extinse în finanțe, tehnologie, sănătate și servicii.",
+        "Regatul Unit oferÄƒ oportunitÄƒÈ›i extinse Ã®n finanÈ›e, tehnologie, sÄƒnÄƒtate È™i servicii.",
     },
     {
       name: "Vatican",
@@ -2433,7 +2297,7 @@ async function main() {
       isoCode: "VA",
       capital: "Vatican",
       currency: "EUR",
-      officialLanguage: "Italiană",
+      officialLanguage: "ItalianÄƒ",
       predominantReligion: "Catolicism",
       latitude: 41.9029,
       longitude: 12.4534,
@@ -2443,7 +2307,7 @@ async function main() {
       citizenshipDifficulty: "FOARTE_RIDICATA",
       emigrationDifficulty: "RIDICATA",
       generalDescription:
-        "Vatican este un microstat religios cu economie instituțională foarte restrânsă.",
+        "Vatican este un microstat religios cu economie instituÈ›ionalÄƒ foarte restrÃ¢nsÄƒ.",
     },
   ];
 
@@ -2587,13 +2451,13 @@ async function main() {
       countrySlug: "austria",
       name: "Linz",
       slug: "linz",
-      region: "Austria Superioară",
+      region: "Austria SuperioarÄƒ",
       latitude: 48.3069,
       longitude: 14.2858,
       population: 210000,
       averageSalaryEur: 2536,
       generalDescription:
-        "Orasul Linz este situat in regiunea Austria Superioară. Pentru Linz, rolul administrativ asociat regiunii Austria Superioară in Austria concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Linz este situat in regiunea Austria SuperioarÄƒ. Pentru Linz, rolul administrativ asociat regiunii Austria SuperioarÄƒ in Austria concentreaza servicii publice, educatie si locuri de munca.",
     },
 
     {
@@ -2674,13 +2538,13 @@ async function main() {
       countrySlug: "belgia",
       name: "Bruxelles",
       slug: "bruxelles",
-      region: "Bruxelles-Capitală",
+      region: "Bruxelles-CapitalÄƒ",
       latitude: 50.8503,
       longitude: 4.3517,
       population: 1220000,
       averageSalaryEur: 2922,
       generalDescription:
-        "Orasul Bruxelles este situat in regiunea Bruxelles-Capitală. Pentru Bruxelles, rolul administrativ asociat regiunii Bruxelles-Capitală in Belgia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Bruxelles este situat in regiunea Bruxelles-CapitalÄƒ. Pentru Bruxelles, rolul administrativ asociat regiunii Bruxelles-CapitalÄƒ in Belgia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "belgia",
@@ -2717,7 +2581,7 @@ async function main() {
       population: 275000,
       averageSalaryEur: 894,
       generalDescription:
-        "Orasul Sarajevo este situat in regiunea cu acelasi nume. Pentru Sarajevo, rolul administrativ asociat regiunii Sarajevo in Bosnia și Herțegovina concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Sarajevo este situat in regiunea cu acelasi nume. Pentru Sarajevo, rolul administrativ asociat regiunii Sarajevo in Bosnia È™i HerÈ›egovina concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "bosnia-si-hertegovina",
@@ -2735,13 +2599,13 @@ async function main() {
       countrySlug: "bosnia-si-hertegovina",
       name: "Mostar",
       slug: "mostar",
-      region: "Cantonul Herțegovina-Neretva",
+      region: "Cantonul HerÈ›egovina-Neretva",
       latitude: 43.3438,
       longitude: 17.8078,
       population: 105000,
       averageSalaryEur: 850,
       generalDescription:
-        "Orasul Mostar este situat in regiunea Cantonul Herțegovina-Neretva. Pentru Mostar, rolul administrativ asociat regiunii Cantonul Herțegovina-Neretva in Bosnia și Herțegovina concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Mostar este situat in regiunea Cantonul HerÈ›egovina-Neretva. Pentru Mostar, rolul administrativ asociat regiunii Cantonul HerÈ›egovina-Neretva in Bosnia È™i HerÈ›egovina concentreaza servicii publice, educatie si locuri de munca.",
     },
 
     {
@@ -2785,25 +2649,25 @@ async function main() {
       countrySlug: "croatia",
       name: "Zagreb",
       slug: "zagreb",
-      region: "Orașul Zagreb",
+      region: "OraÈ™ul Zagreb",
       latitude: 45.815,
       longitude: 15.9819,
       population: 769000,
       averageSalaryEur: 1652,
       generalDescription:
-        "Orasul Zagreb este situat in regiunea Orașul Zagreb. Pentru Zagreb, rolul administrativ asociat regiunii Zagreb in Croația concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Zagreb este situat in regiunea OraÈ™ul Zagreb. Pentru Zagreb, rolul administrativ asociat regiunii Zagreb in CroaÈ›ia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "croatia",
       name: "Split",
       slug: "split",
-      region: "Split-Dalmația",
+      region: "Split-DalmaÈ›ia",
       latitude: 43.5081,
       longitude: 16.4402,
       population: 160000,
       averageSalaryEur: 1450,
       generalDescription:
-        "Orasul Split este situat in regiunea Split-Dalmația. Dimensiunea urbana a orasului Split aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Split este situat in regiunea Split-DalmaÈ›ia. Dimensiunea urbana a orasului Split aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "croatia",
@@ -2955,15 +2819,15 @@ async function main() {
     },
     {
       countrySlug: "estonia",
-      name: "Pärnu",
+      name: "PÃ¤rnu",
       slug: "parnu",
-      region: "Pärnu",
+      region: "PÃ¤rnu",
       latitude: 58.3859,
       longitude: 24.4971,
       population: 40000,
       averageSalaryEur: 1700,
       generalDescription:
-        "Orasul Pärnu este situat in regiunea cu acelasi nume. Pärnu este prezentat in surse publice ca un centru urban relevant in Estonia, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul PÃ¤rnu este situat in regiunea cu acelasi nume. PÃ¤rnu este prezentat in surse publice ca un centru urban relevant in Estonia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {
@@ -2994,13 +2858,13 @@ async function main() {
       countrySlug: "finlanda",
       name: "Turku",
       slug: "turku",
-      region: "Finlanda Propriu-zisă",
+      region: "Finlanda Propriu-zisÄƒ",
       latitude: 60.4518,
       longitude: 22.2666,
       population: 195000,
       averageSalaryEur: 3400,
       generalDescription:
-        "Orasul Turku este situat in regiunea Finlanda Propriu-zisă. Pentru Turku, rolul administrativ asociat regiunii Finlanda Propriu-zisă in Finlanda concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Turku este situat in regiunea Finlanda Propriu-zisÄƒ. Pentru Turku, rolul administrativ asociat regiunii Finlanda Propriu-zisÄƒ in Finlanda concentreaza servicii publice, educatie si locuri de munca.",
     },
 
     {
@@ -3056,13 +2920,13 @@ async function main() {
       countrySlug: "grecia",
       name: "Salonic",
       slug: "salonic",
-      region: "Macedonia Centrală",
+      region: "Macedonia CentralÄƒ",
       latitude: 40.6401,
       longitude: 22.9444,
       population: 1100000,
       averageSalaryEur: 1500,
       generalDescription:
-        "Orasul Salonic este situat in regiunea Macedonia Centrală. Salonic are un profil de oras-port si centru universitar, cu oportunitati in logistica, servicii, comert si educatie.",
+        "Orasul Salonic este situat in regiunea Macedonia CentralÄƒ. Salonic are un profil de oras-port si centru universitar, cu oportunitati in logistica, servicii, comert si educatie.",
     },
     {
       countrySlug: "grecia",
@@ -3093,25 +2957,25 @@ async function main() {
       countrySlug: "ungaria",
       name: "Debrecen",
       slug: "debrecen",
-      region: "Hajdú-Bihar",
+      region: "HajdÃº-Bihar",
       latitude: 47.5316,
       longitude: 21.6273,
       population: 200000,
       averageSalaryEur: 1600,
       generalDescription:
-        "Orasul Debrecen este situat in regiunea Hajdú-Bihar. Dimensiunea urbana a orasului Debrecen aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Debrecen este situat in regiunea HajdÃº-Bihar. Dimensiunea urbana a orasului Debrecen aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "ungaria",
       name: "Szeged",
       slug: "szeged",
-      region: "Csongrád-Csanád",
+      region: "CsongrÃ¡d-CsanÃ¡d",
       latitude: 46.253,
       longitude: 20.1414,
       population: 157000,
       averageSalaryEur: 1500,
       generalDescription:
-        "Orasul Szeged este situat in regiunea Csongrád-Csanád. Dimensiunea urbana a orasului Szeged aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul Szeged este situat in regiunea CsongrÃ¡d-CsanÃ¡d. Dimensiunea urbana a orasului Szeged aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
 
     {
@@ -3412,27 +3276,27 @@ async function main() {
 
     {
       countrySlug: "moldova",
-      name: "Chișinău",
+      name: "ChiÈ™inÄƒu",
       slug: "chisinau",
-      region: "Chișinău",
+      region: "ChiÈ™inÄƒu",
       latitude: 47.0105,
       longitude: 28.8638,
       population: 639000,
       averageSalaryEur: 750,
       generalDescription:
-        "Orasul Chișinău este situat in regiunea cu acelasi nume. Pentru Chișinău, rolul administrativ asociat regiunii Chișinău in Moldova concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul ChiÈ™inÄƒu este situat in regiunea cu acelasi nume. Pentru ChiÈ™inÄƒu, rolul administrativ asociat regiunii ChiÈ™inÄƒu in Moldova concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "moldova",
-      name: "Bălți",
+      name: "BÄƒlÈ›i",
       slug: "balti",
-      region: "Bălți",
+      region: "BÄƒlÈ›i",
       latitude: 47.7539,
       longitude: 27.9184,
       population: 97000,
       averageSalaryEur: 650,
       generalDescription:
-        "Orasul Bălți este situat in regiunea cu acelasi nume. Bălți este prezentat in surse publice ca un centru urban relevant in Moldova, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul BÄƒlÈ›i este situat in regiunea cu acelasi nume. BÄƒlÈ›i este prezentat in surse publice ca un centru urban relevant in Moldova, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
     {
       countrySlug: "moldova",
@@ -3498,15 +3362,15 @@ async function main() {
     },
     {
       countrySlug: "muntenegru",
-      name: "Nikšić",
+      name: "NikÅ¡iÄ‡",
       slug: "niksic",
-      region: "Nikšić",
+      region: "NikÅ¡iÄ‡",
       latitude: 42.7731,
       longitude: 18.9445,
       population: 57000,
       averageSalaryEur: 900,
       generalDescription:
-        "Orasul Nikšić este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului Nikšić aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul NikÅ¡iÄ‡ este situat in regiunea cu acelasi nume. Dimensiunea urbana a orasului NikÅ¡iÄ‡ aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
     {
       countrySlug: "muntenegru",
@@ -3586,18 +3450,18 @@ async function main() {
       countrySlug: "norvegia",
       name: "Trondheim",
       slug: "trondheim",
-      region: "Trøndelag",
+      region: "TrÃ¸ndelag",
       latitude: 63.4305,
       longitude: 10.3951,
       population: 212000,
       averageSalaryEur: 4800,
       generalDescription:
-        "Orasul Trondheim este situat in regiunea Trøndelag. Trondheim este prezentat in surse publice ca un centru urban relevant in Norvegia, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Trondheim este situat in regiunea TrÃ¸ndelag. Trondheim este prezentat in surse publice ca un centru urban relevant in Norvegia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {
       countrySlug: "polonia",
-      name: "Varșovia",
+      name: "VarÈ™ovia",
       slug: "varsovia",
       region: "Mazovia",
       latitude: 52.2297,
@@ -3605,44 +3469,44 @@ async function main() {
       population: 1860000,
       averageSalaryEur: 2100,
       generalDescription:
-        "Orasul Varșovia este situat in regiunea Mazovia. Pentru Varșovia, rolul administrativ asociat regiunii Mazovia in Polonia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul VarÈ™ovia este situat in regiunea Mazovia. Pentru VarÈ™ovia, rolul administrativ asociat regiunii Mazovia in Polonia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "polonia",
       name: "Cracovia",
       slug: "cracovia",
-      region: "Polonia Mică",
+      region: "Polonia MicÄƒ",
       latitude: 50.0647,
       longitude: 19.945,
       population: 805000,
       averageSalaryEur: 1900,
       generalDescription:
-        "Orasul Cracovia este situat in regiunea Polonia Mică. Pentru Cracovia, rolul administrativ asociat regiunii Polonia Mică in Polonia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Cracovia este situat in regiunea Polonia MicÄƒ. Pentru Cracovia, rolul administrativ asociat regiunii Polonia MicÄƒ in Polonia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "polonia",
       name: "Wroclaw",
       slug: "wroclaw",
-      region: "Silezia Inferioară",
+      region: "Silezia InferioarÄƒ",
       latitude: 51.1079,
       longitude: 17.0385,
       population: 675000,
       averageSalaryEur: 1900,
       generalDescription:
-        "Orasul Wroclaw este situat in regiunea Silezia Inferioară. Wroclaw este un centru universitar si de business in vestul Poloniei, cu oportunitati in IT, servicii si industrie.",
+        "Orasul Wroclaw este situat in regiunea Silezia InferioarÄƒ. Wroclaw este un centru universitar si de business in vestul Poloniei, cu oportunitati in IT, servicii si industrie.",
     },
 
     {
       countrySlug: "romania",
-      name: "București",
+      name: "BucureÈ™ti",
       slug: "bucuresti",
-      region: "București",
+      region: "BucureÈ™ti",
       latitude: 44.4268,
       longitude: 26.1025,
       population: 1710000,
       averageSalaryEur: 1800,
       generalDescription:
-        "Orasul București este situat in regiunea cu acelasi nume. Pentru București, rolul administrativ asociat regiunii București in România concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul BucureÈ™ti este situat in regiunea cu acelasi nume. Pentru BucureÈ™ti, rolul administrativ asociat regiunii BucureÈ™ti in RomÃ¢nia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "romania",
@@ -3654,19 +3518,19 @@ async function main() {
       population: 287000,
       averageSalaryEur: 1700,
       generalDescription:
-        "Orasul Cluj-Napoca este situat in regiunea Cluj. Cluj-Napoca este prezentat in surse publice ca un centru urban relevant in România, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Cluj-Napoca este situat in regiunea Cluj. Cluj-Napoca este prezentat in surse publice ca un centru urban relevant in RomÃ¢nia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
     {
       countrySlug: "romania",
-      name: "Timișoara",
+      name: "TimiÈ™oara",
       slug: "timisoara",
-      region: "Timiș",
+      region: "TimiÈ™",
       latitude: 45.7489,
       longitude: 21.2087,
       population: 250000,
       averageSalaryEur: 1600,
       generalDescription:
-        "Orasul Timișoara este situat in regiunea Timiș. Pentru Timișoara, rolul administrativ asociat regiunii Timiș in România concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul TimiÈ™oara este situat in regiunea TimiÈ™. Pentru TimiÈ™oara, rolul administrativ asociat regiunii TimiÈ™ in RomÃ¢nia concentreaza servicii publice, educatie si locuri de munca.",
     },
 
     {
@@ -3769,15 +3633,15 @@ async function main() {
     },
     {
       countrySlug: "serbia",
-      name: "Niš",
+      name: "NiÅ¡",
       slug: "nis",
-      region: "Nišava",
+      region: "NiÅ¡ava",
       latitude: 43.3209,
       longitude: 21.8958,
       population: 183000,
       averageSalaryEur: 900,
       generalDescription:
-        "Orasul Niš este situat in regiunea Nišava. Nis este un centru regional important din sudul Serbiei, cu profil universitar, industrial si logistic.",
+        "Orasul NiÅ¡ este situat in regiunea NiÅ¡ava. Nis este un centru regional important din sudul Serbiei, cu profil universitar, industrial si logistic.",
     },
 
     {
@@ -3794,27 +3658,27 @@ async function main() {
     },
     {
       countrySlug: "slovacia",
-      name: "Košice",
+      name: "KoÅ¡ice",
       slug: "kosice",
-      region: "Košice",
+      region: "KoÅ¡ice",
       latitude: 48.7164,
       longitude: 21.2611,
       population: 230000,
       averageSalaryEur: 1700,
       generalDescription:
-        "Orasul Košice este situat in regiunea cu acelasi nume. Košice este un centru important al estului Slovaciei, cu profil industrial, universitar si servicii regionale.",
+        "Orasul KoÅ¡ice este situat in regiunea cu acelasi nume. KoÅ¡ice este un centru important al estului Slovaciei, cu profil industrial, universitar si servicii regionale.",
     },
     {
       countrySlug: "slovacia",
-      name: "Žilina",
+      name: "Å½ilina",
       slug: "zilina",
-      region: "Žilina",
+      region: "Å½ilina",
       latitude: 49.223,
       longitude: 18.7394,
       population: 81000,
       averageSalaryEur: 1600,
       generalDescription:
-        "Orasul Žilina este situat in regiunea cu acelasi nume. Žilina este asociat cu transportul si industria auto, ceea ce sustine joburi in productie, logistica si servicii tehnice.",
+        "Orasul Å½ilina este situat in regiunea cu acelasi nume. Å½ilina este asociat cu transportul si industria auto, ceea ce sustine joburi in productie, logistica si servicii tehnice.",
     },
 
     {
@@ -3870,38 +3734,38 @@ async function main() {
       countrySlug: "suedia",
       name: "Gothenburg",
       slug: "gothenburg",
-      region: "Västra Götaland",
+      region: "VÃ¤stra GÃ¶taland",
       latitude: 57.7089,
       longitude: 11.9746,
       population: 605000,
       averageSalaryEur: 4200,
       generalDescription:
-        "Orasul Gothenburg este situat in regiunea Västra Götaland. Pentru Gothenburg, rolul administrativ asociat regiunii Västra Götaland in Suedia concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Gothenburg este situat in regiunea VÃ¤stra GÃ¶taland. Pentru Gothenburg, rolul administrativ asociat regiunii VÃ¤stra GÃ¶taland in Suedia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "suedia",
-      name: "Malmö",
+      name: "MalmÃ¶",
       slug: "malmo",
-      region: "Skåne",
+      region: "SkÃ¥ne",
       latitude: 55.605,
       longitude: 13.0038,
       population: 360000,
       averageSalaryEur: 4000,
       generalDescription:
-        "Orasul Malmö este situat in regiunea Skåne. Dimensiunea urbana a orasului Malmö aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
+        "Orasul MalmÃ¶ este situat in regiunea SkÃ¥ne. Dimensiunea urbana a orasului MalmÃ¶ aduce o piata a muncii mai variata, infrastructura mai buna si acces la servicii diverse.",
     },
 
     {
       countrySlug: "elvetia",
       name: "Zurich",
       slug: "zurich",
-      region: "Zürich",
+      region: "ZÃ¼rich",
       latitude: 47.3769,
       longitude: 8.5417,
       population: 443000,
       averageSalaryEur: 7000,
       generalDescription:
-        "Orasul Zurich este situat in regiunea cu acelasi nume. Pentru Zurich, rolul administrativ asociat regiunii Zurich in Elveția concentreaza servicii publice, educatie si locuri de munca.",
+        "Orasul Zurich este situat in regiunea cu acelasi nume. Pentru Zurich, rolul administrativ asociat regiunii Zurich in ElveÈ›ia concentreaza servicii publice, educatie si locuri de munca.",
     },
     {
       countrySlug: "elvetia",
@@ -3913,7 +3777,7 @@ async function main() {
       population: 203000,
       averageSalaryEur: 6900,
       generalDescription:
-        "Orasul Geneva este situat in regiunea cu acelasi nume. Geneva este prezentat in surse publice ca un centru urban relevant in Elveția, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Geneva este situat in regiunea cu acelasi nume. Geneva este prezentat in surse publice ca un centru urban relevant in ElveÈ›ia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
     {
       countrySlug: "elvetia",
@@ -3925,7 +3789,7 @@ async function main() {
       population: 178000,
       averageSalaryEur: 6500,
       generalDescription:
-        "Orasul Basel este situat in regiunea Basel-Stadt. Basel este prezentat in surse publice ca un centru urban relevant in Elveția, cu rol local distinct in administratie, servicii sau economie regionala.",
+        "Orasul Basel este situat in regiunea Basel-Stadt. Basel este prezentat in surse publice ca un centru urban relevant in ElveÈ›ia, cu rol local distinct in administratie, servicii sau economie regionala.",
     },
 
     {
@@ -4065,7 +3929,7 @@ async function main() {
     },
     {
       countrySlug: "vatican",
-      name: "Grădinile Vaticanului",
+      name: "GrÄƒdinile Vaticanului",
       slug: "gradinile-vaticanului",
       region: "Vatican",
       latitude: 41.9012,
@@ -4073,7 +3937,7 @@ async function main() {
       population: 300,
       averageSalaryEur: 2300,
       generalDescription:
-        "Orasul Grădinile Vaticanului este situat in regiunea Vatican. Gradinile Vaticanului au un rol cultural si institutional, fiind relevante pentru turism controlat, patrimoniu si administrarea spatiilor istorice.",
+        "Orasul GrÄƒdinile Vaticanului este situat in regiunea Vatican. Gradinile Vaticanului au un rol cultural si institutional, fiind relevante pentru turism controlat, patrimoniu si administrarea spatiilor istorice.",
     },
   ];
 
@@ -4101,9 +3965,7 @@ async function main() {
           countryDescriptions[country.slug] ?? country.generalDescription,
         population: country.population ?? null,
         citizenshipDifficulty: country.citizenshipDifficulty,
-        emigrationDifficulty: country.emigrationDifficulty,
-        averageSalaryEur: country.averageSalaryEur,
-      },
+        emigrationDifficulty: country.emigrationDifficulty,      },
       create: {
         ...countryData,
         continent: "Europa",
@@ -4111,9 +3973,7 @@ async function main() {
           countryDescriptions[country.slug] ?? country.generalDescription,
         population: country.population ?? null,
         citizenshipDifficulty: country.citizenshipDifficulty,
-        emigrationDifficulty: country.emigrationDifficulty,
-        averageSalaryEur: country.averageSalaryEur,
-      },
+        emigrationDifficulty: country.emigrationDifficulty,      },
     });
 
     additionalCountryIds.set(country.slug, countryRecord.id);
@@ -4137,10 +3997,9 @@ async function main() {
         population: city.population,
         generalDescription: city.generalDescription,
         romanianCommunityNotes:
-          "Există puncte de sprijin comunitar românesc, în special în zonele urbane mari.",
+          "ExistÄƒ puncte de sprijin comunitar romÃ¢nesc, Ã®n special Ã®n zonele urbane mari.",
         jobMarketNotes:
-          "Oportunitățile depind de industrie și de sezonalitate, cu cerere crescută în servicii și domenii tehnice.",
-        averageSalaryEur: city.averageSalaryEur,
+          "OportunitÄƒÈ›ile depind de industrie È™i de sezonalitate, cu cerere crescutÄƒ Ã®n servicii È™i domenii tehnice.",
       },
       create: {
         countryId,
@@ -4152,10 +4011,9 @@ async function main() {
         population: city.population,
         generalDescription: city.generalDescription,
         romanianCommunityNotes:
-          "Există puncte de sprijin comunitar românesc, în special în zonele urbane mari.",
+          "ExistÄƒ puncte de sprijin comunitar romÃ¢nesc, Ã®n special Ã®n zonele urbane mari.",
         jobMarketNotes:
-          "Oportunitățile depind de industrie și de sezonalitate, cu cerere crescută în servicii și domenii tehnice.",
-        averageSalaryEur: city.averageSalaryEur,
+          "OportunitÄƒÈ›ile depind de industrie È™i de sezonalitate, cu cerere crescutÄƒ Ã®n servicii È™i domenii tehnice.",
       },
     });
   }
@@ -4166,19 +4024,22 @@ async function main() {
       id: true,
       name: true,
       slug: true,
-      averageSalaryEur: true,
       cities: {
         select: {
           id: true,
           name: true,
-          averageSalaryEur: true,
+          slug: true,
         },
       },
     },
   });
 
   for (const country of europeanCountries) {
-    const countrySalary = country.averageSalaryEur ?? 1800;
+    const countrySalary =
+      countryNumbeoEstimates[country.slug]?.averageSalaryEur ??
+      additionalEuropeanCountries.find((item) => item.slug === country.slug)
+        ?.averageSalaryEur ??
+      1800;
     const countryCost = buildCountryCostFromSalary(countrySalary);
 
     const existingCountryCost = await prisma.costOfLiving.findFirst({
@@ -4199,7 +4060,9 @@ async function main() {
     }
 
     for (const city of country.cities) {
-      const citySalary = city.averageSalaryEur ?? countrySalary;
+      const citySalary =
+        additionalEuropeanCities.find((item) => item.slug === city.slug)
+          ?.averageSalaryEur ?? countrySalary;
       const cityCost = buildCityCostFromSalary(citySalary);
 
       const existingCityCost = await prisma.costOfLiving.findFirst({
@@ -4228,9 +4091,8 @@ async function main() {
   }
 
   for (const [slug, estimate] of Object.entries(countryNumbeoEstimates)) {
-    const country = await prisma.country.update({
+    const country = await prisma.country.findUniqueOrThrow({
       where: { slug },
-      data: { averageSalaryEur: estimate.averageSalaryEur },
       select: { id: true },
     });
 
@@ -4240,6 +4102,7 @@ async function main() {
     });
 
     const costData = {
+      averageSalaryEur: estimate.averageSalaryEur,
       totalMonthlyCostEur: estimate.totalMonthlyCostEur,
     };
 

@@ -53,7 +53,6 @@ model Country {
   emigrationDifficulty  EmigrationDifficulty
   latitude              Decimal?             @db.Decimal(9, 6)
   longitude             Decimal?             @db.Decimal(9, 6)
-  averageSalaryEur      Int?
   population            Int?
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
@@ -65,7 +64,6 @@ model Country {
 
   @@index([continent])
   @@index([emigrationDifficulty])
-  @@index([averageSalaryEur])
   @@map("countries")
 }
 
@@ -81,7 +79,6 @@ model City {
   generalDescription     String
   romanianCommunityNotes String?
   jobMarketNotes         String?
-  averageSalaryEur       Int?
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
 
@@ -91,7 +88,6 @@ model City {
   comparisonItems ComparisonItem[]
 
   @@index([countryId])
-  @@index([averageSalaryEur])
   @@map("cities")
 }
 
@@ -99,12 +95,10 @@ model CostOfLiving {
   id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   countryId           String?   @db.Uuid
   cityId              String?   @db.Uuid
-  rentOneBedroomEur   Int?
-  utilitiesEur        Int?
-  groceriesEur        Int?
+  averageSalaryEur    Int?
+  rentUtilitiesEur    Int?
+  foodEur             Int?
   transportEur        Int?
-  healthcareEur       Int?
-  internetEur         Int?
   totalMonthlyCostEur Int?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -114,6 +108,7 @@ model CostOfLiving {
 
   @@index([countryId])
   @@index([cityId])
+  @@index([averageSalaryEur])
   @@index([totalMonthlyCostEur])
   @@map("cost_of_living")
 }

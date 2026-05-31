@@ -28,12 +28,9 @@ export function CostBreakdownChart({ cost }: CostBreakdownChartProps) {
     getServerSnapshot,
   );
   const data = [
-    { name: "Chirie", value: cost?.rentOneBedroomEur ?? 0 },
-    { name: "Utilități", value: cost?.utilitiesEur ?? 0 },
-    { name: "Alimente", value: cost?.groceriesEur ?? 0 },
+    { name: "Chirie + utilități", value: cost?.rentUtilitiesEur ?? 0 },
+    { name: "Alimente", value: cost?.foodEur ?? 0 },
     { name: "Transport", value: cost?.transportEur ?? 0 },
-    { name: "Sănătate", value: cost?.healthcareEur ?? 0 },
-    { name: "Internet", value: cost?.internetEur ?? 0 },
   ].filter((item) => item.value > 0);
 
   if (data.length === 0) {

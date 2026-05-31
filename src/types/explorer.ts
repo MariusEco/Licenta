@@ -1,12 +1,10 @@
 import type { EmigrationDifficulty, LocationKind } from "@prisma/client";
 
 export type CostOfLivingView = {
-  rentOneBedroomEur: number | null;
-  utilitiesEur: number | null;
-  groceriesEur: number | null;
+  averageSalaryEur: number | null;
+  rentUtilitiesEur: number | null;
+  foodEur: number | null;
   transportEur: number | null;
-  healthcareEur: number | null;
-  internetEur: number | null;
   totalMonthlyCostEur: number | null;
 };
 

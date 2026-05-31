@@ -17,14 +17,6 @@ const countryInclude = {
 function getCountryOrderBy(
   sort: string,
 ): Prisma.CountryOrderByWithRelationInput[] {
-  if (sort === "salary_desc") {
-    return [{ averageSalaryEur: "desc" }, { name: "asc" }];
-  }
-
-  if (sort === "salary_asc") {
-    return [{ averageSalaryEur: "asc" }, { name: "asc" }];
-  }
-
   if (sort === "difficulty_asc") {
     return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
   }
@@ -56,7 +48,11 @@ export async function GET(request: Request) {
         : {}),
       ...(query.difficulty ? { emigrationDifficulty: query.difficulty } : {}),
       ...(query.minAverageSalaryEur
-        ? { averageSalaryEur: { gte: query.minAverageSalaryEur } }
+        ? {
+            costOfLiving: {
+              some: { averageSalaryEur: { gte: query.minAverageSalaryEur } },
+            },
+          }
         : {}),
       ...(query.maxMonthlyCostEur
         ? {
@@ -73,7 +69,10 @@ export async function GET(request: Request) {
         where,
         include: countryInclude,
         orderBy: getCountryOrderBy(query.sort),
-        ...(query.sort === "cost_asc" || query.sort === "cost_desc"
+        ...(query.sort === "cost_asc" ||
+        query.sort === "cost_desc" ||
+        query.sort === "salary_asc" ||
+        query.sort === "salary_desc"
           ? {}
           : {
               skip: (query.page - 1) * query.pageSize,
@@ -83,7 +82,10 @@ export async function GET(request: Request) {
     ]);
 
     const sortedCountries =
-      query.sort === "cost_asc" || query.sort === "cost_desc"
+      query.sort === "cost_asc" ||
+      query.sort === "cost_desc" ||
+      query.sort === "salary_asc" ||
+      query.sort === "salary_desc"
         ? [...countries]
             .sort((first, second) => {
               const firstCost =
@@ -92,10 +94,27 @@ export async function GET(request: Request) {
               const secondCost =
                 second.costOfLiving[0]?.totalMonthlyCostEur ??
                 Number.MAX_SAFE_INTEGER;
+              const firstSalary = first.costOfLiving[0]?.averageSalaryEur ?? 0;
+              const secondSalary =
+                second.costOfLiving[0]?.averageSalaryEur ?? 0;
 
               if (query.sort === "cost_desc") {
                 return (
                   secondCost - firstCost ||
+                  first.name.localeCompare(second.name)
+                );
+              }
+
+              if (query.sort === "salary_desc") {
+                return (
+                  secondSalary - firstSalary ||
+                  first.name.localeCompare(second.name)
+                );
+              }
+
+              if (query.sort === "salary_asc") {
+                return (
+                  firstSalary - secondSalary ||
                   first.name.localeCompare(second.name)
                 );
               }

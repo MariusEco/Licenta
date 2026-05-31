@@ -52,7 +52,7 @@ function getLocationDetailPath(location: ComparableLocation) {
 
 function formatMaybeText(value: string | null | undefined) {
   if (!value || !value.trim()) {
-    return "Nedisponibil";
+    return "Indisponibil";
   }
 
   return value;
@@ -108,7 +108,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Tip",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       return location.kind === "COUNTRY" ? "Țară" : "Oraș";
@@ -118,7 +118,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Țară",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       return location.kind === "COUNTRY" ? location.name : location.countryName;
@@ -128,7 +128,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Continent / Regiune",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
@@ -142,7 +142,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Capitală / Oraș",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
@@ -156,7 +156,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Monedă",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
@@ -170,7 +170,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Populație",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "CITY") {
@@ -184,7 +184,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Limbă oficială",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       return location.kind === "COUNTRY"
@@ -201,7 +201,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Dificultate cetățenie",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       return formatDifficulty(location.citizenshipDifficulty ?? null);
@@ -216,19 +216,14 @@ const comparisonRows: ComparisonRow[] = [
     render: (location) => formatCurrency(location?.monthlyCostEur ?? null),
   },
   {
-    label: "Chirie 1 dormitor",
+    label: "Chirie + utilita?i",
     render: (location) =>
-      formatCurrency(getCostOfLiving(location)?.rentOneBedroomEur ?? null),
-  },
-  {
-    label: "Utilități",
-    render: (location) =>
-      formatCurrency(getCostOfLiving(location)?.utilitiesEur ?? null),
+      formatCurrency(getCostOfLiving(location)?.rentUtilitiesEur ?? null),
   },
   {
     label: "Mâncare",
     render: (location) =>
-      formatCurrency(getCostOfLiving(location)?.groceriesEur ?? null),
+      formatCurrency(getCostOfLiving(location)?.foodEur ?? null),
   },
   {
     label: "Transport",
@@ -236,20 +231,10 @@ const comparisonRows: ComparisonRow[] = [
       formatCurrency(getCostOfLiving(location)?.transportEur ?? null),
   },
   {
-    label: "Sănătate",
-    render: (location) =>
-      formatCurrency(getCostOfLiving(location)?.healthcareEur ?? null),
-  },
-  {
-    label: "Internet",
-    render: (location) =>
-      formatCurrency(getCostOfLiving(location)?.internetEur ?? null),
-  },
-  {
     label: "Comunitate românească",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
@@ -263,7 +248,7 @@ const comparisonRows: ComparisonRow[] = [
     label: "Piața muncii",
     render: (location) => {
       if (!location) {
-        return "Nedisponibil";
+        return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
