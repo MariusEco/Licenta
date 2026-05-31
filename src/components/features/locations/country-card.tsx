@@ -32,7 +32,7 @@ export function CountryCard({ country }: CountryCardProps) {
         <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
           <dt className="flex items-center gap-2 text-muted-foreground">
             <WalletCards className="h-4 w-4" aria-hidden="true" />
-            Cost lunar
+            Cost lunar fără chirie
           </dt>
           <dd className="font-semibold text-foreground">
             {formatCurrency(country.monthlyCostEur)}
@@ -41,7 +41,7 @@ export function CountryCard({ country }: CountryCardProps) {
         <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
           <dt className="flex items-center gap-2 text-muted-foreground">
             <Euro className="h-4 w-4" aria-hidden="true" />
-            Salariu mediu
+            Salariu net mediu
           </dt>
           <dd className="font-semibold text-foreground">
             {formatCurrency(country.averageSalaryEur)}

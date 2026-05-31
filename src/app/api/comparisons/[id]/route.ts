@@ -28,7 +28,7 @@ export async function GET(_request: Request, context: RouteContext) {
             country: {
               include: {
                 costOfLiving: {
-                  orderBy: { collectedAt: "desc" },
+                  orderBy: { updatedAt: "desc" },
                   take: 1,
                 },
               },
@@ -36,7 +36,7 @@ export async function GET(_request: Request, context: RouteContext) {
             city: {
               include: {
                 costOfLiving: {
-                  orderBy: { collectedAt: "desc" },
+                  orderBy: { updatedAt: "desc" },
                   take: 1,
                 },
               },

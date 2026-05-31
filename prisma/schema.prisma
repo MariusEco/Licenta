@@ -81,11 +81,7 @@ model City {
   generalDescription     String
   romanianCommunityNotes String?
   jobMarketNotes         String?
-  localLawNotes          String?
-  predominantReligion    String?
-  emigrationDifficulty   EmigrationDifficulty?
   averageSalaryEur       Int?
-  isFeatured             Boolean               @default(false)
   createdAt              DateTime              @default(now())
   updatedAt              DateTime              @updatedAt
 
@@ -110,9 +106,6 @@ model CostOfLiving {
   healthcareEur       Int?
   internetEur         Int?
   totalMonthlyCostEur Int?
-  sourceName          String?
-  sourceUrl           String?
-  collectedAt         DateTime?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 

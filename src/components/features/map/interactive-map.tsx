@@ -101,8 +101,8 @@ export function InteractiveMap({ locations }: InteractiveMapProps) {
           event.preventDefault();
           router.push(getLocationHref(location) as Route);
         });
-        cost.textContent = `Cost lunar: ${formatCurrency(location.monthlyCostEur)}`;
-        salary.textContent = `Salariu mediu: ${formatCurrency(location.averageSalaryEur)}`;
+        cost.textContent = `Cost lunar fără chirie: ${formatCurrency(location.monthlyCostEur)}`;
+        salary.textContent = `Salariu net mediu: ${formatCurrency(location.averageSalaryEur)}`;
         difficulty.textContent = `Dificultate: ${formatDifficulty(location.emigrationDifficulty)}`;
         title.append(titleLink);
         popup.append(title, cost, salary, difficulty);

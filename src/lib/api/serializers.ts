@@ -24,9 +24,6 @@ export function serializeCostOfLiving(cost: CostOfLiving | null) {
     healthcareEur: cost.healthcareEur,
     internetEur: cost.internetEur,
     totalMonthlyCostEur: cost.totalMonthlyCostEur,
-    sourceName: cost.sourceName,
-    sourceUrl: cost.sourceUrl,
-    collectedAt: cost.collectedAt?.toISOString() ?? null,
   };
 }
 
@@ -64,6 +61,7 @@ export function serializeCountry(
           ...city,
           countryName: country.name,
           countrySlug: country.slug,
+          countryEmigrationDifficulty: country.emigrationDifficulty,
         }),
       ) ?? [],
   };
@@ -114,12 +112,9 @@ export function serializeCity(
     generalDescription: city.generalDescription,
     romanianCommunityNotes: city.romanianCommunityNotes,
     jobMarketNotes: city.jobMarketNotes,
-    localLawNotes: city.localLawNotes,
-    predominantReligion: city.predominantReligion,
-    emigrationDifficulty: city.emigrationDifficulty,
+    emigrationDifficulty: city.country.emigrationDifficulty,
     averageSalaryEur: city.averageSalaryEur,
     monthlyCostEur: city.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
-    isFeatured: city.isFeatured,
     costOfLiving: serializeCostOfLiving(city.costOfLiving?.[0] ?? null),
   };
 }
@@ -127,8 +122,10 @@ export function serializeCity(
 export function serializeCitySummary(
   city: City & {
     costOfLiving?: CostOfLiving[];
+    country?: Country;
     countryName?: string;
     countrySlug?: string;
+    countryEmigrationDifficulty?: Country["emigrationDifficulty"];
   },
 ) {
   return {
@@ -142,7 +139,9 @@ export function serializeCitySummary(
     longitude: toNumber(city.longitude),
     averageSalaryEur: city.averageSalaryEur,
     monthlyCostEur: city.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
-    emigrationDifficulty: city.emigrationDifficulty,
-    isFeatured: city.isFeatured,
+    emigrationDifficulty:
+      city.countryEmigrationDifficulty ??
+      city.country?.emigrationDifficulty ??
+      null,
   };
 }

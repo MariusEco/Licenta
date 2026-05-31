@@ -210,11 +210,11 @@ const comparisonRows: ComparisonRow[] = [
     },
   },
   {
-    label: "Salariu mediu",
+    label: "Salariu net mediu",
     render: (location) => formatCurrency(location?.averageSalaryEur ?? null),
   },
   {
-    label: "Cost lunar",
+    label: "Cost lunar fără chirie",
     render: (location) => formatCurrency(location?.monthlyCostEur ?? null),
   },
   {
@@ -601,13 +601,13 @@ export function ComparisonBuilder({
 
         <div className="mt-4 grid gap-3 text-sm sm:grid-cols-3">
           <div>
-            <div className="text-muted-foreground">Salariu mediu</div>
+            <div className="text-muted-foreground">Salariu net mediu</div>
             <div className="font-semibold text-foreground">
               {formatCurrency(location.averageSalaryEur)}
             </div>
           </div>
           <div>
-            <div className="text-muted-foreground">Cost lunar</div>
+            <div className="text-muted-foreground">Cost lunar fără chirie</div>
             <div className="font-semibold text-foreground">
               {formatCurrency(location.monthlyCostEur)}
             </div>

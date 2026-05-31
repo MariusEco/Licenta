@@ -174,11 +174,11 @@ function getCityOrderBy(
   }
 
   if (sort === "difficulty_asc") {
-    return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
+    return [{ country: { emigrationDifficulty: "asc" } }, { name: "asc" }];
   }
 
   if (sort === "difficulty_desc") {
-    return [{ emigrationDifficulty: "desc" }, { name: "asc" }];
+    return [{ country: { emigrationDifficulty: "desc" } }, { name: "asc" }];
   }
 
   return [{ name: "asc" }];
@@ -231,7 +231,7 @@ export async function getCountries(
       population: true,
       createdAt: true,
       updatedAt: true,
-      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+      costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
     },
     orderBy: getCountryOrderBy(filters.sort),
   });
@@ -302,18 +302,13 @@ export async function getCountryBySlug(
           updatedAt: true,
           population: true,
           averageSalaryEur: true,
-          emigrationDifficulty: true,
-          predominantReligion: true,
           romanianCommunityNotes: true,
           jobMarketNotes: true,
-          localLawNotes: true,
-          // country.isFeatured removed; keep city isFeatured
-          isFeatured: true,
           generalDescription: true,
-          costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+          costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
         },
       },
-      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+      costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
     },
   });
 
@@ -340,7 +335,9 @@ export async function getCities(
           ],
         }
       : {}),
-    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+    ...(filters.difficulty
+      ? { country: { emigrationDifficulty: filters.difficulty } }
+      : {}),
     ...(filters.minAverageSalaryEur
       ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
       : {}),
@@ -364,7 +361,7 @@ export async function getCities(
       where,
       include: {
         country: true,
-        costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+        costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
       },
       orderBy: getCityOrderBy(filters.sort),
       ...(sortInMemory
@@ -402,7 +399,7 @@ export async function getCityBySlug(
     where: { slug },
     include: {
       country: true,
-      costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+      costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
     },
   });
 

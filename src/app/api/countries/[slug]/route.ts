@@ -22,13 +22,13 @@ export async function GET(_request: Request, context: RouteContext) {
           orderBy: { name: "asc" },
           include: {
             costOfLiving: {
-              orderBy: { collectedAt: "desc" },
+              orderBy: { updatedAt: "desc" },
               take: 1,
             },
           },
         },
         costOfLiving: {
-          orderBy: { collectedAt: "desc" },
+          orderBy: { updatedAt: "desc" },
           take: 1,
         },
       },

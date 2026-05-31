@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 const countryInclude = {
   costOfLiving: {
-    orderBy: { collectedAt: "desc" },
+    orderBy: { updatedAt: "desc" },
     take: 1,
   },
 } satisfies Prisma.CountryInclude;

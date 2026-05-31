@@ -22,7 +22,7 @@ export async function GET() {
             country: {
               include: {
                 costOfLiving: {
-                  orderBy: { collectedAt: "desc" },
+                  orderBy: { updatedAt: "desc" },
                   take: 1,
                 },
               },
@@ -30,7 +30,7 @@ export async function GET() {
             city: {
               include: {
                 costOfLiving: {
-                  orderBy: { collectedAt: "desc" },
+                  orderBy: { updatedAt: "desc" },
                   take: 1,
                 },
               },

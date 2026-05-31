@@ -15,7 +15,7 @@ export async function GET() {
       prisma.country.findMany({
         include: {
           costOfLiving: {
-            orderBy: { collectedAt: "desc" },
+            orderBy: { updatedAt: "desc" },
             take: 1,
           },
         },
@@ -23,8 +23,9 @@ export async function GET() {
       }),
       prisma.city.findMany({
         include: {
+          country: true,
           costOfLiving: {
-            orderBy: { collectedAt: "desc" },
+            orderBy: { updatedAt: "desc" },
             take: 1,
           },
         },

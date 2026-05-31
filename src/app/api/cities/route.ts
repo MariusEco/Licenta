@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 const cityInclude = {
   country: true,
   costOfLiving: {
-    orderBy: { collectedAt: "desc" },
+    orderBy: { updatedAt: "desc" },
     take: 1,
   },
 } satisfies Prisma.CityInclude;
@@ -25,11 +25,11 @@ function getCityOrderBy(sort: string): Prisma.CityOrderByWithRelationInput[] {
   }
 
   if (sort === "difficulty_asc") {
-    return [{ emigrationDifficulty: "asc" }, { name: "asc" }];
+    return [{ country: { emigrationDifficulty: "asc" } }, { name: "asc" }];
   }
 
   if (sort === "difficulty_desc") {
-    return [{ emigrationDifficulty: "desc" }, { name: "asc" }];
+    return [{ country: { emigrationDifficulty: "desc" } }, { name: "asc" }];
   }
 
   return [{ name: "asc" }];
@@ -55,7 +55,9 @@ export async function GET(request: Request) {
           }
         : {}),
       ...(query.countrySlug ? { country: { slug: query.countrySlug } } : {}),
-      ...(query.difficulty ? { emigrationDifficulty: query.difficulty } : {}),
+      ...(query.difficulty
+        ? { country: { emigrationDifficulty: query.difficulty } }
+        : {}),
       ...(query.minAverageSalaryEur
         ? { averageSalaryEur: { gte: query.minAverageSalaryEur } }
         : {}),

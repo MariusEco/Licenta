@@ -64,9 +64,6 @@ export default async function CityDetailPage({ params }: CityDetailPageProps) {
           <h1 className="mt-4 text-4xl font-semibold text-foreground">
             {city.name}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
-            {city.generalDescription}
-          </p>
         </div>
 
         <div className="grid gap-3 text-sm text-muted-foreground">

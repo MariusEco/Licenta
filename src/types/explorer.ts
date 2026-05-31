@@ -8,7 +8,6 @@ export type CostOfLivingView = {
   healthcareEur: number | null;
   internetEur: number | null;
   totalMonthlyCostEur: number | null;
-  sourceName: string | null;
 };
 
 export type OfficialMigrationResourceView = {
@@ -43,7 +42,6 @@ export type CitySummaryView = {
   averageSalaryEur: number | null;
   monthlyCostEur: number | null;
   emigrationDifficulty: EmigrationDifficulty | null;
-  isFeatured: boolean;
 };
 
 export type CountryDetailView = CountrySummaryView & {
@@ -67,8 +65,6 @@ export type CityDetailView = CitySummaryView & {
   generalDescription: string;
   romanianCommunityNotes: string | null;
   jobMarketNotes: string | null;
-  localLawNotes: string | null;
-  predominantReligion: string | null;
   costOfLiving: CostOfLivingView | null;
 };
 

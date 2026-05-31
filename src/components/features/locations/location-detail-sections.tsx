@@ -1,13 +1,10 @@
 import {
-  BookOpenText,
   BriefcaseBusiness,
   ExternalLink,
-  Scale,
   Users,
   type LucideIcon,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { CostBreakdownChart } from "@/components/features/locations/cost-breakdown-chart";
 import { LocationStat } from "@/components/features/locations/location-stat";
 import {
@@ -146,43 +143,24 @@ export function LocationDetailSections({
             title="Oportunități de joburi"
             content={location.jobMarketNotes}
           />
-          <InfoPanel
-            icon={Scale}
-            title="Legi locale relevante"
-            content={location.localLawNotes}
-          />
-          <InfoPanel
-            icon={BookOpenText}
-            title="Religie predominantă"
-            content={location.predominantReligion}
-          />
         </div>
 
         <section>
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <h2 className="text-xl font-semibold text-foreground">
-              Costuri lunare estimate
-            </h2>
-            {location.costOfLiving?.sourceName ? (
-              <Badge>{location.costOfLiving.sourceName}</Badge>
-            ) : null}
-          </div>
+          <h2 className="mb-3 text-xl font-semibold text-foreground">
+            Costuri lunare estimate
+          </h2>
           <CostBreakdownChart cost={location.costOfLiving} />
         </section>
       </section>
 
       <aside className="grid h-fit gap-3">
         <LocationStat
-          label="Cost lunar"
+          label="Cost lunar fără chirie"
           value={formatCurrency(location.monthlyCostEur)}
         />
         <LocationStat
-          label="Salariu mediu"
+          label="Salariu net mediu"
           value={formatCurrency(location.averageSalaryEur)}
-        />
-        <LocationStat
-          label="Dificultate emigrare"
-          value={formatDifficulty(location.emigrationDifficulty)}
         />
         <LocationStat
           label="Populație"

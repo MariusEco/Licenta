@@ -24,12 +24,12 @@ export default async function ComparisonsPage() {
         include: {
           country: {
             include: {
-              costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+              costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
             },
           },
           city: {
             include: {
-              costOfLiving: { orderBy: { collectedAt: "desc" }, take: 1 },
+              costOfLiving: { orderBy: { updatedAt: "desc" }, take: 1 },
             },
           },
         },
