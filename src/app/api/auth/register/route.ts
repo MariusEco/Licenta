@@ -14,8 +14,6 @@ export async function POST(request: Request) {
     const prisma = getPrismaClient();
     const normalizedEmail = body.email.toLowerCase();
 
-    // Supabase admin key may be missing or invalid in local dev; query the
-    // Postgres `auth.users` table directly to detect existing emails.
     try {
       const rows = (await prisma.$queryRawUnsafe(
         `select email from auth.users where lower(email) = $1 limit 1`,

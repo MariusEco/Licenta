@@ -32,7 +32,7 @@ export async function createSupabaseServerClient() {
             cookieStore.set(name, value, options);
           });
         } catch {
-          // Middleware-ul gestionează refresh-ul sesiunii pentru cererile normale.
+          return;
         }
       },
     },

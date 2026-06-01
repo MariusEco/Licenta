@@ -1,48 +1,90 @@
 # Migro
 
-Migro este o aplicație web production-ready pentru lucrarea de licență „Platformă web pentru informarea și analiza oportunităților de emigrare”. Platforma este destinată românilor care analizează oportunități de emigrare în funcție de informații legale, costuri, salarii, taxe, comunități și dificultatea obținerii cetățeniei.
+Migro este o platformă web pentru informarea și analiza oportunităților de emigrare, construită pentru românii care vor să compare țări și orașe după criterii practice: costul vieții, salarii medii, cerințe generale de emigrare, dificultatea obținerii cetățeniei, comunități românești, piața muncii și date demografice.
 
-## Stack tehnologic
+Aplicația este construită ca proiect production-ready pentru lucrarea de licență „Platformă web pentru informarea și analiza oportunităților de emigrare”.
 
-- Next.js App Router
-- TypeScript strict
-- Tailwind CSS
-- PostgreSQL prin Supabase
-- Prisma ORM
-- Supabase Auth
-- Leaflet + OpenStreetMap
-- Recharts
-- Deployment pe Vercel
+## Tehnologii folosite
 
-## Rulare locală
+- Next.js cu App Router pentru frontend, backend și API Route Handlers
+- TypeScript pentru tipare stricte și cod predictibil
+- React pentru interfața utilizator
+- Tailwind CSS pentru stilizare responsive
+- PostgreSQL ca bază de date relațională
+- Supabase pentru baza de date găzduită, autentificare și sesiuni
+- Supabase Auth pentru login, register, Google OAuth și resetare parolă
+- Prisma ORM pentru modelarea și accesarea bazei de date
+- Leaflet și OpenStreetMap pentru harta interactivă
+- Recharts pentru graficele de costuri
+- Zod pentru validarea datelor în frontend și backend
 
-```bash
-npm install
-npm run dev
+
+## Funcționalități principale
+
+- listare țări și orașe
+- pagini de detalii pentru fiecare țară și oraș
+- costuri lunare, salariu net mediu și date socio-economice
+- hartă interactivă cu locații
+- filtrare și sortare după cost, salariu și dificultate
+- comparare între țări și orașe
+- cont utilizator prin Supabase Auth
+- autentificare cu email/parolă și Google
+- resetare parolă prin email
+- salvare locații favorite
+- salvare comparații în cont
+- protecție pentru rutele private
+- politici RLS în Supabase pentru datele asociate utilizatorilor
+
+## Structură proiect
+
+```text
+prisma/
+  schema.prisma
+  migrations/
+  seed.ts
+
+src/
+  app/
+  components/
+  config/
+  lib/
+  services/
+  types/
+  validations/
 ```
 
-Aplicația pornește implicit la `http://localhost:3000`.
+`src/app` conține paginile Next.js și endpoint-urile API.
 
-## Verificări
+`src/components` conține componentele reutilizabile, împărțite în componente UI, layout și componente specifice funcționalităților.
 
-```bash
-npm run typecheck
-npm run lint
-npm run build
-```
+`src/lib` conține integrarea cu Prisma, Supabase, serializarea datelor, erori comune, formatări și metadate despre locații.
 
-## Bază de date
+`src/services` conține query-uri și logică de acces la date mai complexă.
 
-```bash
-npm run db:validate
-npm run db:generate
-npm run db:migrate
-npm run db:seed
-```
+`src/validations` conține scheme Zod pentru validarea inputurilor.
 
-Schema Prisma este în `prisma/schema.prisma`, iar migrarea inițială este în `prisma/migrations/0001_init/migration.sql`.
+`src/types` conține tipuri TypeScript comune pentru locații și datele afișate în interfață.
 
-## API intern
+`prisma` conține schema bazei de date, migrațiile SQL și scriptul opțional de seed.
+
+## Pagini importante
+
+- `/` - pagina principală
+- `/countries` - listă țări
+- `/countries/[slug]` - detalii țară
+- `/cities/[slug]` - detalii oraș
+- `/map` - hartă interactivă
+- `/compare` - comparare locații
+- `/favorites` - favoritele utilizatorului
+- `/comparisons` - comparații salvate
+- `/dashboard` - panou cont
+- `/settings` - setări profil și resetare parolă
+- `/settings/recovery` - setare parolă nouă după resetare
+- `/login` - autentificare
+- `/register` - creare cont
+- `/forgot-password` - cerere resetare parolă
+
+## Endpoint-uri API
 
 Endpoint-uri publice:
 
@@ -51,8 +93,10 @@ Endpoint-uri publice:
 - `GET /api/cities`
 - `GET /api/cities/[slug]`
 - `GET /api/map/locations`
+- `POST /api/auth/register`
+- `POST /api/auth/password-reset`
 
-Endpoint-uri private, protejate prin Supabase Auth:
+Endpoint-uri pentru utilizatori autentificați:
 
 - `GET /api/favorites`
 - `POST /api/favorites`
@@ -61,45 +105,64 @@ Endpoint-uri private, protejate prin Supabase Auth:
 - `POST /api/comparisons`
 - `GET /api/comparisons/[id]`
 - `DELETE /api/comparisons/[id]`
+- `POST /api/settings/profile`
+- `POST /api/settings/password`
+- `POST /api/settings/password-reset`
 
-Autentificare:
+## Variabile de mediu
 
-- `/login` pentru autentificare cu email și parolă;
-- `/register` pentru creare cont;
-- `/auth/callback` pentru confirmări email și schimbarea codului Supabase în sesiune;
-- `/dashboard`, `/favorites` și `/comparisons` sunt protejate prin middleware.
-
-## Frontend
-
-Paginile publice principale sunt:
-
-- `/` pentru prezentarea platformei și țări recomandate;
-- `/countries` pentru listare, filtrare și sortare țări;
-- `/countries/[slug]` pentru detalii despre o țară;
-- `/cities` pentru listare, filtrare și sortare orașe;
-- `/cities/[slug]` pentru detalii despre un oraș;
-- `/compare` pentru comparație vizuală între indicatori economici;
-- `/map` pentru harta Leaflet cu locații interactive.
-
-## Configurare Supabase local
-
-În `.env.local` trebuie să existe cel puțin:
+Creează un fișier `.env.local` în rădăcina proiectului.
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL=https://lihesfxqmjwtocefjqjh.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+DATABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
 ```
 
-Pentru funcționalitățile care salvează date în PostgreSQL mai trebuie:
+Pentru `DATABASE_URL`, în Windows este recomandată conexiunea prin Supabase Pooler.
+
+## Instalare locală
 
 ```bash
-DATABASE_URL=postgresql://postgres:<PAROLA_DB>@db.lihesfxqmjwtocefjqjh.supabase.co:5432/postgres
-SUPABASE_SERVICE_ROLE_KEY=<SERVICE_ROLE_KEY>
+npm install
+npm run db:generate
+npm run dev
 ```
 
-Pentru Windows sau alte medii fără IPv6, folosește conexiunea Supabase Pooler pentru Prisma:
+Aplicația pornește implicit pe:
 
 ```bash
-DATABASE_URL=postgresql://postgres.<PROJECT_REF>:<PAROLA_DB>@aws-0-eu-west-1.pooler.supabase.com:5432/postgres
+http://localhost:3000
 ```
+
+## Bază de date
+
+Validare schema Prisma:
+
+```bash
+npm run db:validate
+```
+
+Generare Prisma Client:
+
+```bash
+npm run db:generate
+```
+
+Aplicare migrații în baza configurată prin `DATABASE_URL`:
+
+```bash
+npx prisma migrate deploy
+```
+
+Pentru dezvoltare locală se poate folosi:
+
+```bash
+npm run db:migrate
+```
+
+## Surse de date
+
+Datele folosite în aplicație provin din surse publice și agregatoare precum Numbeo, Livingcost, World Population Review, Wikipedia și pagini oficiale guvernamentale sau instituționale.

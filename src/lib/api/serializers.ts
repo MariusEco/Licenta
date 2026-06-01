@@ -94,7 +94,6 @@ export function serializeCountrySummary(
     monthlyCostEur: country.costOfLiving?.[0]?.totalMonthlyCostEur ?? null,
     emigrationDifficulty: country.emigrationDifficulty,
     citizenshipDifficulty: country.citizenshipDifficulty,
-    // isFeatured removed from Country model; omit from summary
   };
 }
 

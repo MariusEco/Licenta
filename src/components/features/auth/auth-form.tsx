@@ -249,7 +249,6 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    // Additional client-side policy check for registration: require uppercase, digit and symbol.
     if (mode === "register" && passwordInput) {
       const pwd = String(password ?? "");
       const hasUpper = /[A-Z]/.test(pwd);
@@ -313,7 +312,6 @@ export function AuthForm({ mode }: AuthFormProps) {
 
       if (error) {
         const mapped = translateSignUpError(error);
-        // If this is a password field-specific message, show it as native validation
         if (mapped?.asField === "password" && passwordInput) {
           setFieldValidity(passwordInput, mapped.message);
           form.reportValidity();
@@ -377,9 +375,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return { message: "Există deja un cont cu această adresă de email." };
     }
 
-    // Detect password policy messages. If the password length is the issue, keep the existing message.
     if (raw.includes("password")) {
-      // Detect Supabase-style class lists like: "abcdefghijklmnopqrstuvwxyz, ABCDEFGHIJKLMNOPQRSTUVWXYZ, 0123456789, !@#$..."
       const hasLower = raw.includes("abcdefghijklmnopqrstuvwxyz");
       const hasUpper = raw.includes("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
       const hasDigits = raw.includes("0123456789");
@@ -397,7 +393,6 @@ export function AuthForm({ mode }: AuthFormProps) {
         };
       }
 
-      // If message mentions length, map to length message (inline behavior handled elsewhere).
       if (
         raw.includes("8") ||
         raw.includes("length") ||
@@ -406,7 +401,6 @@ export function AuthForm({ mode }: AuthFormProps) {
         return { message: "Parola trebuie să aibă cel puțin 8 caractere." };
       }
 
-      // Generic password problem fallback
       return { message: "Parola nu respectă politica de securitate." };
     }
 

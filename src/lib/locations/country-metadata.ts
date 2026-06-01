@@ -10,7 +10,6 @@ const countryMetadataBySlug: Record<string, CountryMetadata> = {
   },
   andorra: {
     population: 84_406,
-    // Fallback to Wikipedia taxation page when PwC summary is not available
     taxSummaryUrl: "https://en.wikipedia.org/wiki/Taxation_in_Andorra",
   },
   armenia: {

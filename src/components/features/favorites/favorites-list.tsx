@@ -68,7 +68,6 @@ export default function FavoritesList({ items }: FavoritesListProps) {
     }
 
     if (!response.ok) {
-      // keep it simple for now
       alert("Nu s-a putut șterge favorita.");
       return;
     }

@@ -2,6 +2,7 @@
 
 import {
   GitCompareArrows,
+  Info,
   Loader2,
   RotateCcw,
   Save,
@@ -98,10 +99,13 @@ function getCityDetail(
 
 type ComparisonRow = {
   label: string;
+  tooltip?: string;
   render: (
     location: ComparableLocation | ComparableDetailLocation | null,
   ) => string;
 };
+
+const capitalSourceTooltip = "Pentru țări, datele folosesc capitala ca reper.";
 
 const comparisonRows: ComparisonRow[] = [
   {
@@ -232,13 +236,16 @@ const comparisonRows: ComparisonRow[] = [
   },
   {
     label: "Comunitate românească",
+    tooltip: capitalSourceTooltip,
     render: (location) => {
       if (!location) {
         return "Indisponibil";
       }
 
       if (location.kind === "COUNTRY") {
-        return formatMaybeText(getCountryDetail(location)?.romanianCommunityNotes);
+        return formatMaybeText(
+          getCountryDetail(location)?.romanianCommunityNotes,
+        );
       }
 
       return formatMaybeText(getCityDetail(location)?.romanianCommunityNotes);
@@ -246,6 +253,7 @@ const comparisonRows: ComparisonRow[] = [
   },
   {
     label: "Piața muncii",
+    tooltip: capitalSourceTooltip,
     render: (location) => {
       if (!location) {
         return "Indisponibil";
@@ -295,10 +303,6 @@ export function ComparisonBuilder({
   );
 
   const [search, setSearch] = useState("");
-
-  // `initialTitle` and `initialSelectedKeys` are used to seed initial state
-  // via lazy initializers above. Avoid calling setState synchronously inside
-  // effects to satisfy the linter and prevent cascading renders.
 
   useEffect(() => {
     if (!notification) {
@@ -388,16 +392,15 @@ export function ComparisonBuilder({
     );
 
     if (keysToLoad.length === 0) {
-      // No keys to load — nothing to do. State clearing is handled by
-      // `clearAll()` when the user explicitly resets selections.
       return;
     }
 
     const controller = new AbortController();
-    // Allow setting loading keys for the async fetch sequence. This is
-    // intentionally done here to reflect the active fetch keys.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLoadingKeys(keysToLoad);
+    queueMicrotask(() => {
+      if (!controller.signal.aborted) {
+        setLoadingKeys(keysToLoad);
+      }
+    });
 
     Promise.allSettled(
       keysToLoad.map(async (key) => {
@@ -796,7 +799,25 @@ export function ComparisonBuilder({
                   }`}
                 >
                   <div className="px-4 py-3 font-medium text-foreground">
-                    {row.label}
+                    {row.tooltip ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        {row.label}
+                        <span className="group relative inline-flex">
+                          <button
+                            type="button"
+                            className="inline-flex h-5 w-5 items-center justify-center text-muted-foreground transition hover:text-primary focus:text-primary focus:outline-none"
+                            aria-label={row.tooltip}
+                          >
+                            <Info className="h-3.5 w-3.5" aria-hidden="true" />
+                          </button>
+                          <span className="absolute left-full top-1/2 z-20 ml-1.5 hidden w-max -translate-y-1/2 whitespace-nowrap border border-border bg-white px-2 py-1 text-[11px] font-normal leading-4 text-muted-foreground shadow-sm group-hover:block group-focus-within:block">
+                            {row.tooltip}
+                          </span>
+                        </span>
+                      </span>
+                    ) : (
+                      row.label
+                    )}
                   </div>
                   <div className="px-4 py-3 leading-6 text-muted-foreground">
                     {row.render(leftComparisonLocation)}

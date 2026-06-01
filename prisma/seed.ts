@@ -36,7 +36,6 @@ type SeedCountry = {
   citizenshipDifficulty: Difficulty;
   emigrationDifficulty: Difficulty;
   generalDescription: string;
-  // Legacy/removed fields may still appear in seed data; accept them and ignore later.
   taxLevel?: "LOW" | "MEDIUM" | "HIGH";
   incomeTaxRate?: number;
   romanianCommunityNotes?: string;

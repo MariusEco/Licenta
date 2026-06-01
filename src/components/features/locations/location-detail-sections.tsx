@@ -110,8 +110,6 @@ export function LocationDetailSections({
           />
           <LocationStat
             label="Taxare"
-            // Always show a static call-to-action and link to the tax summary (PwC when available,
-            // otherwise Wikipedia fallback provided by country-metadata).
             value={"Vezi mai multe detalii"}
             href={location.taxSummaryUrl ?? null}
           />

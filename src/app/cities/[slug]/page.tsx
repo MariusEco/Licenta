@@ -7,7 +7,6 @@ import { FavoriteButton } from "@/components/features/favorites/favorite-button"
 import { LocationDetailSections } from "@/components/features/locations/location-detail-sections";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-// `formatDifficulty` not needed in this page
 import { getCurrentUser } from "@/lib/supabase/server";
 import { getPrismaClient } from "@/lib/prisma/client";
 import { getCityBySlug } from "@/services/locations/queries";

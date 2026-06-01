@@ -138,8 +138,6 @@ function sortLocations<
   return sorted.sort(compareByName);
 }
 
-// `paginate` helper removed — replaced by inlined pagination where used.
-
 function getCountryOrderBy(
   sort: LocationListFilters["sort"],
 ): Prisma.CountryOrderByWithRelationInput[] {

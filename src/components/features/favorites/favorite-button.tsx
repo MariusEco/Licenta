@@ -68,7 +68,6 @@ export function FavoriteButton({
         return;
       }
 
-      // already favorited -> remove
       const response = await fetch("/api/favorites", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -128,7 +127,7 @@ export function FavoriteButton({
 
         if (mounted) setIsFavorited(Boolean(match));
       } catch {
-        // ignore
+        return;
       }
     }
 

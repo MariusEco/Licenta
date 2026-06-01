@@ -30,7 +30,7 @@ export async function getSupabaseServerClient() {
             cookieStore.set(name, value, options);
           });
         } catch {
-          // Server Components nu pot seta cookies; middleware-ul va acoperi refresh-ul sesiunii în etapa de autentificare.
+          return;
         }
       },
     },
