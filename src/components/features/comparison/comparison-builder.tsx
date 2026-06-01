@@ -216,7 +216,7 @@ const comparisonRows: ComparisonRow[] = [
     render: (location) => formatCurrency(location?.monthlyCostEur ?? null),
   },
   {
-    label: "Chirie + utilita?i",
+    label: "Chirie & Utilități",
     render: (location) =>
       formatCurrency(getCostOfLiving(location)?.rentUtilitiesEur ?? null),
   },

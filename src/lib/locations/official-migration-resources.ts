@@ -66,9 +66,9 @@ const governmentDescription = undefined;
 function resource(
   title: string,
   url: string,
-  _description?: unknown,
+  description?: string,
 ): OfficialMigrationResource {
-  return { title, url };
+  return { title, url, description };
 }
 
 const countryOfficialResources: Record<string, OfficialMigrationResource[]> = {

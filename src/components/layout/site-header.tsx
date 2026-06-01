@@ -50,6 +50,9 @@ export async function SiteHeader() {
               >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
+              <Button asChild variant="ghost" className="hidden sm:inline-flex">
+                <Link href={"/settings" as Route}>Setări</Link>
+              </Button>
               <LogoutButton />
             </>
           ) : (

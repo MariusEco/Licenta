@@ -34,8 +34,13 @@ const overviewItems = [
 export default async function HomePage() {
   const featuredSlugs = ["italia", "spania", "germania"];
 
-  const resolved = await Promise.all(featuredSlugs.map((s) => getCountryBySlug(s)));
-  const items = resolved.filter(Boolean) as any[];
+  const resolved = await Promise.all(
+    featuredSlugs.map((slug) => getCountryBySlug(slug)),
+  );
+  const items = resolved.filter(
+    (country): country is Exclude<(typeof resolved)[number], null> =>
+      country !== null,
+  );
   const countries = { items, total: items.length, page: 1, pageSize: items.length };
 
   return (

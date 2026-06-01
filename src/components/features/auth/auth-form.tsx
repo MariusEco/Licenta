@@ -250,7 +250,7 @@ export function AuthForm({ mode }: AuthFormProps) {
           data: {
             full_name: fullName,
           },
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/dashboard`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/register`,
         },
       });
 
@@ -270,7 +270,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
 
       setMessage(
-        "Contul a fost creat. Dacă proiectul Supabase cere confirmare pe email, verifică inbox-ul înainte de autentificare.",
+        "Contul a fost creat. Confirmă adresa de email din inbox înainte de autentificare.",
       );
     } catch (error) {
       setError(

@@ -50,6 +50,34 @@ export async function requireAuthenticatedUser() {
 
   const prisma = getPrismaClient();
 
+  const existingById = await prisma.user.findUnique({
+    where: { id: user.id },
+  });
+
+  if (existingById) {
+    return prisma.user.update({
+      where: { id: user.id },
+      data: {
+        email: user.email,
+        fullName: user.user_metadata.full_name as string | undefined,
+      },
+    });
+  }
+
+  const existingByEmail = await prisma.user.findUnique({
+    where: { email: user.email },
+  });
+
+  if (existingByEmail) {
+    return prisma.user.update({
+      where: { id: existingByEmail.id },
+      data: {
+        email: user.email,
+        fullName: user.user_metadata.full_name as string | undefined,
+      },
+    });
+  }
+
   return prisma.user.upsert({
     where: { id: user.id },
     update: { email: user.email },

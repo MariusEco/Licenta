@@ -1,15 +1,21 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 import { AuthForm } from "@/components/features/auth/auth-form";
-import { isSupabaseConfigured } from "@/lib/supabase/server";
+import { isSupabaseConfigured, getCurrentUser } from "@/lib/supabase/server";
 
 export const metadata = {
   title: "Cont nou",
 };
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
   const isConfigured = isSupabaseConfigured();
+  const user = isConfigured ? await getCurrentUser() : null;
+
+  if (user) {
+    redirect("/dashboard");
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-12 sm:px-6">
