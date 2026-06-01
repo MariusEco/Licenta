@@ -59,7 +59,9 @@ export async function requireAuthenticatedUser() {
       where: { id: user.id },
       data: {
         email: user.email,
-        fullName: user.user_metadata.full_name as string | undefined,
+        username:
+          (user.user_metadata.username as string | undefined) ??
+          (user.user_metadata.full_name as string | undefined),
       },
     });
   }
@@ -73,7 +75,9 @@ export async function requireAuthenticatedUser() {
       where: { id: existingByEmail.id },
       data: {
         email: user.email,
-        fullName: user.user_metadata.full_name as string | undefined,
+        username:
+          (user.user_metadata.username as string | undefined) ??
+          (user.user_metadata.full_name as string | undefined),
       },
     });
   }
@@ -84,7 +88,9 @@ export async function requireAuthenticatedUser() {
     create: {
       id: user.id,
       email: user.email,
-      fullName: user.user_metadata.full_name as string | undefined,
+      username:
+        (user.user_metadata.username as string | undefined) ??
+        (user.user_metadata.full_name as string | undefined),
     },
   });
 }

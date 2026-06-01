@@ -26,7 +26,7 @@ enum EmigrationDifficulty {
 model User {
   id        String   @id @db.Uuid
   email     String   @unique
-  fullName  String?
+  username  String?
   role      UserRole @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -62,25 +62,24 @@ model Country {
   favorites       Favorite[]
   comparisonItems ComparisonItem[]
 
-  @@index([continent])
   @@index([emigrationDifficulty])
   @@map("countries")
 }
 
 model City {
-  id                     String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  countryId              String                @db.Uuid
+  id                     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId              String   @db.Uuid
   name                   String
-  slug                   String                @unique
+  slug                   String   @unique
   region                 String?
-  latitude               Decimal               @db.Decimal(9, 6)
-  longitude              Decimal               @db.Decimal(9, 6)
+  latitude               Decimal  @db.Decimal(9, 6)
+  longitude              Decimal  @db.Decimal(9, 6)
   population             Int?
   generalDescription     String
   romanianCommunityNotes String?
   jobMarketNotes         String?
-  createdAt              DateTime              @default(now())
-  updatedAt              DateTime              @updatedAt
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
   country         Country          @relation(fields: [countryId], references: [id], onDelete: Cascade)
   costOfLiving    CostOfLiving[]
@@ -92,16 +91,16 @@ model City {
 }
 
 model CostOfLiving {
-  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  countryId           String?   @db.Uuid
-  cityId              String?   @db.Uuid
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  countryId           String?  @db.Uuid
+  cityId              String?  @db.Uuid
   averageSalaryEur    Int?
   rentUtilitiesEur    Int?
   foodEur             Int?
   transportEur        Int?
   totalMonthlyCostEur Int?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   country Country? @relation(fields: [countryId], references: [id], onDelete: Cascade)
   city    City?    @relation(fields: [cityId], references: [id], onDelete: Cascade)
@@ -127,7 +126,8 @@ model Favorite {
 
   @@unique([userId, countryId])
   @@unique([userId, cityId])
-  @@index([userId])
+  @@index([countryId])
+  @@index([cityId])
   @@map("favorites")
 }
 

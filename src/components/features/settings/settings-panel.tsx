@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 type SettingsPanelProps = {
   email: string;
-  fullName: string | null;
+  username: string | null;
 };
 
 async function readApiError(response: Response) {
@@ -19,8 +19,8 @@ async function readApiError(response: Response) {
   return payload?.error?.message ?? "A apărut o eroare neașteptată.";
 }
 
-export function SettingsPanel({ email, fullName }: SettingsPanelProps) {
-  const [name, setName] = useState(fullName ?? "");
+export function SettingsPanel({ email, username }: SettingsPanelProps) {
+  const [name, setName] = useState(username ?? "");
   const [isSavingName, setIsSavingName] = useState(false);
   const [isSendingReset, setIsSendingReset] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
@@ -70,7 +70,7 @@ export function SettingsPanel({ email, fullName }: SettingsPanelProps) {
       const response = await fetch("/api/settings/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fullName: normalized }),
+        body: JSON.stringify({ username: normalized }),
       });
 
       if (!response.ok) {
@@ -174,8 +174,8 @@ export function SettingsPanel({ email, fullName }: SettingsPanelProps) {
               Resetare parolă
             </h2>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">
-              Vei primi un email cu linkul de resetare. După ce îl deschizi,
-              vei putea alege o parolă nouă.
+              Vei primi un email cu linkul de resetare. După ce îl deschizi, vei
+              putea alege o parolă nouă.
             </p>
           </div>
         </div>
