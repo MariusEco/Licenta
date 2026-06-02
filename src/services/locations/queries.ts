@@ -172,19 +172,20 @@ export async function getCountries(
   assertDatabaseUrl();
 
   const prisma = getPrismaClient();
-  const where: Prisma.CountryWhereInput = {
-    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+  const costOfLivingFilter: Prisma.CostOfLivingWhereInput = {
     ...(filters.minAverageSalaryEur
-      ? {
-          costOfLiving: {
-            some: { averageSalaryEur: { gte: filters.minAverageSalaryEur } },
-          },
-        }
+      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
       : {}),
     ...(filters.maxMonthlyCostEur
+      ? { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } }
+      : {}),
+  };
+  const where: Prisma.CountryWhereInput = {
+    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+    ...(Object.keys(costOfLivingFilter).length
       ? {
           costOfLiving: {
-            some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
+            some: costOfLivingFilter,
           },
         }
       : {}),
@@ -307,6 +308,17 @@ export async function getCities(
   assertDatabaseUrl();
 
   const prisma = getPrismaClient();
+  const countryFilter: Prisma.CountryWhereInput = {
+    ...(filters.difficulty ? { emigrationDifficulty: filters.difficulty } : {}),
+  };
+  const costOfLivingFilter: Prisma.CostOfLivingWhereInput = {
+    ...(filters.minAverageSalaryEur
+      ? { averageSalaryEur: { gte: filters.minAverageSalaryEur } }
+      : {}),
+    ...(filters.maxMonthlyCostEur
+      ? { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } }
+      : {}),
+  };
   const where: Prisma.CityWhereInput = {
     ...(filters.search
       ? {
@@ -321,20 +333,11 @@ export async function getCities(
           ],
         }
       : {}),
-    ...(filters.difficulty
-      ? { country: { emigrationDifficulty: filters.difficulty } }
-      : {}),
-    ...(filters.minAverageSalaryEur
+    ...(Object.keys(countryFilter).length ? { country: countryFilter } : {}),
+    ...(Object.keys(costOfLivingFilter).length
       ? {
           costOfLiving: {
-            some: { averageSalaryEur: { gte: filters.minAverageSalaryEur } },
-          },
-        }
-      : {}),
-    ...(filters.maxMonthlyCostEur
-      ? {
-          costOfLiving: {
-            some: { totalMonthlyCostEur: { lte: filters.maxMonthlyCostEur } },
+            some: costOfLivingFilter,
           },
         }
       : {}),

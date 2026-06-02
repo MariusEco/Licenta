@@ -32,6 +32,14 @@ export async function GET(request: Request) {
   try {
     const query = countryListQuerySchema.parse(parseSearchParams(request));
     const prisma = getPrismaClient();
+    const costOfLivingFilter: Prisma.CostOfLivingWhereInput = {
+      ...(query.minAverageSalaryEur
+        ? { averageSalaryEur: { gte: query.minAverageSalaryEur } }
+        : {}),
+      ...(query.maxMonthlyCostEur
+        ? { totalMonthlyCostEur: { lte: query.maxMonthlyCostEur } }
+        : {}),
+    };
 
     const where: Prisma.CountryWhereInput = {
       ...(query.search
@@ -47,17 +55,10 @@ export async function GET(request: Request) {
         ? { continent: { equals: query.continent, mode: "insensitive" } }
         : {}),
       ...(query.difficulty ? { emigrationDifficulty: query.difficulty } : {}),
-      ...(query.minAverageSalaryEur
+      ...(Object.keys(costOfLivingFilter).length
         ? {
             costOfLiving: {
-              some: { averageSalaryEur: { gte: query.minAverageSalaryEur } },
-            },
-          }
-        : {}),
-      ...(query.maxMonthlyCostEur
-        ? {
-            costOfLiving: {
-              some: { totalMonthlyCostEur: { lte: query.maxMonthlyCostEur } },
+              some: costOfLivingFilter,
             },
           }
         : {}),
