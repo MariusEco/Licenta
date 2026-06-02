@@ -20,8 +20,10 @@ export function getPrismaClient() {
   const pool = new Pool({
     connectionString,
     max: 1,
-    idleTimeoutMillis: 10_000,
+    idleTimeoutMillis: 1_000,
     connectionTimeoutMillis: 10_000,
+    maxLifetimeSeconds: 30,
+    allowExitOnIdle: true,
     ssl: {
       rejectUnauthorized: false,
     },
