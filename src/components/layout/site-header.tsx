@@ -2,7 +2,7 @@ import { Globe2 } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 
-import { LogoutButton } from "@/components/features/auth/logout-button";
+import { AccountMenu } from "@/components/features/auth/account-menu";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/supabase/server";
 
@@ -12,8 +12,61 @@ const navigation = [
   { href: "/compare", label: "Comparare" },
 ] satisfies Array<{ href: Route; label: string }>;
 
+function getUserDisplayName(user: Awaited<ReturnType<typeof getCurrentUser>>) {
+  if (!user) {
+    return "Contul meu";
+  }
+
+  const username = user.user_metadata.username;
+  const fullName = user.user_metadata.full_name;
+
+  if (typeof username === "string" && username.trim()) {
+    return username;
+  }
+
+  if (typeof fullName === "string" && fullName.trim()) {
+    return fullName;
+  }
+
+  return user.email ?? "Contul meu";
+}
+
+function getUserAvatarUrl(user: Awaited<ReturnType<typeof getCurrentUser>>) {
+  if (!user) {
+    return null;
+  }
+
+  const avatarUrl = user.user_metadata.avatar_url;
+  const picture = user.user_metadata.picture;
+
+  if (typeof avatarUrl === "string" && avatarUrl.trim()) {
+    return avatarUrl;
+  }
+
+  if (typeof picture === "string" && picture.trim()) {
+    return picture;
+  }
+
+  for (const identity of user.identities ?? []) {
+    const identityAvatarUrl = identity.identity_data?.avatar_url;
+    const identityPicture = identity.identity_data?.picture;
+
+    if (typeof identityAvatarUrl === "string" && identityAvatarUrl.trim()) {
+      return identityAvatarUrl;
+    }
+
+    if (typeof identityPicture === "string" && identityPicture.trim()) {
+      return identityPicture;
+    }
+  }
+
+  return null;
+}
+
 export async function SiteHeader() {
   const user = await getCurrentUser();
+  const displayName = getUserDisplayName(user);
+  const avatarUrl = getUserAvatarUrl(user);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-white/92 backdrop-blur">
@@ -50,10 +103,11 @@ export async function SiteHeader() {
               >
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
-              <Button asChild variant="ghost" className="hidden sm:inline-flex">
-                <Link href={"/settings" as Route}>Setări</Link>
-              </Button>
-              <LogoutButton />
+              <AccountMenu
+                avatarUrl={avatarUrl}
+                displayName={displayName}
+                email={user.email ?? null}
+              />
             </>
           ) : (
             <>

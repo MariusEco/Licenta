@@ -13,7 +13,7 @@ export default async function SettingsPage() {
       <section className="border-b border-border pb-8">
         <h1 className="text-3xl font-semibold text-foreground">Setări cont</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
-          Actualizează numele afișat și trimite un email de resetare a parolei.
+          Actualizează numele afișat sau trimite un email de resetare a parolei.
         </p>
       </section>
 
