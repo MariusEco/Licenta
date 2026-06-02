@@ -19,6 +19,9 @@ export function getPrismaClient() {
 
   const pool = new Pool({
     connectionString,
+    max: 1,
+    idleTimeoutMillis: 10_000,
+    connectionTimeoutMillis: 10_000,
     ssl: {
       rejectUnauthorized: false,
     },
@@ -28,9 +31,7 @@ export function getPrismaClient() {
     adapter: new PrismaPg(pool),
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.prisma = prisma;
-  }
+  globalForPrisma.prisma = prisma;
 
   return prisma;
 }
