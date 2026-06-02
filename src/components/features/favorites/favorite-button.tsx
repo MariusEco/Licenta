@@ -112,10 +112,11 @@ export function FavoriteButton({
 
         if (!res.ok) return;
 
-        const data = await res.json();
-        if (!Array.isArray(data)) return;
+        const payload = await res.json();
+        const favorites = Array.isArray(payload) ? payload : payload.data;
+        if (!Array.isArray(favorites)) return;
 
-        const match = data.find(
+        const match = favorites.find(
           (f: { location?: { kind?: string; id?: string } }) => {
             const loc = f.location;
             if (!loc) return false;

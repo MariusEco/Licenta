@@ -4,6 +4,8 @@ import { CountryCard } from "@/components/features/locations/country-card";
 import { LocationFilters } from "@/components/features/locations/location-filters";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Pagination } from "@/components/ui/pagination";
+import { getPrismaClient } from "@/lib/prisma/client";
+import { getCurrentUser } from "@/lib/supabase/server";
 import { getCountries } from "@/services/locations/queries";
 
 export const metadata = {
@@ -90,6 +92,26 @@ export default async function CountriesPage({
     countries.total,
     currentPage * countriesPageSize,
   );
+  const favoriteCountryIds = new Set<string>();
+  const user = await getCurrentUser();
+
+  if (user && countries.items.length > 0) {
+    const prisma = getPrismaClient();
+    const favorites = await prisma.favorite.findMany({
+      where: {
+        userId: user.id,
+        kind: "COUNTRY",
+        countryId: { in: countries.items.map((country) => country.id) },
+      },
+      select: { countryId: true },
+    });
+
+    favorites.forEach((favorite) => {
+      if (favorite.countryId) {
+        favoriteCountryIds.add(favorite.countryId);
+      }
+    });
+  }
 
   return (
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8">
@@ -127,7 +149,11 @@ export default async function CountriesPage({
         <>
           <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {countries.items.map((country) => (
-              <CountryCard key={country.id} country={country} />
+              <CountryCard
+                key={country.id}
+                country={country}
+                initialFavorited={favoriteCountryIds.has(country.id)}
+              />
             ))}
           </section>
 

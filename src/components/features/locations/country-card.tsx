@@ -9,9 +9,10 @@ import { FavoriteButton } from "@/components/features/favorites/favorite-button"
 
 type CountryCardProps = {
   country: CountrySummaryView;
+  initialFavorited?: boolean;
 };
 
-export function CountryCard({ country }: CountryCardProps) {
+export function CountryCard({ country, initialFavorited }: CountryCardProps) {
   const href = `/countries/${country.slug}` as Route;
 
   return (
@@ -66,7 +67,11 @@ export function CountryCard({ country }: CountryCardProps) {
         <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </Link>
       <div className="mt-3">
-        <FavoriteButton kind="COUNTRY" countryId={country.id} />
+        <FavoriteButton
+          kind="COUNTRY"
+          countryId={country.id}
+          initialFavorited={initialFavorited}
+        />
       </div>
     </article>
   );
