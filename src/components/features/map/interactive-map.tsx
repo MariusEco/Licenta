@@ -47,9 +47,9 @@ export function InteractiveMap({ locations }: InteractiveMapProps) {
         scrollWheelZoom: true,
       });
 
-      L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="https://wikimediafoundation.org/">Wikimedia</a>',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 18,
       }).addTo(map);
 
