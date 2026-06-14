@@ -2,8 +2,6 @@
 
 Migro este o platformă web pentru informarea și analiza oportunităților de emigrare, construită pentru românii care vor să compare țări și orașe după criterii practice: costul vieții, salarii medii, cerințe generale de emigrare, dificultatea obținerii cetățeniei, comunități românești, piața muncii și date demografice.
 
-Aplicația este construită ca proiect production-ready pentru lucrarea de licență „Platformă web pentru informarea și analiza oportunităților de emigrare”.
-
 ## Tehnologii folosite
 
 - Next.js cu App Router pentru frontend, backend și API Route Handlers
@@ -25,7 +23,7 @@ Aplicația este construită ca proiect production-ready pentru lucrarea de licen
 - pagini de detalii pentru fiecare țară și oraș
 - costuri lunare, salariu net mediu și date socio-economice
 - hartă interactivă cu locații
-- filtrare și sortare după cost, salariu și dificultate
+- filtrare și sortare după cost, salariu și dificultate a țărilor
 - comparare între țări și orașe
 - cont utilizator prin Supabase Auth
 - autentificare cu email/parolă și Google
@@ -90,7 +88,6 @@ Endpoint-uri publice:
 
 - `GET /api/countries`
 - `GET /api/countries/[slug]`
-- `GET /api/cities`
 - `GET /api/cities/[slug]`
 - `GET /api/map/locations`
 - `POST /api/auth/register`

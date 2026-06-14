@@ -606,9 +606,9 @@ export function ComparisonBuilder({
   }
 
   return (
-    <section className="grid gap-6 lg:grid-cols-[380px_1fr] lg:items-start">
+    <section className="grid min-w-0 gap-6 lg:grid-cols-[380px_minmax(0,1fr)] lg:items-start">
       <aside className="border border-border bg-white p-4 lg:sticky lg:top-6">
-        <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <GitCompareArrows
               className="h-5 w-5 text-primary"
@@ -724,15 +724,15 @@ export function ComparisonBuilder({
         </div>
       </aside>
 
-      <div className="grid gap-6">
+      <div className="grid min-w-0 gap-6">
         <section className="grid gap-3 lg:grid-cols-2">
           {renderSelectedCard(leftDisplay, "left")}
           {renderSelectedCard(rightDisplay, "right")}
         </section>
 
         <section className="border border-border bg-white">
-          <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-            <div>
+          <div className="flex flex-col gap-3 border-b border-border px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0">
               <h2 className="text-lg font-semibold text-foreground">
                 Comparație
               </h2>
@@ -742,12 +742,12 @@ export function ComparisonBuilder({
                   : "Selectează două locații pentru a vedea comparația completă."}
               </p>
             </div>
-            <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-col gap-2 sm:items-end">
               <Button
                 type="button"
                 onClick={saveComparison}
                 disabled={isSaving || !canSave}
-                className="shrink-0"
+                className="w-full shrink-0 sm:w-auto"
               >
                 {isSaving ? (
                   <Loader2
@@ -761,7 +761,7 @@ export function ComparisonBuilder({
               </Button>
               {notification ? (
                 <div
-                  className={`max-w-sm rounded-sm border px-3 py-2 text-xs leading-5 shadow-sm ${
+                  className={`w-full max-w-sm rounded-sm border px-3 py-2 text-xs leading-5 shadow-sm ${
                     notification.tone === "success"
                       ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                       : "border-rose-200 bg-rose-50 text-rose-700"
@@ -779,7 +779,58 @@ export function ComparisonBuilder({
             </div>
           ) : null}
 
-          <div className="overflow-x-auto">
+          <div className="grid md:hidden">
+            {comparisonRows.map((row, index) => (
+              <div
+                key={row.label}
+                className={`border-b border-border px-4 py-4 text-sm ${
+                  index % 2 === 0 ? "bg-white" : "bg-muted/20"
+                }`}
+              >
+                <div className="mb-3 font-medium text-foreground">
+                  {row.tooltip ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      {row.label}
+                      <span className="group relative inline-flex">
+                        <button
+                          type="button"
+                          className="inline-flex h-5 w-5 items-center justify-center text-muted-foreground transition hover:text-primary focus:text-primary focus:outline-none"
+                          aria-label={row.tooltip}
+                        >
+                          <Info className="h-3.5 w-3.5" aria-hidden="true" />
+                        </button>
+                        <span className="absolute left-0 top-full z-20 mt-1.5 hidden w-52 border border-border bg-white px-2 py-1 text-[11px] font-normal leading-4 text-muted-foreground shadow-sm group-hover:block group-focus-within:block">
+                          {row.tooltip}
+                        </span>
+                      </span>
+                    </span>
+                  ) : (
+                    row.label
+                  )}
+                </div>
+                <div className="grid gap-3">
+                  <div className="min-w-0 border-l-2 border-primary/40 pl-3">
+                    <div className="text-xs font-semibold text-foreground">
+                      {leftDisplay ? leftDisplay.name : "Locația din stânga"}
+                    </div>
+                    <div className="mt-1 break-words leading-6 text-muted-foreground">
+                      {row.render(leftComparisonLocation)}
+                    </div>
+                  </div>
+                  <div className="min-w-0 border-l-2 border-accent/70 pl-3">
+                    <div className="text-xs font-semibold text-foreground">
+                      {rightDisplay ? rightDisplay.name : "Locația din dreapta"}
+                    </div>
+                    <div className="mt-1 break-words leading-6 text-muted-foreground">
+                      {row.render(rightComparisonLocation)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden overflow-x-auto md:block">
             <div className="min-w-[920px]">
               <div className="grid grid-cols-[220px_minmax(0,1fr)_minmax(0,1fr)] border-b border-border bg-muted/40 text-sm font-semibold text-foreground">
                 <div className="px-4 py-3">Specificație</div>
