@@ -86,7 +86,7 @@ export function AccountMenu({
       </button>
 
       {isOpen ? (
-        <div className="absolute right-0 top-full z-50 mt-2 w-64 border border-border bg-white p-2 shadow-lg">
+        <div className="absolute right-0 top-full z-[1300] mt-2 w-64 border border-border bg-white p-2 shadow-lg">
           <div className="border-b border-border px-3 py-3">
             <div className="truncate text-sm font-semibold text-foreground">
               {displayName}
