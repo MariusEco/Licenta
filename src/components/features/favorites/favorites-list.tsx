@@ -37,6 +37,14 @@ function getFavoriteHref(location: LocationRef) {
   ) as Route;
 }
 
+function getLocationKindLabel(location: LocationRef) {
+  if (!location) {
+    return "";
+  }
+
+  return location.kind === "COUNTRY" ? "Țară" : "Oraș";
+}
+
 export default function FavoritesList({ items }: FavoritesListProps) {
   const router = useRouter();
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -97,7 +105,7 @@ export default function FavoritesList({ items }: FavoritesListProps) {
               {fav.location?.name ?? "(Locație necunoscută)"}
             </div>
             <div className="text-xs text-muted-foreground">
-              {fav.location?.kind ?? ""}
+              {getLocationKindLabel(fav.location)}
             </div>
           </Link>
 
